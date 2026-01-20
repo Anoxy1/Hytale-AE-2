@@ -30,7 +30,7 @@ Basierend auf Analyse von HyPipes, ChestTerminal und offiziellen Quellen:
 ## 🚀 Quick Start
 
 ### Für neue Entwickler
-1. **[QUICK_START.md](QUICK_START.md)** - 5-Minuten Setup
+1. **[QUICK_START.md](QUICK_START.md)** - Setup aligned with official HelloPlugin & Server Manual
 2. **[SETUP.md](SETUP.md)** - Vollständiges Development Environment
 3. **[HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md)** - Lerne die Struktur
 
@@ -48,6 +48,12 @@ Basierend auf Analyse von HyPipes, ChestTerminal und offiziellen Quellen:
   - Block System API, Event System, Plugin Lifecycle
 - **[DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)** - Roadmap & Phasen
 - **[TESTING_GUIDE.md](TESTING_GUIDE.md)** - Test-Strategien
+
+### 🔗 Canonical Sources
+- HelloPlugin (Example): noel-lang/hytale-example-plugin
+- Hytale Server Manual: support.hytale.com (authoritative server setup)
+
+Hinweis: Projektinterne Dokumente können teilweise veraltet sein. Bei Konflikten gelten die offiziellen Quellen oben.
 
 ### 📦 Configuration & Build
 - **[HYTALE_MANIFEST_FORMAT.md](HYTALE_MANIFEST_FORMAT.md)** - Manifest Spezifikation

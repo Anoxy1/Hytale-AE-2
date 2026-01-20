@@ -45,29 +45,20 @@ copy path\to\HyPipes-1.0.5-SNAPSHOT.jar libs\
 copy path\to\HytaleServer.jar libs\
 ```
 
-### 3. Build Project
+# Setup
 
-```bash
-# Gradle Wrapper initialisieren (falls nicht vorhanden)
-gradle wrapper
+Authoritative environment setup based on Hytale Server Manual and HelloPlugin.
 
-# Clean Build
-.\gradlew clean build
+## Requirements
 
-# Build mit Shadow Plugin (creates fat JAR)
-.\gradlew shadowJar
-```
+- Java 25 (Temurin recommended)
+- HytaleServer.jar (server API)
 
-**Erwartete Ausgabe:**
-```
-BUILD SUCCESSFUL in 10s
-5 actionable tasks: 5 executed
-```
+## Obtain Server Files
 
-**Generated Files:**
+Option 1 (Launcher):
 - `build/libs/HytaleAE2-0.1.0-SNAPSHOT.jar`
 
----
 
 ## 🛠️ Development Environment
 
@@ -79,8 +70,6 @@ BUILD SUCCESSFUL in 10s
    ```
 
 2. **Configure JDK**
-   ```
-   File → Project Structure → Project Settings → Project
    Set SDK to JDK 17+
    ```
 
@@ -93,8 +82,6 @@ BUILD SUCCESSFUL in 10s
 4. **Run Configuration**
    - Create new "Application" configuration
    - Main class: `com.tobi.mesystem.MEPlugin`
-   - VM options: `-Xmx2G -Xms1G`
-
 ### VS Code Setup
 
 1. **Install Extensions**

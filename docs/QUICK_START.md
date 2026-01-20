@@ -1,5 +1,10 @@
 # Quick Start Guide - HytaleAE2
 
+Hinweis: Diese Seite ist historisch und kann veraltet sein.
+Bitte folge dem aktuellen Quick Start in [README.md](../README.md) und der
+autoritativen Einrichtung in [SETUP.md](SETUP.md) basierend auf dem offiziellen
+HelloPlugin und dem Hytale Server Manual.
+
 **Build Status:** ✅ SUCCESSFUL  
 **JAR Generated:** `build/libs/HytaleAE2-0.1.0-SNAPSHOT.jar` (20 KB)
 
