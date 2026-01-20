@@ -41,7 +41,140 @@
   - Performance-Expectations
   - Ökosystem-Strategie
 
-## 2. Daten-Struktur Referenzen
+## 2. Erweiterte JSON-Konfigurationsdateien
+
+Hytale nutzt JSON als primäres Dateiformat für Konfiguration von Spielinhalten und Servereinstellungen. Diese Dateien ermöglichen einen datengesteuerten Ansatz zur Erstellung und Modifikation von Inhalten – ein Großteil der Spielmechaniken ist nicht hartcodiert, sondern über JSON definierbar.
+
+### 2.1 Haupt-Server-Konfiguration (config.json)
+
+Die zentrale Servereinstellungs-Datei mit kritischen Leistungsparametern:
+
+```json
+{
+  "ServerName": "My Hytale Server",
+  "MOTD": "Welcome to the custom server!",
+  "Password": "",                    // Leerer String = öffentlicher Server
+  "MaxPlayers": 100,
+  "MaxViewRadius": 12,               // Empfohlen: 12-16 Chunks
+  "LocalCompressionEnabled": true,   // Bandbreitenoptimierung
+  "Port": 25565,
+  "Version": 1,
+  "Defaults": {
+    "World": "default",
+    "GameMode": "ADVENTURE"          // oder "CREATIVE"
+  },
+  "ConnectionTimeouts": {},
+  "RateLimit": {},                   // DDoS-Schutz
+  "PlayerStorage": {
+    "Type": "Hytale"
+  },
+  "DisplayTmpTagsInStrings": false,
+  "LogLevels": {
+    "Default": "INFO",
+    "Network": "WARN"
+  }
+}
+```
+
+**Kritische Parameter für Performance:**
+- **MaxPlayers**: Direkter Einfluss auf Serverlast. Höhere Werte benötigen mehr CPU/RAM
+- **MaxViewRadius**: Chunk-Radius um Spieler herum. Verdopplung = 4x CPU/Bandbreite
+- **LocalCompressionEnabled**: true reduziert Netzwerknutzung; wichtig für öffentliche Server
+- **LogLevels**: DEBUG/TRACE für Debugging, aber erzeugt viel Datenvolumen
+
+⚠️ **Wichtig**: Änderungen nur bei gestopptem Server vornehmen. Backup vor Änderungen erstellen!
+
+### 2.2 Weltspezifische Konfiguration (universe/worlds/<world_name>/config.json)
+
+Jede Welt hat eigene config.json für granulare Anpassung:
+
+```json
+{
+  "UUID": "auto-generated",
+  "DisplayName": "Default World",
+  "Seed": 1768666912427,
+  "WorldGen": {
+    "Type": "Hytale",              // oder "Flat", "Empty"
+    "Name": "Default",
+    "Path": "WorldGenTemplates/Orbis_Default.json"
+  },
+  "ChunkStorage": {
+    "Type": "Hytale"               // oder "IndexedStorage", "Empty"
+  },
+  "ChunkConfig": {
+    "PregenerateRegion": { "Min": [0, 0], "Max": [100, 100] },
+    "KeepLoadedRegion": { "Min": [0, 0], "Max": [50, 50] }
+  },
+  "GameRules": {
+    "IsPvpEnabled": false,
+    "IsFallDamageEnabled": true,
+    "IsGameTimePaused": false,
+    "GameTime": "0001-01-01T05:30:00Z",  // ISO 8601 Format
+    "GameplayConfig": "Default",
+    "DaytimeDurationSeconds": 600,
+    "NighttimeDurationSeconds": 600
+  },
+  "ClientEffects": {
+    "SunIntensity": 1.0,
+    "BloomIntensity": 0.5,
+    "SunAngleDegrees": 45.0,
+    "ForcedWeather": "Clear"       // oder "Rain", "Snow"
+  },
+  "NPCs": {
+    "IsSpawningNPC": true,
+    "IsAllNPCFrozen": false
+  },
+  "System & Saving": {
+    "IsTicking": true,
+    "IsBlockTicking": true,
+    "IsSavingPlayers": true,
+    "IsUnloadingChunks": true,
+    "SaveNewChunks": true,
+    "DeleteOnUniverseStart": false,
+    "DeleteOnRemove": false,
+    "ResourceStorage": { "Type": "Hytale" }
+  },
+  "RequiredPlugins": {
+    "myplugin.id": ">=1.0.0 <2.0.0"
+  },
+  "Plugin": {
+    "myplugin.config.key": "value"
+  }
+}
+```
+
+**Szenarien-Konfigurationen:**
+- **Kreativwelt (safe building)**: IsPvpEnabled=false, IsFallDamageEnabled=false, IsGameTimePaused=true
+- **Survival-Arena (fast paced)**: IsPvpEnabled=true, IsSpawningNPC=true, DaytimeDurationSeconds=120
+- **Performance (server optimization)**: IsUnloadingChunks=true, kleinere KeepLoadedRegion
+
+### 2.3 Access Control Files
+
+- **permissions.json**: Rolle-basierte Zugriffskontrolle für Admin/Mod/Builder
+- **bans.json**: Automatisch verwaltet – nicht manuell bearbeiten
+- **whitelist.json**: Definiert erlaubte Spieler (privaten Server)
+
+### 2.4 Plugin-spezifische Konfiguration
+
+Plugins können eigene config.json mit Codec-System-Serialisierung haben:
+
+```json
+{
+  "LuckIncreaseChance": 0.40,
+  "MaxPlayersAllowed": 100,
+  "ServerWelcomeMessage": "Welcome to the custom server!",
+  "EnableCustomFeature": true,
+  "BannedChatWords": ["badword1", "badword2"],
+  "DropRateMultiplier": 1.5,
+  "DebugModeActive": false,
+  "CustomItemRecipeEnabled": {
+    "IronGolemSpawner": true,
+    "MagicWand": false
+  }
+}
+```
+
+## 3. Daten-Struktur Referenzen
 
 ### Item-Konfiguration
 **Kernattribute:**
@@ -404,7 +537,7 @@ ItemRegistry.register(builder.build());
 - **Fallback Chains**: Sekundäre/Tertiäre Server falls Primär ausfällt
 - **Session Persistence**: Cross-Server Inventory/Stats
 
-## 6. IDE & Tool-Support
+## 11. IDE & Tool-Support
 
 ### JetBrains Marketplace Plugins
 - **Hytale Development Tools**: Syntax-Highlighting, Refactoring-Support
@@ -418,7 +551,7 @@ ItemRegistry.register(builder.build());
 - **Export**: Hytale-spezifisches Format mit Animations-Support
 - **Partner-Status**: Blockbench ist offizieller Hytale 3D Modeling Partner
 
-## 7. JSON Validierung & Tools
+## 12. JSON Validierung & Tools
 
 ### Online-Validator
 - **HytaleTools.org**: Comprehensive JSON Schema Validator
@@ -430,7 +563,7 @@ ItemRegistry.register(builder.build());
 - **Modding Wiki**: Umfassende JSON-Richtlinien
 - **CurseForge**: Distribution & Versionierung
 
-## 8. Versionierungs-Strategie
+## 13. Versionierungs-Strategie
 
 ### Semantic Versioning für Plugins
 ```
@@ -453,7 +586,428 @@ v1.2.3-alpha.1
 - [ ] Changelog mit Version aktualisiert
 - [ ] GitHub Release mit Artifact erstellt
 
-## 9. Debugging & Testing
+## 9. Erweiterte JSON-Konfiguration - Deep Dive
+
+Hytale nutzt JSON als primäres Dateiformat für die Konfiguration einer Vielzahl von Spielinhalten und Servereinstellungen. Dies ermöglicht einen datengesteuerten Ansatz – ein Großteil der Spielmechaniken ist nicht hartcodiert, sondern über leicht zugängliche und modifizierbare JSON-Strukturen definierbar.
+
+### 9.1 Haupt-Server-Konfiguration (config.json) - Erweiterte Parameter
+
+**Kritische Performance-Parameter:**
+
+```json
+{
+  "ServerName": "My Hytale Server",
+  "MOTD": "Welcome!",
+  "Password": "",                    // Leerer String = öffentlich
+  "MaxPlayers": 100,                 // 1-20: 4-6GB RAM, 20-50: 8-12GB, 50+: 16+GB
+  "MaxViewRadius": 12,               // Empfohlen: 12-16 Chunks
+  "LocalCompressionEnabled": true,   // Reduziert Bandbreite um ~40%
+  "Port": 25565,
+  "Version": 1,
+  "Defaults": {
+    "World": "default",
+    "GameMode": "ADVENTURE"
+  },
+  "ConnectionTimeouts": {
+    "DefaultTimeout": 30000           // Millisekunden bis Rauswurf
+  },
+  "RateLimit": {
+    "PacketsPerSecond": 1000          // DDoS-Schutz
+  },
+  "PlayerStorage": {
+    "Type": "Hytale"
+  },
+  "LogLevels": {
+    "Default": "INFO",
+    "Network": "WARN"
+  }
+}
+```
+
+**Performance-Auswirkungen:**
+- MaxPlayers verdoppeln = +CPU, +RAM, +Bandbreite
+- MaxViewRadius verdoppeln = 4x Speicher, 4x CPU, 4x Netzwerk
+- LocalCompressionEnabled=true = ~40% Bandbreiteneinsparung
+
+**⚠️ Kritisch**: Änderungen NUR bei gestopptem Server! Backup vor Änderungen!
+
+### 9.2 Weltspezifische Konfiguration - Erweiterte GameRules
+
+```json
+{
+  "UUID": "auto-generated",
+  "DisplayName": "Default World",
+  "Seed": 1768666912427,
+  "WorldGen": {
+    "Type": "Hytale",                 // oder "Flat", "Empty"
+    "Name": "Default",
+    "Path": "WorldGenTemplates/Orbis_Default.json"
+  },
+  "ChunkStorage": {
+    "Type": "Hytale"
+  },
+  "ChunkConfig": {
+    "PregenerateRegion": { "Min": [0, 0], "Max": [100, 100] },
+    "KeepLoadedRegion": { "Min": [-50, -50], "Max": [50, 50] }
+  },
+  "GameRules": {
+    "IsPvpEnabled": false,
+    "IsFallDamageEnabled": true,
+    "IsGameTimePaused": false,
+    "GameTime": "0001-01-01T05:30:00Z",  // ISO 8601
+    "GameplayConfig": "Default",
+    "DaytimeDurationSeconds": 600,
+    "NighttimeDurationSeconds": 600,
+    "DeathDropItemsOnGround": true,
+    "KeepInventoryOnDeath": false
+  },
+  "ClientEffects": {
+    "SunIntensity": 1.0,               // 0.0-1.0
+    "BloomIntensity": 0.5,             // Licht-Halo
+    "SunAngleDegrees": 45.0,           // Schattenwinkel
+    "FogEnabled": true,
+    "FogDistance": 128.0,
+    "RenderDistance": 16,
+    "AmbientLight": 0.8                // 0.0-1.0
+  },
+  "NPCs": {
+    "IsSpawningNPC": true,
+    "IsAllNPCFrozen": false,
+    "IsSpawnMarkersEnabled": true,
+    "IsObjectiveMarkersEnabled": true
+  },
+  "System & Saving": {
+    "IsTicking": true,
+    "IsBlockTicking": true,
+    "IsSavingPlayers": true,
+    "IsSavingChunks": true,
+    "IsUnloadingChunks": true,
+    "SaveNewChunks": true,
+    "DeleteOnUniverseStart": false,
+    "ResourceStorage": { "Type": "Hytale" }
+  },
+  "RequiredPlugins": {
+    "myplugin.id": ">=1.0.0 <2.0.0"
+  }
+}
+```
+
+**Szenarien-Konfigurationen:**
+
+**Kreativ-Welt (Safe Building):**
+```json
+{
+  "GameRules": {
+    "IsPvpEnabled": false,
+    "IsFallDamageEnabled": false,
+    "IsGameTimePaused": true,
+    "GameTime": "0001-01-01T12:00:00Z"  // Mittags
+  },
+  "ClientEffects": {
+    "ForcedWeather": "Clear"
+  }
+}
+```
+
+**Survival-Arena (Fast-Paced PvP):**
+```json
+{
+  "GameRules": {
+    "IsPvpEnabled": true,
+    "IsGameTimePaused": false,
+    "DaytimeDurationSeconds": 120,
+    "NighttimeDurationSeconds": 60,
+    "IsSpawningNPC": true
+  }
+}
+```
+
+**Performance-Optimiert (Viele Spieler):**
+```json
+{
+  "ChunkConfig": {
+    "KeepLoadedRegion": { "Min": [-25, -25], "Max": [25, 25] }
+  },
+  "GameRules": {
+    "DaytimeDurationSeconds": 1200,   // Längere Zyklen = weniger Ticks
+    "IsUnloadingChunks": true
+  }
+}
+```
+
+### 9.3 Item-Konfiguration - Vollständige Spezifikation
+
+**Tool-Item mit vollständiger Spec:**
+```json
+{
+  "Id": "stone_pickaxe",
+  "TranslationProperties": {
+    "Name": "items.stone_pickaxe.name",
+    "Description": "items.stone_pickaxe.description"
+  },
+  "Icon": "Icons/ItemsGenerated/stone_pickaxe.png",
+  "ItemLevel": 5,
+  "MaxStack": 1,
+  "QualityId": "Common",
+  "Set": "Tool_Stone",
+  "ToolConfiguration": {
+    "Specs": [
+      {
+        "GatherType": "Rocks",
+        "Power": 3,
+        "Quality": 2,
+        "IsIncorrect": false,
+        "HitSoundLayer": "pick_hit_rock"
+      },
+      {
+        "GatherType": "Ore",
+        "Power": 2,
+        "Quality": 1,
+        "IsIncorrect": false
+      }
+    ],
+    "Speed": 1.2,
+    "MaxDurability": 250,
+    "DurabilityLossBlockTypes": [
+      { "BlockType": "Rocks", "DurabilityLossOnHit": 1 },
+      { "BlockType": "Ore", "DurabilityLossOnHit": 2 }
+    ]
+  },
+  "DroppedItemConfiguration": {
+    "PhysicsValues": {
+      "ItemMass": 2.0,
+      "FrictionCoefficient": 0.6,
+      "ApplyGravity": true
+    },
+    "PickupRadius": 1.75,
+    "ttl": 300.0,
+    "ParticleSystemId": "tool_sparkles",
+    "ParticleColor": "#8B7355"
+  }
+}
+```
+
+**Weapon-Item mit Stats:**
+```json
+{
+  "Id": "iron_sword",
+  "WeaponConfiguration": {
+    "StatModifiers": {
+      "Damage": {
+        "Amount": 7.0,
+        "CalculationType": "Additive"
+      },
+      "AttackSpeed": {
+        "Amount": 1.2,
+        "CalculationType": "Multiplicative"
+      }
+    },
+    "RenderDualWielded": false,
+    "Knockback": 1.5
+  }
+}
+```
+
+**Armor-Item mit Widerständen:**
+```json
+{
+  "Id": "diamond_chestplate",
+  "ArmorConfiguration": {
+    "EquipmentSlot": "Chest",
+    "BaseDamageResistance": 0.3,         // 30% Basis
+    "DamageResistance": {
+      "FireResistance": 0.6,
+      "ColdResistance": 0.4,
+      "PoisonResistance": 0.2
+    },
+    "StatModifiers": {
+      "Health": {
+        "Amount": 20,
+        "CalculationType": "Additive"
+      }
+    }
+  }
+}
+```
+
+### 9.4 Block-Konfiguration - Texture Mapping & Rendering
+
+```json
+{
+  "Id": "oak_logs",
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "Group": "Wood",
+    "Flags": {
+      "CanRotate": true,
+      "CanVariate": true
+    },
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Wood",
+        "ItemId": "oak_logs",
+        "HarvestLevel": 0
+      }
+    },
+    "BlockParticleSetId": "Wood",
+    "Textures": [
+      {
+        "TopFace": "BlockTextures/oak_logs_top.png",
+        "BottomFace": "BlockTextures/oak_logs_bottom.png",
+        "NorthFace": "BlockTextures/oak_logs_side.png",
+        "SouthFace": "BlockTextures/oak_logs_side.png",
+        "EastFace": "BlockTextures/oak_logs_side.png",
+        "WestFace": "BlockTextures/oak_logs_side.png",
+        "VariantWeight": 1.0
+      }
+    ],
+    "ParticleColor": "#8B4513",
+    "BlockSoundSetId": "Wood",
+    "BlockBreakingDecalId": "Breaking_Decals_Wood"
+  },
+  "ResourceTypes": ["Wood", "OakWood"]
+}
+```
+
+### 9.5 Loot-Tabellen - Fortgeschrittene Pools
+
+```json
+{
+  "pools": [
+    {
+      "rolls": 2,
+      "bonusRolls": {
+        "min": 0,
+        "max": 1
+      },
+      "entries": [
+        {
+          "type": "item",
+          "name": "stone_cobble",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "set_count",
+              "count": { "min": 1, "max": 2 }
+            },
+            {
+              "function": "set_damage",
+              "damage": { "min": 0.0, "max": 0.5 }
+            }
+          ]
+        },
+        {
+          "type": "loot_table",
+          "name": "loot/bonus_drops",
+          "weight": 2,
+          "conditions": [
+            {
+              "condition": "killed_by_player"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+### 9.6 Spawn-Regeln - Zeit & Biom-Filter
+
+```json
+{
+  "minecraft:spawn_rules": {
+    "description": {
+      "identifier": "ghost",
+      "population_control": "monster"
+    },
+    "conditions": [
+      { "minecraft:brightness_filter": { "min": 0, "max": 7 } },
+      { "minecraft:difficulty_filter": { "min": "easy" } },
+      { "minecraft:weight": { "default": 80 } },
+      { "minecraft:herd": { "min_size": 1, "max_size": 3 } },
+      {
+        "minecraft:biome_filter": {
+          "test": "has_biome_tag",
+          "value": "haunted"
+        }
+      },
+      {
+        "minecraft:time_filter": {
+          "min": 18000,                 // 18000 Ticks = Sonnenuntergang
+          "max": 6000                   // 6000 Ticks = Sonnenaufgang
+        }
+      }
+    ]
+  }
+}
+```
+
+### 9.7 Plugin-Konfiguration - Codec System
+
+```json
+{
+  "LuckIncreaseChance": 0.40,
+  "MaxPlayersAllowed": 100,
+  "ServerWelcomeMessage": "Welcome!",
+  "EnableCustomFeature": true,
+  "BannedChatWords": ["badword1", "badword2"],
+  "DropRateMultiplier": 1.5,
+  "DebugModeActive": false,
+  "CustomRecipes": {
+    "IronGolemSpawner": {
+      "Enabled": true,
+      "CooldownSeconds": 30,
+      "RequiresPermission": "plugin.spawn.golem"
+    },
+    "MagicWand": {
+      "Enabled": false,
+      "ManaCost": 50,
+      "CooldownSeconds": 5
+    }
+  }
+}
+```
+
+### 9.8 Best Practices für JSON in Hytale
+
+**Syntax & Validierung:**
+- Nutze Online-JSON-Validator (JSONLint, HytaleTools.org)
+- Achte auf Kommas, Klammern, Datentypen
+- format_version Feld nutzen für Versionierbarkeit
+
+**Dynamische Updates:**
+- JSON-Schemata ändern sich bei Updates
+- Immer Kompatibilität prüfen
+- Migration Paths in Version-Kompatibilität dokumentieren
+
+**Manuelle Bearbeitung:**
+- ✅ Einfache Konfigurationsdateien: Manuell ok
+- ❌ Komplexe Data Assets: Asset Editor bevorzugt
+- ⚠️ Bei laufendem Server ändern: Kann überschrieben werden!
+
+**Dokumentation:**
+- Jedes Plugin sollte Konfigurationsdokumentation bereitstellen
+- JSON-Schemata für IDE-Integration verwenden
+- Kommentare nutzen (z.B. $comment Felder)
+
+**Fehlerbehandlung:**
+- Server-Logs im logs/ Ordner prüfen
+- Fehler zeigen genaue Zeile & Feld
+- Inkrementelles Testing: Eine Änderung pro Test
+
+**Sicherheit:**
+- JSON-Dateien selbst sind nicht malware-anfällig
+- Aber: Von vertrauenswürdigen Quellen laden
+- Immer auf isoliertem Server testen
+- Backups vor Änderungen!
+
+---
+
+## 10. Debugging & Testing
+
+## 10. Debugging & Testing
 
 ### MEDebugCommand Integration
 ```
@@ -475,9 +1029,12 @@ v1.2.3-alpha.1
 | Performance-Einbußen | View Distance zu hoch | Empfehlung vs. Spielerzahl prüfen |
 | Netzwerk-Timeouts | TCP statt QUIC | Port 25565 UDP konfigurieren |
 | Assets nicht synced | Codec-Serialisierung fehlgeschlagen | BuilderCodec Feld-Mapping prüfen |
+| Config wird ignoriert | Server läuft noch während Edit | Server stoppen vor Änderungen |
+| Loot-Tabellen funktionieren nicht | Pool-Syntax fehlerhaft | rolls/entries/conditions validieren |
+| NPCs spawnen nicht | Biome-Tags falsch | Biom-Filter gegen aktuelle Welt prüfen |
 
 ---
 
 **Letzte Aktualisierung**: v2026.01 Schema (Hytale Server v2026.01.17-4b0f30090)  
-**Status**: Offizielle Quellen validiert, Community-Ressourcen integriert  
+**Status**: Offizielle Quellen validiert, Community-Ressourcen integriert, Erweiterte JSON-Konfiguration dokumentiert  
 **Beiträge**: britakee-studios, Slikey (Technical Director), Blockbench Team, Hytale Community
