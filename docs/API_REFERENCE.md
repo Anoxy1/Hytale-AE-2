@@ -2,7 +2,9 @@
 
 **Source:** Decompiled from HytaleServer.jar, Community Plugins  
 **Last Updated:** Januar 2026  
-**Version:** Hytale Server API (Latest)
+**Version:** Hytale Server API (Latest)  
+**REFERENCE**: [HelloPlugin (official)](https://github.com/noel-lang/hytale-example-plugin) – Command patterns, event registration  
+**CRITICAL**: [PROJECT_RULES.md](PROJECT_RULES.md#critical-no-emoji-or-unicode-in-codestrings) – ASCII logging only!
 
 ---
 

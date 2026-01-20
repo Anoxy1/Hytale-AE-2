@@ -2,7 +2,9 @@
 
 **Version:** 0.1.0-SNAPSHOT  
 **Status:** Foundation Complete ✅  
-**Last Updated:** Januar 2026
+**Last Updated:** Januar 2026  
+**REFERENCE**: [HelloPlugin (official)](https://github.com/noel-lang/hytale-example-plugin) – Commands, lifecycle, manifest pattern  
+**CRITICAL**: See [PROJECT_RULES.md](PROJECT_RULES.md) for emoji/unicode ban and logging standards
 
 ---
 
