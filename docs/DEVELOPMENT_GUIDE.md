@@ -307,7 +307,7 @@ Map<BlockPos, BlockPos> parent = new HashMap<>();
 - [API_REFERENCE.md](API_REFERENCE.md) - Hytale API documentation
 - [SETUP.md](SETUP.md) - Development environment setup
 - [TESTING_GUIDE.md](TESTING_GUIDE.md) - Testing procedures
-- [../PLUGIN_BEST_PRACTICES.md](../PLUGIN_BEST_PRACTICES.md) - Best practices guide
+- [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md) - Best practices guide
 
 ---
 

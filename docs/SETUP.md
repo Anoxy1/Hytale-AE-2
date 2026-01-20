@@ -304,7 +304,7 @@ plugins {
 
 ### Documentation
 - [README.md](../README.md) - Project overview
-- [PLUGIN_BEST_PRACTICES.md](../PLUGIN_BEST_PRACTICES.md) - Best practices guide
+- [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md) - Best practices guide
 - [INDEX.md](../INDEX.md) - Documentation index
 
 ### Community

@@ -490,7 +490,7 @@ public class PipeNetwork {
 - [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) - Development roadmap
 - [PROJECT_STATUS.md](PROJECT_STATUS.md) - Current implementation status
 - [HYTALE_MANIFEST_FORMAT.md](HYTALE_MANIFEST_FORMAT.md) - Manifest configuration
-- [../PLUGIN_BEST_PRACTICES.md](../PLUGIN_BEST_PRACTICES.md) - Best practices
+- [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md) - Best practices
 
 ---
 

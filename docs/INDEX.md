@@ -37,7 +37,7 @@ Basierend auf Analyse von HyPipes, ChestTerminal und offiziellen Quellen:
 ### Für HytaleAE2 Contributors
 1. **[PROJECT_STATUS.md](PROJECT_STATUS.md)** - Was ist fertig?
 2. **[DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)** - Nächste Schritte
-3. **[../PLUGIN_BEST_PRACTICES.md](../PLUGIN_BEST_PRACTICES.md)** - Code-Patterns
+3. **[PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md)** - Code-Patterns
 
 ---
 
@@ -66,7 +66,7 @@ Hinweis: Projektinterne Dokumente können teilweise veraltet sein. Bei Konflikte
 - **[OPTIMIZATION_REPORT.md](OPTIMIZATION_REPORT.md)** - Performance-Analyse
 
 ### ✨ Best Practices
-- **[../PLUGIN_BEST_PRACTICES.md](../PLUGIN_BEST_PRACTICES.md)** - Patterns & Conventions
+- **[PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md)** - Patterns & Conventions
 - **[HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md)** - Production-Ready Practices
 
 ---
