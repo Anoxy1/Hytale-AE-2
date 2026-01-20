@@ -10,9 +10,9 @@
 ## 🎯 Quick Navigation
 
 ### For New Developers
-1. **[QUICK_START.md](QUICK_START.md)** – Clone, build, deploy (5 minutes)
-2. **[DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)** – Architecture overview
-3. **[PROJECT_RULES.md](PROJECT_RULES.md)** – Governance & best practices
+1. **[AGENT_ONBOARDING.md](AGENT_ONBOARDING.md)** – Complete project overview (5 min read)
+2. **[QUICK_START.md](QUICK_START.md)** – Clone, build, deploy (5 minutes)
+3. **[DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)** – Architecture overview
 
 ### For Contributors
 1. **[PROJECT_RULES.md](PROJECT_RULES.md)** – Rules, workflow, standards
@@ -22,8 +22,9 @@
 
 ### For Deploying / Server Setup
 1. **[QUICK_START.md](QUICK_START.md)** – Deployment steps
-2. **[API_REFERENCE.md](API_REFERENCE.md)** – manifest.json format
-3. **[CHANGELOG.md](CHANGELOG.md)** – Version history
+2. **[TECHNICAL_SOURCES.md](TECHNICAL_SOURCES.md)** – Server configuration, world setup
+3. **[API_REFERENCE.md](API_REFERENCE.md)** – manifest.json format
+4. **[CHANGELOG.md](CHANGELOG.md)** – Version history
 
 ---
 
@@ -57,6 +58,7 @@
 ### Special Files
 | File | Purpose | Location |
 |------|---------|----------|
+| [AGENT_ONBOARDING.md](AGENT_ONBOARDING.md) | Complete project overview for new agents (RECOMMENDED START) | docs/ |
 | [CHANGELOG.md](CHANGELOG.md) | Release notes & version history | docs/ |
 | [RELEASE_NOTES.md](../.github/RELEASE_NOTES.md) | How to release | .github/ |
 | [TESTING_GUIDE.md](TESTING_GUIDE.md) | Testing strategies | docs/ (future expansion) |
