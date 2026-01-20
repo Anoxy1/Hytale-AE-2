@@ -93,6 +93,10 @@ Eine vollständige, kopierbare Gesamtliste aller Hytale Plugin-/Mod-Dokumentatio
 
 27. https://support.hytale.com/hc/en-us/articles/45326769420827-Hytale-Server-Manual – **Hytale Server Manual** (Setup, Configuration, Operation, Troubleshooting)
 
+## Interne Projektdokumentation
+
+28. [JSON_DATA_ASSETS.md](JSON_DATA_ASSETS.md) – **HytaleAE2 JSON Data Assets Reference** (Vollständige Schemata für Items, Blöcke, NPCs, Loot-Tabellen, Prefabs, Weltgenerierung, Config-Dateien mit Beispielen)
+
 ---
 
 ## Übersicht nach Themen

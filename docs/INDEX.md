@@ -51,6 +51,7 @@
 |------|---------|----------|
 | [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) | Architecture, roadmap, design | Developers |
 | [API_REFERENCE.md](API_REFERENCE.md) | Hytale API, BlockState, Codecs, manifest.json | Developers |
+| [JSON_DATA_ASSETS.md](JSON_DATA_ASSETS.md) | JSON schemas for Items, Blocks, NPCs, Loot, Prefabs | Developers/Content Creators |
 
 ### Special Files
 | File | Purpose | Location |
@@ -81,6 +82,12 @@
 - **Codec System**: [API_REFERENCE.md](API_REFERENCE.md#codec-system)
 - **manifest.json Format**: [API_REFERENCE.md](API_REFERENCE.md#manifestjson-format-plugin-configuration)
 - **Plugin Lifecycle**: [API_REFERENCE.md](API_REFERENCE.md#event-system)
+- **JSON Data Assets**: [JSON_DATA_ASSETS.md](JSON_DATA_ASSETS.md) (Items, Blocks, NPCs, Loot Tables, Prefabs, Config)
+- **Item Templates**: [JSON_DATA_ASSETS.md](JSON_DATA_ASSETS.md#item-templates)
+- **Block Templates**: [JSON_DATA_ASSETS.md](JSON_DATA_ASSETS.md#block-templates)
+- **NPC Templates**: [JSON_DATA_ASSETS.md](JSON_DATA_ASSETS.md#npc-templates)
+- **Loot Tables**: [JSON_DATA_ASSETS.md](JSON_DATA_ASSETS.md#loot-tables)
+- **World Configuration**: [JSON_DATA_ASSETS.md](JSON_DATA_ASSETS.md#server--world-configuration)
 
 ### Git & Collaboration
 - **Branching & PRs**: [CONTRIBUTING.md](CONTRIBUTING.md)
@@ -138,6 +145,7 @@ Always check official sources first. Internal docs may lag behind.
 | DEVELOPMENT_GUIDE.md | ✅ Current | 1.0 | 2026-01-20 |
 | API_REFERENCE.md | ✅ Current | 1.1 | 2026-01-20 |
 | CHANGELOG.md | ✅ Current | 0.1.0 | 2026-01-20 |
+| JSON_DATA_ASSETS.md | ✅ Current | 1.0 | 2026-01-21 |
 | TESTING_GUIDE.md | ⏳ Incomplete | 1.0 | TBD |
 | RESOURCES.md | ✅ Reference | 1.0 | 2026-01-20 |
 | README.md (root) | ✅ Current | 1.0 | 2026-01-20 |
