@@ -74,36 +74,37 @@ public class MEPlugin extends JavaPlugin {
 
     /**
      * Registers BlockStates with Hytale's BlockStateRegistry
-     * 
+     *
      * The JSON files in Server/Item/Items/ will be auto-loaded because
      * IncludesAssetPack: true is set in manifest.json
      */
     private void registerBlockStates() {
         BlockStateRegistry registry = getBlockStateRegistry();
-        
+
         // Register ME Controller
         registry.registerBlockState(
-            MEControllerBlockState.class,
-            "hytaleae2:me_controller",
-            MEControllerBlockState.CODEC
+                MEControllerBlockState.class,
+                "hytaleae2:me_controller",
+                MEControllerBlockState.CODEC
         );
         logger.debug("  ✓ ME Controller BlockState registered");
-        
+
         // Register ME Terminal (extends ItemContainerState)
         registry.registerBlockState(
-            METerminalBlockState.class,
-            "hytaleae2:me_terminal",
-            METerminalBlockState.CODEC
+                METerminalBlockState.class,
+                "hytaleae2:me_terminal",
+                METerminalBlockState.CODEC
         );
         logger.debug("  ✓ ME Terminal BlockState registered");
-        
+
         // Register ME Cable
         registry.registerBlockState(
-            MECableBlockState.class,
-            "hytaleae2:me_cable",
-            MECableBlockState.CODEC
+                MECableBlockState.class,
+                "hytaleae2:me_cable",
+                MECableBlockState.CODEC
         );
         logger.debug("  ✓ ME Cable BlockState registered");
+        
     }
 
     @Override

@@ -3,6 +3,12 @@
   "Categories": ["Tech.Storage"],
   "Icon": "Icons/ItemsGenerated/MEController.png",
   
+  "State": {
+    "Definitions": {
+      "Id": "hytaleae2:me_controller"
+    }
+  },
+  
   "BlockType": {
     "components": {
       "hytale:block_entity": {}

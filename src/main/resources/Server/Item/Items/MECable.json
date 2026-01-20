@@ -3,6 +3,12 @@
   "Categories": ["Tech.Storage"],
   "Icon": "Icons/ItemsGenerated/MECable.png",
   
+  "State": {
+    "Definitions": {
+      "Id": "hytaleae2:me_cable"
+    }
+  },
+  
   "BlockType": {
     "CustomModel": "Blocks/ME/Models/MECable.blockymodel",
     "CustomModelTexture": [

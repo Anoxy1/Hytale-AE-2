@@ -3,6 +3,12 @@
   "Categories": ["Tech.Storage"],
   "Icon": "Icons/ItemsGenerated/METerminal.png",
   
+  "State": {
+    "Definitions": {
+      "Id": "hytaleae2:me_terminal"
+    }
+  },
+  
   "BlockType": {
     "components": {
       "hytale:block_entity": {}
