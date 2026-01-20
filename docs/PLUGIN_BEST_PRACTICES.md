@@ -628,7 +628,234 @@ shadowJar {
 
 ---
 
-## ⚠️ Common Pitfalls
+## 8. Konkrete Java Plugin-Implementierungen
+
+Praktische, Copy-Paste-ready Beispiele für häufige Plugin-Tasks.
+
+### 8.1 Minimal Main-Plugin-Klasse
+
+```java
+package com.deinname.meinplugin;
+
+import com.hypixel.hytale.logger.HytaleLogger;
+
+public class MainPlugin {
+    // Statischer Logger fuer die ganze Klasse
+    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+
+    // Diese Methode wird aufgerufen, wenn das Plugin geladen wird
+    public void setup() {
+        LOGGER.atInfo().log("MeinPlugin wurde geladen!");
+        
+        // Hier registrierst du Commands und Events
+        getCommandRegistry().registerCommand(new PingCommand());
+    }
+}
+```
+
+**[CRITICAL] Manifest Entry**: Der Main-Eintrag in manifest.json muss exakt auf diese Klasse zeigen (z.B. `com.deinname.meinplugin.MainPlugin`). Falscher Eintrag = Plugin lädt nicht!
+
+### 8.2 Einfacher Command: PingCommand
+
+```java
+package com.deinname.meinplugin.commands;
+
+import com.hypixel.hytale.command.CommandBase;
+import com.hypixel.hytale.command.CommandContext;
+import com.hypixel.hytale.message.Message;
+import javax.annotation.Nonnull;
+
+public class PingCommand extends CommandBase {
+    
+    public PingCommand() {
+        // Parameter 1: Command-Name
+        // Parameter 2: Translations-Key (kann auch leer sein)
+        super("ping", "meinplugin.commands.ping.desc");
+    }
+
+    @Override
+    protected void executeSync(@Nonnull CommandContext context) {
+        // Nachricht an den Spieler senden
+        context.sendMessage(Message.raw("Pong!"));
+        
+        // Mit Logging
+        HytaleLogger logger = HytaleLogger.forEnclosingClass();
+        logger.atInfo().log("Spieler %s hat /ping ausgefuehrt", 
+            context.senderUUID());
+    }
+}
+```
+
+**Spieler-Erlebnis**: Tippt `/ping` im Chat → Server antwortet mit `Pong!`
+
+### 8.3 Command mit Argumenten: EchoCommand
+
+```java
+package com.deinname.meinplugin.commands;
+
+import com.hypixel.hytale.command.CommandBase;
+import com.hypixel.hytale.command.CommandContext;
+import com.hypixel.hytale.command.argument.ArgTypes;
+import com.hypixel.hytale.command.argument.DefaultArg;
+import com.hypixel.hytale.command.argument.RequiredArg;
+import com.hypixel.hytale.message.Message;
+import javax.annotation.Nonnull;
+
+public class EchoCommand extends CommandBase {
+    
+    // Erforderlicher Argument: Text
+    private final RequiredArg<String> textArg = 
+        this.withRequiredArg("text", "meinplugin.commands.echo.text", ArgTypes.STRING);
+    
+    // Optionaler Argument mit Default-Wert: Anzahl (Standard = 1)
+    private final DefaultArg<Integer> timesArg = 
+        this.withDefaultArg("times", "meinplugin.commands.echo.times", ArgTypes.INTEGER, 1, "1");
+
+    public EchoCommand() {
+        super("echo", "meinplugin.commands.echo.desc");
+    }
+
+    @Override
+    protected void executeSync(@Nonnull CommandContext context) {
+        String text = textArg.get(context);
+        int times = timesArg.get(context);
+        
+        for (int i = 0; i < times; i++) {
+            context.sendMessage(Message.raw(text));
+        }
+    }
+}
+```
+
+**Nutzungs-Beispiele:**
+- `/echo "Hallo"` → Hallo (einmal)
+- `/echo "Hallo" 3` → Hallo, Hallo, Hallo (3x)
+
+### 8.4 Logging mit HytaleLogger
+
+```java
+import com.hypixel.hytale.logger.HytaleLogger;
+
+public class MyPlugin {
+    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    
+    public void someMethod() {
+        // Info-Level - fuer wichtige Lifecycle Events
+        LOGGER.atInfo().log("Plugin ist aktiv");
+        
+        // Mit Variablen (printf-Style)
+        LOGGER.atInfo().log("Spieler %s verbunden mit UUID %s", 
+            "Bob", "uuid-123");
+        
+        // Warn-Level - fuer potenzielle Probleme
+        LOGGER.atWarning().log("Warnung: Feature ist experimentell!");
+        
+        // Severe-Level - fuer Fehler
+        LOGGER.atSevere().log("Fehler: Plugin konnte nicht initialisiert werden");
+        
+        // Mit Exception Stack Trace
+        try {
+            // Code...
+        } catch (Exception e) {
+            LOGGER.atSevere().withCause(e).log("Ein Fehler ist aufgetreten");
+        }
+    }
+}
+```
+
+**Log-Speicherort**: `{Hytale-Ordner}/UserData/Saves/{World}/logs`
+
+### 8.5 Command nur fuer Spieler (nicht Konsole)
+
+```java
+public class PlayerOnlyCommand extends CommandBase {
+    
+    public PlayerOnlyCommand() {
+        super("playercmd", "meinplugin.commands.playeronly.desc");
+    }
+
+    @Override
+    protected void executeSync(@Nonnull CommandContext context) {
+        // Pruefe, ob der Befehl von einem Spieler kommt
+        if (!context.isPlayer()) {
+            context.sendMessage(Message.raw("[ERROR] Nur Spieler koennen diesen Befehl nutzen!"));
+            return;
+        }
+        
+        // Ab hier ist es SICHER, dass es ein Spieler ist
+        Player player = context.senderAs(Player.class);
+        player.sendMessage(Message.raw("[OK] Hallo Spieler!"));
+    }
+}
+```
+
+### 8.6 Manifest-Beispiel (src/main/resources/manifest.json)
+
+```json
+{
+  "Group": "de.deinname",
+  "Name": "MeinPlugin",
+  "Version": "1.0.0",
+  "Description": "Mein erstes Hytale-Plugin",
+  "Authors": [
+    {
+      "Name": "Dein Name"
+    }
+  ],
+  "Main": "com.deinname.meinplugin.MainPlugin",
+  "IncludesAssetPack": false,
+  "SubPlugins": []
+}
+```
+
+**[CRITICAL] Main-Feld**: Muss exakt auf deine Haupt-Klasse zeigen. Falsche Angabe = Plugin lädt nicht!
+
+### 8.7 Commands in setup() Registrieren
+
+```java
+public class MainPlugin {
+    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+
+    public void setup() {
+        LOGGER.atInfo().log("MainPlugin wird initialisiert...");
+        
+        // Commands registrieren
+        getCommandRegistry().registerCommand(new PingCommand());
+        getCommandRegistry().registerCommand(new EchoCommand());
+        getCommandRegistry().registerCommand(new PlayerOnlyCommand());
+        
+        LOGGER.atInfo().log("Alle Commands sind registriert!");
+    }
+}
+```
+
+### 8.8 Schnell-Checkliste fuer erstes Plugin
+
+```
+Schritt 1: [ ] Template aus GitHub clonen
+           [ ] Projekt: https://github.com/Kaupenjoe/Hytale-Example-Plugin
+
+Schritt 2: [ ] Build-Datei anpassen
+           [ ] settings.gradle: Projektnamen anpassen
+           [ ] manifest.json: Group, Name, Main anpassen
+
+Schritt 3: [ ] Plugin-Code schreiben
+           [ ] Neue Klasse erstellen (z.B. PingCommand extends CommandBase)
+           [ ] Command-Logik implementieren
+           [ ] In setup() mit getCommandRegistry().registerCommand() registrieren
+
+Schritt 4: [ ] Kompilieren & Testen
+           [ ] Mit gradle build kompilieren
+           [ ] JAR aus build/libs/ in {Hytale}/Mods/ kopieren
+           [ ] Server starten
+           [ ] Im Spiel /ping testen
+
+Fortgeschrittene Features: Event-Listener, Custom-Komponenten, Async-Befehle bauen auf diesen Grundmustern auf.
+```
+
+---
+
+## 9. ⚠️ Common Pitfalls
 
 ### 1. ❌ Static Utility Classes statt Services
 ```java
@@ -797,7 +1024,8 @@ public class ContainerUtils {
 
 ---
 
-**Version:** 1.1.0  
-**Last Updated:** Januar 20, 2026  
+**Version:** 1.2.0  
+**Last Updated:** Januar 21, 2026  
 **Hytale Version:** Early Access (Januar 2026)  
+**Critical Updates**: v1.2 – Added concrete Java plugin implementation examples (8 sections), copy-paste-ready code, quick start checklist  
 **Critical Updates**: v1.1 – Added HelloPlugin patterns, emoji/unicode ban with anti-patterns, logging best practices, common pitfalls
