@@ -1,0 +1,79 @@
+{
+  "PlayerAnimationsId": "Block",
+  "Categories": ["Tech.Storage"],
+  "Icon": "Icons/ItemsGenerated/MECable.png",
+  
+  "BlockType": {
+    "CustomModel": "Blocks/ME/Models/MECable.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "BlockTextures/me_cable.png",
+        "Weight": 0
+      }
+    ],
+    "CustomModelScale": 1.0,
+    
+    "DrawType": "Model",
+    "Material": "Solid",
+    "Opacity": "Opaque",
+    "HitboxType": "Beam",
+    
+    "BlockSoundSetId": "Block_Metal",
+    "ParticleColor": "#707070",
+    
+    "Support": {
+      "Down": [{"FaceType": "Full"}],
+      "Up": [{"FaceType": "Full"}],
+      "North": [{"FaceType": "Full"}],
+      "South": [{"FaceType": "Full"}],
+      "East": [{"FaceType": "Full"}],
+      "West": [{"FaceType": "Full"}]
+    },
+    
+    "Supporting": {
+      "Up": [{"FaceType": "Center"}],
+      "Down": [{"FaceType": "Center"}],
+      "North": [{"FaceType": "Center"}],
+      "South": [{"FaceType": "Center"}],
+      "East": [{"FaceType": "Center"}],
+      "West": [{"FaceType": "Center"}]
+    },
+    
+    "Gathering": {
+      "Soft": {}
+    },
+    
+    "Flags": {
+      "IsUsable": false
+    },
+    
+    "State": {
+      "Definitions": {
+        "Id": "ME_Cable",
+        "straight_ns": {
+          "CustomModel": "Blocks/ME/Models/MECable_Straight_NS.blockymodel"
+        },
+        "straight_ew": {
+          "CustomModel": "Blocks/ME/Models/MECable_Straight_EW.blockymodel"
+        },
+        "straight_ud": {
+          "CustomModel": "Blocks/ME/Models/MECable_Straight_UD.blockymodel"
+        },
+        "corner_ne": {
+          "CustomModel": "Blocks/ME/Models/MECable_Corner.blockymodel"
+        },
+        "t_north": {
+          "CustomModel": "Blocks/ME/Models/MECable_T.blockymodel"
+        },
+        "cross": {
+          "CustomModel": "Blocks/ME/Models/MECable_Cross.blockymodel"
+        }
+      }
+    }
+  },
+  
+  "TranslationProperties": {
+    "Name": "items.me_cable.name",
+    "Description": "items.me_cable.description"
+  }
+}

@@ -28,8 +28,11 @@ copy build\libs\HytaleAE2-0.1.0-SNAPSHOT.jar [Hytale-Server]\plugins\
 - ✅ **EventHandler** - Polyfill annotation für compile-time support
 - ✅ **Hytale manifest.json** - Korrektes Format (Januar 2026)
 - ✅ **Mod lädt erfolgreich** - Single Player & Server kompatibel
+- ✅ **BlockStateRegistry Integration** - JSON definitions + Java stubs
+- ✅ **Asset Pack Structure** - Embedded asset pack mit IncludesAssetPack: true
+- ⏳ **Block Implementation** - Requires HytaleServer.jar for Codecs
 
-**Status:** ✅ Plugin Loading Successful - Ready for Block Implementation
+**Status:** ✅ Plugin Loading Successful - BlockStateRegistry Ready (Pending HytaleServer.jar)
 
 ---
 
@@ -39,6 +42,8 @@ Alle Dokumentation ist in `docs/`:
 
 - **[JETZT_MACHEN.md](docs/JETZT_MACHEN.md)** - Konkrete nächste Schritte
 - **[PROJECT_STATUS.md](docs/PROJECT_STATUS.md)** - Aktueller Projekt-Status
+- **[BLOCKSTATE_REGISTRY_GUIDE.md](docs/BLOCKSTATE_REGISTRY_GUIDE.md)** - BlockStateRegistry Implementation
+- **[HYTALE_MANIFEST_FORMAT.md](docs/HYTALE_MANIFEST_FORMAT.md)** - Correct manifest.json format
 - **[ENTWICKLUNGSPLAN.md](docs/ENTWICKLUNGSPLAN.md)** - 9-Monats Entwicklungsplan
 - **[START_HIER.md](docs/START_HIER.md)** - Detaillierte Anleitung
 - **[SETUP.md](docs/SETUP.md)** - Setup-Details

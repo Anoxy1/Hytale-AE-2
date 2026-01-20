@@ -1,0 +1,19 @@
+{
+  "Group": "com.example",
+  "Name": "HyPipes",
+  "Version": "1.0.5",
+  "Main": "com.example.plugin.PipePlugin",
+  "Description": "Smart pipes with Priority system, Distribution strategies, and overflow support.",
+  "Authors": [
+    {
+      "Name": "Blake21"
+    }
+  ],
+  "ServerVersion": "*",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "LoadBefore": {},
+  "DisabledByDefault": false,
+  "IncludesAssetPack": true,
+  "SubPlugins": []
+}

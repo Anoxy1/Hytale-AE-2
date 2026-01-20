@@ -1,0 +1,10 @@
+# ME System - English Translations
+
+items.me_controller.name=ME Controller
+items.me_controller.description=Main hub for ME networks. Expands channel capacity from 8 to 32.
+
+items.me_terminal.name=ME Terminal
+items.me_terminal.description=Access point for viewing and managing ME network storage.
+
+items.me_cable.name=ME Cable
+items.me_cable.description=Transport cable that connects ME network devices.

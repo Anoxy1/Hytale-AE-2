@@ -5,14 +5,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
-import com.tobi.mesystem.util.BlockRegistry;
 import com.tobi.mesystem.util.EventRegistry;
 import com.tobi.mesystem.util.NetworkManager;
 
 /**
  * HytaleAE2 - Applied Energistics 2 für Hytale
  *
- * Main Plugin Class - Initialisiert Block-Registry und Event-System
+ * Main Plugin Class - Initialisiert BlockState-Registry und Event-System
  */
 public class MEPlugin extends JavaPlugin {
 
@@ -20,7 +19,6 @@ public class MEPlugin extends JavaPlugin {
     private static boolean initialized = false;
     private final Logger logger = LogManager.getLogger(MEPlugin.class);
     private final NetworkManager networkManager = new NetworkManager();
-    private BlockRegistry blockRegistry;
     private EventRegistry eventRegistry;
 
     public MEPlugin(JavaPluginInit init) {
@@ -40,14 +38,13 @@ public class MEPlugin extends JavaPlugin {
             networkManager.start();
             logger.info("  ✓ NetworkManager initialisiert");
 
-            // 2. Blocks registrieren
+            // 2. BlockStates registrieren (wenn HytaleServer.jar im Classpath)
             try {
-                logger.info("→ Registriere Blocks...");
-                blockRegistry = new BlockRegistry(getBlockManager());
-                blockRegistry.registerAllBlocks();
-                logger.info("  ✓ Block-Registry aktiviert");
+                logger.info("→ Registriere BlockStates...");
+                registerBlockStates();
+                logger.info("  ✓ BlockState-Registry aktiviert");
             } catch (Exception e) {
-                logger.warn("Block-Registry nicht verfügbar (erwartet wenn Hytale BlockManager nicht zugänglich)", e);
+                logger.warn("BlockState-Registry nicht verfügbar (HytaleServer.jar nicht im Classpath)", e);
             }
 
             // 3. Event-Listener registrieren
@@ -69,6 +66,60 @@ public class MEPlugin extends JavaPlugin {
             // Do NOT rethrow - allow Hytale to continue
             initialized = false;
         }
+    }
+    
+    /**
+     * Registers BlockStates with Hytale's BlockStateRegistry
+     * 
+     * NOTE: This method requires HytaleServer.jar at runtime.
+     * When HytaleServer.jar is available, uncomment the code below.
+     * 
+     * The JSON files in Server/Item/Items/ will be auto-loaded because
+     * IncludesAssetPack: true is set in manifest.json
+     */
+    private void registerBlockStates() {
+        logger.info("BlockState registration stubbed - requires HytaleServer.jar");
+        
+        /* UNCOMMENT WHEN HytaleServer.jar IS IN CLASSPATH:
+        
+        BlockStateRegistry registry = getBlockStateRegistry();
+        
+        // Register ME Controller
+        registry.registerBlockState(
+            MEControllerBlockState.class,
+            "ME_Controller",  // Must match JSON State.Definitions.Id
+            MEControllerBlockState.CODEC
+        );
+        logger.debug("  ✓ ME Controller BlockState registered");
+        
+        // Register ME Terminal (with inventory support)
+        registry.registerBlockState(
+            METerminalBlockState.class,
+            "ME_Terminal",
+            METerminalBlockState.CODEC,
+            ItemContainerStateData.class,
+            ItemContainerStateData.CODEC
+        );
+        logger.debug("  ✓ ME Terminal BlockState registered");
+        
+        // Register ME Cable
+        registry.registerBlockState(
+            MECableBlockState.class,
+            "ME_Cable",
+            MECableBlockState.CODEC
+        );
+        logger.debug("  ✓ ME Cable BlockState registered");
+        
+        // Register Terminal Interaction
+        getCodecRegistry(Interaction.CODEC)
+            .register(
+                "ME_Terminal_Interaction",
+                METerminalInteraction.class,
+                METerminalInteraction.CODEC
+            );
+        logger.debug("  ✓ Terminal Interaction registered");
+        
+        */
     }
 
     @Override

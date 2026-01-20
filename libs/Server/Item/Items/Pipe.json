@@ -1,0 +1,603 @@
+{
+  "PlayerAnimationsId": "Block",
+  "Categories": [
+    "Furniture.Furniture"
+  ],
+  "Set": "",
+  "Recipe": {
+    "TimeSeconds": 1,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Iron",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Bar_Copper",
+        "Quantity": 2
+      }
+    ],
+    "OutputQuantity": 8,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Workbench",
+        "Categories": [
+          "Workbench_Tinkering"
+        ]
+      }
+    ]
+  },
+  "IconProperties": {
+    "Scale": 0.58823,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0,
+      -13.5
+    ]
+  },
+  "BlockType": {
+    "components": {
+      "hytale:block_entity": {}
+    },
+    "Supporting": {
+      "Up": [
+        {
+          "FaceType": "Full"
+        }
+      ],
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ],
+      "North": [
+        {
+          "FaceType": "Full"
+        }
+      ],
+      "South": [
+        {
+          "FaceType": "Full"
+        }
+      ],
+      "East": [
+        {
+          "FaceType": "Full"
+        }
+      ],
+      "West": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "BlockSoundSetId": "Clay_Pot_Small",
+    "CustomModel": "Blocks/Pipes/Models/PipeCore.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "BlockTextures/pipe.png",
+        "Weight": 0
+      }
+    ],
+    "DrawType": "Model",
+    "Flags": {
+      "IsUsable": true
+    },
+    "Interactions": {
+      "Use": "pipe_configure"
+    },
+    "InteractionHint": "server.interactionHints.open",
+    "HitboxType": "Beam",
+    "Gathering": {
+      "Soft": {}
+    },
+    "Material": "Solid",
+    "Opacity": "Semitransparent",
+    "ParticleColor": "#ffffff",
+    "Looping": true,
+    "RequiresAlphaBlending": false,
+    "CubeShadingMode": "Standard",
+    "CustomModelScale": 1.0,
+    "State": {
+      "Definitions": {
+        "Id": "pipe_data",
+        "Straight_Ns": {
+          "CustomModel": "Blocks/Pipes/Models/PipeDiritto_NS.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Vertical": {
+          "CustomModel": "Blocks/Pipes/Models/PipeDiritto.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Straight_Ew": {
+          "CustomModel": "Blocks/Pipes/Models/PipeDiritto_EW.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Corner_Ne": {
+          "CustomModel": "Blocks/Pipes/Models/PipeAngolo.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Corner_Se": {
+          "CustomModel": "Blocks/Pipes/Models/PipeAngolo_SE.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Corner_Sw": {
+          "CustomModel": "Blocks/Pipes/Models/PipeAngolo_SW.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Corner_Nw": {
+          "CustomModel": "Blocks/Pipes/Models/PipeAngolo_NW.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_North": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_East": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_E.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_South": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_S.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_West": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_W.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Cross": {
+          "CustomModel": "Blocks/Pipes/Models/PipeCroce.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Core": {
+          "CustomModel": "Blocks/Pipes/Models/PipeCore.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Corner_Nu": {
+          "CustomModel": "Blocks/Pipes/Models/PipeAngolo_NU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Corner_Nd": {
+          "CustomModel": "Blocks/Pipes/Models/PipeAngolo_ND.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Corner_Su": {
+          "CustomModel": "Blocks/Pipes/Models/PipeAngolo_SU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Corner_Sd": {
+          "CustomModel": "Blocks/Pipes/Models/PipeAngolo_SD.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Corner_Eu": {
+          "CustomModel": "Blocks/Pipes/Models/PipeAngolo_EU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Corner_Ed": {
+          "CustomModel": "Blocks/Pipes/Models/PipeAngolo_ED.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Corner_Wu": {
+          "CustomModel": "Blocks/Pipes/Models/PipeAngolo_WU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Corner_Wd": {
+          "CustomModel": "Blocks/Pipes/Models/PipeAngolo_WD.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_NeU": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_NeU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_NeD": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_NeD.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_SeU": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_SeU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_SeD": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_SeD.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_SwU": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_SwU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_SwD": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_SwD.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_NwU": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_NwU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_NwD": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_NwD.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Cross_U": {
+          "CustomModel": "Blocks/Pipes/Models/PipeCroce_U.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Cross_D": {
+          "CustomModel": "Blocks/Pipes/Models/PipeCroce_D.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_NorthU": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_NorthU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_NorthD": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_NorthD.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_EastU": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_EastU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_EastD": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_EastD.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_SouthU": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_SouthU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_SouthD": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_SouthD.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_WestU": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_WestU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_WestD": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_WestD.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_VN": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_VN.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_VS": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_VS.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_VE": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_VE.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_VW": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_VW.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Cross_VNE": {
+          "CustomModel": "Blocks/Pipes/Models/PipeCross_VNE.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Cross_VSE": {
+          "CustomModel": "Blocks/Pipes/Models/PipeCross_VSE.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Cross_VSW": {
+          "CustomModel": "Blocks/Pipes/Models/PipeCross_VSW.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Cross_VNW": {
+          "CustomModel": "Blocks/Pipes/Models/PipeCross_VNW.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_NorthV": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_NorthV.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_EastV": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_EastV.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_SouthV": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_SouthV.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_WestV": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_WestV.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "Cross_Full": {
+          "CustomModel": "Blocks/Pipes/Models/PipeCroce_Full.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_EwU": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_EwU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_EwD": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_EwD.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_NsU": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_NsU.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "T_NsD": {
+          "CustomModel": "Blocks/Pipes/Models/PipeT_NsD.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "End_N": {
+          "CustomModel": "Blocks/Pipes/Models/PipeEnd_N.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "End_S": {
+          "CustomModel": "Blocks/Pipes/Models/PipeEnd_S.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "End_E": {
+          "CustomModel": "Blocks/Pipes/Models/PipeEnd_E.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        },
+        "End_W": {
+          "CustomModel": "Blocks/Pipes/Models/PipeEnd_W.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "BlockTextures/pipe.png"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "TranslationProperties": {
+    "Name": "items.pipe.name",
+    "Description": "items.pipe.description"
+  },
+  "Icon": "Icons/ItemsGenerated/Pip1e.png"
+}

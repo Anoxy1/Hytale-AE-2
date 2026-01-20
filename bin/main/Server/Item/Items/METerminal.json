@@ -1,0 +1,66 @@
+{
+  "PlayerAnimationsId": "Block",
+  "Categories": ["Tech.Storage"],
+  "Icon": "Icons/ItemsGenerated/METerminal.png",
+  
+  "BlockType": {
+    "components": {
+      "hytale:block_entity": {}
+    },
+    
+    "CustomModel": "Blocks/ME/Models/METerminal.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "BlockTextures/me_terminal.png",
+        "Weight": 0
+      }
+    ],
+    "CustomModelScale": 1.0,
+    
+    "DrawType": "Model",
+    "Material": "Solid",
+    "Opacity": "Opaque",
+    "HitboxType": "Full",
+    
+    "BlockSoundSetId": "Block_Metal",
+    "ParticleColor": "#3070ff",
+    
+    "Support": {
+      "Down": [{"FaceType": "Full"}]
+    },
+    
+    "Supporting": {
+      "Up": [{"FaceType": "Full"}],
+      "Down": [{"FaceType": "Full"}],
+      "North": [{"FaceType": "Full"}],
+      "South": [{"FaceType": "Full"}],
+      "East": [{"FaceType": "Full"}],
+      "West": [{"FaceType": "Full"}]
+    },
+    
+    "Gathering": {
+      "Soft": {}
+    },
+    
+    "Flags": {
+      "IsUsable": true
+    },
+    
+    "Interactions": {
+      "Use": "ME_Terminal_Interaction"
+    },
+    
+    "InteractionHint": "server.interactionHints.open",
+    
+    "State": {
+      "Definitions": {
+        "Id": "ME_Terminal"
+      }
+    }
+  },
+  
+  "TranslationProperties": {
+    "Name": "items.me_terminal.name",
+    "Description": "items.me_terminal.description"
+  }
+}
