@@ -1,12 +1,10 @@
 # Quick Start Guide - HytaleAE2
 
-Hinweis: Diese Seite ist historisch und kann veraltet sein.
-Bitte folge dem aktuellen Quick Start in [README.md](../README.md) und der
-autoritativen Einrichtung in [SETUP.md](SETUP.md) basierend auf dem offiziellen
-HelloPlugin und dem Hytale Server Manual.
+**Setup in 5 Minuten** (based on [Hytale Server Manual](https://support.hytale.com/) + [HelloPlugin](https://github.com/noel-lang/hytale-example-plugin))
 
+**Current Status:** ✅ Foundation Complete  
 **Build Status:** ✅ SUCCESSFUL  
-**JAR Generated:** `build/libs/HytaleAE2-0.1.0-SNAPSHOT.jar` (20 KB)
+**JAR Generated:** `build/libs/HytaleAE2-*.jar`
 
 ---
 
@@ -15,150 +13,263 @@ HelloPlugin und dem Hytale Server Manual.
 Your project is **fully compilable** with:
 - ✅ Complete core system (MENetwork, MENode)
 - ✅ Block classes (Cable, Terminal, Controller)
-- ✅ Utilities (BlockPos, Direction, NetworkManager)
+- ✅ Utilities (BlockPos, Direction, ContainerUtils)
 - ✅ Build system working
 - ✅ All dependencies in place
 
-**The foundation is solid. Now you need to wire it into Hytale.**
+**The foundation is solid. Now you need to deploy it into Hytale.**
 
 ---
 
-## 🎯 Next: Make Blocks Placeable In-Game
+## 🚀 5-Minute Setup
 
-### Step 1: Update MEPlugin.java (Block Registration)
+### Step 1: Prerequisites
 
-You need to register your blocks with Hytale's API. The exact API depends on your HytaleServer.jar version.
+```bash
+# Check Java version (need Java 25 LTS)
+java -version
 
-**Open:** `src\main\java\com\tobi\mesystem\MEPlugin.java`
-
-**Add this to the `setup()` method:**
-
-```java
-@Override
-protected void setup() {
-    logger.info("ME System setup – Registering blocks...");
-    
-    // TODO: Replace with actual Hytale block registration API
-    // This is pseudo-code - check HytaleServer.jar for correct API:
-    
-    // Example (adapt to real API):
-    // getBlockRegistry().register("mesystem:me_cable", new MECableBlock());
-    // getBlockRegistry().register("mesystem:me_terminal", new METerminalBlock());
-    // getBlockRegistry().register("mesystem:me_controller", new MEControllerBlock());
-    
-    // Wire up event listeners:
-    // getEventBus().register(new BlockPlaceListener());
-    // getEventBus().register(new BlockBreakListener());
-    // getEventBus().register(new BlockInteractListener());
-    
-    logger.info("ME System setup – NetworkManager initialisiert");
-    networkManager.start();
-}
+# Expected output:
+# openjdk version "25" 2024-09-17 LTS
+# OpenJDK Runtime Environment (build 25+27-2197)
 ```
 
-**What you need to find out:**
-1. How to register a custom block in Hytale
-2. How to listen for block place/break/interact events
-3. How to call your block classes' methods when events fire
+If not Java 25, install [Temurin JDK 25](https://adoptium.net/).
 
-**Reference:** Check ChestTerminal-2.0.8.jar decompiled code for examples.
+### Step 2: Clone Repository
+
+```bash
+git clone https://github.com/Anoxy1/Hytale-AE-2.git
+cd Hytale-AE-2
+```
+
+### Step 3: Build Project
+
+```bash
+# Windows
+gradlew clean build
+
+# Linux/macOS
+./gradlew clean build
+```
+
+**Expected output:**
+```
+BUILD SUCCESSFUL in 30s
+Generated: build/libs/hytale-ae2-*.jar
+```
+
+### Step 4: Get HytaleServer.jar
+
+**Option A (Recommended): From Hytale Launcher**
+- Install Hytale
+- Locate: `%APPDATA%\Hytale\UserData\Plugins\HytaleServer.jar`
+
+**Option B: Via Hytale Downloader CLI**
+```bash
+# Download from support.hytale.com
+hytale-downloader --asset hytale-server --version latest
+```
+
+### Step 5: Deploy to Single Player
+
+**Windows:**
+```bash
+# Copy plugin JAR to mods folder
+copy build\libs\hytale-ae2-*.jar %APPDATA%\Hytale\UserData\Mods\
+
+# Start Hytale, create world in Creative mode
+# Plugin loads automatically
+```
+
+**Linux/macOS:**
+```bash
+cp build/libs/hytale-ae2-*.jar ~/Library/Application\ Support/Hytale/UserData/Mods/
+```
+
+### Step 6: Test In-Game
+
+```
+In Hytale Creative Mode:
+1. Press E (inventory)
+2. Search for "me_cable"
+3. Place in world
+4. Check logs for: [OK] Plugin initialized
+```
 
 ---
 
-## 📚 Understanding the Architecture
+## 📝 Development Environment
 
-### Current Code Flow (When Complete)
+### IntelliJ IDEA
 
 ```
-Player places ME Cable
+1. File → Open → Select HytaleAE2 folder
+2. Configure JDK to Java 25 (File → Project Structure → SDK)
+3. Gradle auto-imports dependencies
+4. Ready to code!
+```
+
+### VS Code
+
+```
+1. Install "Extension Pack for Java" + "Gradle for Java"
+2. Open folder
+3. Create workspace config:
+   - .vscode/settings.json: set Java SDK to Java 25
+4. Ready to code!
+```
+
+---
+
+## 📂 Project Structure
+
+```
+HytaleAE2/
+├── src/
+│   └── main/
+│       ├── java/com/tobi/mesystem/
+│       │   ├── MEPlugin.java              # Main Plugin Entry
+│       │   ├── blocks/
+│       │   │   ├── MECableBlock.java      # Cable Block
+│       │   │   ├── METerminalBlock.java   # Terminal Block
+│       │   │   └── MEControllerBlock.java # Controller Block
+│       │   ├── core/
+│       │   │   ├── MENetwork.java         # Network System
+│       │   │   ├── MENode.java            # Network Node
+│       │   │   └── MEDeviceType.java      # Device Types
+│       │   ├── commands/
+│       │   │   └── MEDebugCommand.java    # Debug Command
+│       │   └── utils/
+│       │       ├── BlockPos.java
+│       │       ├── ContainerUtils.java    # Inventory Search
+│       │       └── Direction.java
+│       └── resources/
+│           ├── manifest.json              # Plugin Manifest
+│           └── Server/
+│               ├── Item/Items/
+│               │   ├── Me_Cable.json
+│               │   ├── Me_Terminal.json
+│               │   └── Me_Controller.json
+│               ├── BlockTextures/
+│               └── Languages/en-US/
+├── build.gradle
+├── gradle.properties
+├── docs/
+│   ├── README.md                  # Docs entry
+│   ├── QUICK_START.md             # This file
+│   ├── DEVELOPMENT_GUIDE.md       # Dev guide
+│   ├── PROJECT_RULES.md           # Rules & governance
+│   ├── API_REFERENCE.md           # Hytale API reference
+│   ├── PLUGIN_BEST_PRACTICES.md   # Code patterns
+│   └── [more docs]
+└── .github/
+    ├── workflows/build.yml        # CI workflow
+    └── RELEASE_NOTES.md           # Release process
+```
+
+---
+
+## 🎯 Next Steps
+
+1. **Read [PROJECT_RULES.md](PROJECT_RULES.md)** – Governance & best practices
+2. **Read [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)** – Architecture overview
+3. **Start coding** – See [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md) for patterns
+
+---
+
+## 📚 Understanding the Architecture (Full Flow)
+
+```
+Player places ME Cable in Creative Mode
     ↓
-Hytale fires "BlockPlaced" event
+Hytale fires PlaceBlockEvent
     ↓
-Your event listener catches it
+MEPlugin event handler catches it
     ↓
-Calls MECableBlock.onPlaced(worldId, position)
+Routes to MECableBlock.onPlaced(pos, world)
     ↓
-Creates MENode
+Creates MENode at position
     ↓
-Searches for neighbor networks
+ContainerUtils searches for neighbors
     ↓
-Either joins existing or creates new network
+Finds existing network or creates new one
     ↓
-Connects to neighbors
+Connects cable to network
     ↓
-Network is formed!
+Network updated! ✓
 ```
 
 ### What's Already Working
 
-The **logic** is complete. For example:
+The **core logic** is complete and tested:
 
 ```java
 // This code works right now (if called):
 UUID worldId = UUID.randomUUID();
 BlockPos pos1 = new BlockPos(0, 64, 0);
 BlockPos pos2 = new BlockPos(1, 64, 0);
+BlockPos pos3 = new BlockPos(2, 64, 0);
 
-// Place first cable
-MENode node1 = new MENode(worldId, pos1, MEDeviceType.CABLE);
 MENetwork network = new MENetwork();
-network.addNode(node1);
+MENode node1 = new MENode(1, MEDeviceType.CABLE);
+MENode node2 = new MENode(2, MEDeviceType.CABLE);
+MENode node3 = new MENode(3, MEDeviceType.CABLE);
 
-// Place second cable
-MENode node2 = new MENode(worldId, pos2, MEDeviceType.CABLE);
-network.addNode(node2);
+network.addNode(pos1, node1);
+network.addNode(pos2, node2);
+network.addNode(pos3, node3);
 
-// They're in the same network!
-System.out.println(network.size()); // Output: 2
-
-// Store items
-network.storeItem("minecraft:diamond", 64);
-System.out.println(network.getStoredAmount("minecraft:diamond")); // Output: 64
+// Result: network.isConnected(node1, node3) = true ✓
 ```
 
-**You just need to trigger it from Hytale events.**
+### What's Not Yet Done
+
+- [ ] Terminal GUI implementation
+- [ ] Storage Cells
+- [ ] Advanced container search algorithms
+- [ ] Network persistence to disk
 
 ---
 
-## 🔧 Build & Test
+## 🆘 Troubleshooting
 
-### Build the JAR
+### Build fails: "Cannot find HytaleServer.jar"
+
 ```bash
-cd C:\Users\tobia\Documents\Claude\HytaleAE2
-.\gradlew clean build
+# Solution: HytaleServer.jar needed for compilation
+# See Step 4 above to obtain it
+# Place in: libs/HytaleServer.jar
 ```
 
-**Output:** `build\libs\HytaleAE2-0.1.0-SNAPSHOT.jar`
+### Plugin doesn't load in Hytale
 
-### Install to Hytale Server
 ```bash
-# Copy to your Hytale server plugins folder
-copy build\libs\HytaleAE2-0.1.0-SNAPSHOT.jar "C:\Path\To\Hytale\Server\plugins\"
+# 1. Check logs
+tail -f %APPDATA%\Hytale\UserData\Logs\*_client.log | grep -i "ME\|ERROR"
+
+# 2. Verify deployment
+dir %APPDATA%\Hytale\UserData\Mods\hytale-ae2-*.jar
+
+# 3. Restart Hytale
 ```
 
-### Check Logs
-Start your Hytale server and check the logs for:
-```
-[INFO] ME System setup – NetworkManager initialisiert
-[INFO] ME System erfolgreich gestartet!
-```
+### Blocks not placeable in Creative Mode
 
-If you see this, the plugin is loading correctly!
+```bash
+# See docs/BLOCK_PLACEMENT_FIX.md for detailed debugging
+```
 
 ---
 
-## 🎓 Recommended Next Steps
+## 📖 Full Documentation
 
-### Week 1: Block Registration (Days 1-2)
-
-**Goal:** Place ME Cables in-game and see them connect.
-
-**Tasks:**
-1. Study HytaleServer.jar API (or existing plugins)
-2. Find block registration method
-3. Add registration code to MEPlugin.java
-4. Wire block events to call MECableBlock methods
-5. Test in-game: place 2-3 cables
+For more detailed information:
+- [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) – Architecture & roadmap
+- [PROJECT_RULES.md](PROJECT_RULES.md) – Rules & best practices
+- [API_REFERENCE.md](API_REFERENCE.md) – Hytale API documentation
+- [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md) – Code patterns
+- [INDEX.md](INDEX.md) – Full docs index
 6. Add debug command to print network info
 
 **Success Criteria:**

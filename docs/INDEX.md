@@ -1,83 +1,191 @@
 # HytaleAE2 Documentation Index
 
-**Zentraler Dokumentations-Hub für das Hytale AE2 Plugin**
+**Complete guide to all documentation. Start here to find what you need.**
+
+**Last Updated:** 2026-01-20  
+**Status:** Foundation Complete (v0.1.0)
 
 ---
 
-## 🌟 Haupt-Dokumentation
+## 🎯 Quick Navigation
 
-### 📖 **[HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md)** ⭐ NEU!
-**Der ultimative Leitfaden für Hytale Plugin-Entwicklung**
+### For New Developers
+1. **[QUICK_START.md](QUICK_START.md)** – Clone, build, deploy (5 minutes)
+2. **[DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)** – Architecture overview
+3. **[PROJECT_RULES.md](PROJECT_RULES.md)** – Governance & best practices
 
-Basierend auf Analyse von HyPipes, ChestTerminal und offiziellen Quellen:
-- ✅ Komplette Ordnerstruktur (Common/ Standard)
-- ✅ Manifest.json Format & Validation
-- ✅ Block JSON Comprehensive Reference
-- ✅ IconProperties API (Scale, Rotation, Translation)
-- ✅ DrawType Unterschiede (Cube vs Model)
-- ✅ State.Definitions & Variants
-- ✅ Interactions System (RootInteractions + Interactions)
-- ✅ Crafting Recipes Format
-- ✅ Java Plugin Architektur
-- ✅ Lifecycle & Event Handlers
-- ✅ Best Practices von funktionierenden Plugins
-- ✅ Troubleshooting & Common Issues
+### For Contributors
+1. **[PROJECT_RULES.md](PROJECT_RULES.md)** – Rules, workflow, standards
+2. **[CONTRIBUTING.md](CONTRIBUTING.md)** – PR guidelines
+3. **[PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md)** – Code patterns
+4. **[../.github/RELEASE_NOTES.md](../.github/RELEASE_NOTES.md)** – How to release
 
-**👉 Beginne hier, wenn du Hytale Plugins entwickeln willst!**
+### For Deploying / Server Setup
+1. **[QUICK_START.md](QUICK_START.md)** – Deployment steps
+2. **[API_REFERENCE.md](API_REFERENCE.md)** – manifest.json format
+3. **[CHANGELOG.md](CHANGELOG.md)** – Version history
 
 ---
 
-## 🚀 Quick Start
+## 📚 Core Documentation (7 Files)
 
-### Für neue Entwickler
-1. **[QUICK_START.md](QUICK_START.md)** - Setup aligned with official HelloPlugin & Server Manual
-2. **[SETUP.md](SETUP.md)** - Vollständiges Development Environment
-3. **[HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md)** - Lerne die Struktur
+### Tier 1: Entry Points
+| File | Purpose | Audience |
+|------|---------|----------|
+| [README.md](../README.md) | Project overview | Everyone |
+| [QUICK_START.md](QUICK_START.md) | 5-minute setup | New developers |
 
-### Für HytaleAE2 Contributors
-1. **[PROJECT_STATUS.md](PROJECT_STATUS.md)** - Was ist fertig?
-2. **[DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)** - Nächste Schritte
-3. **[PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md)** - Code-Patterns
+### Tier 2: Governance
+| File | Purpose | Audience |
+|------|---------|----------|
+| [PROJECT_RULES.md](PROJECT_RULES.md) | Rules, build, git, release workflow | All developers |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | PR process, commit format | Contributors |
 
----
+### Tier 3: Code Quality
+| File | Purpose | Audience |
+|------|---------|----------|
+| [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md) | Patterns, logging, anti-patterns | Developers |
 
-## 📚 Dokumentations-Kategorien
+### Tier 4: Architecture & Development
+| File | Purpose | Audience |
+|------|---------|----------|
+| [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) | Architecture, roadmap, design | Developers |
+| [API_REFERENCE.md](API_REFERENCE.md) | Hytale API, BlockState, Codecs, manifest.json | Developers |
 
-### 🛠️ Development & API
-- **[API_REFERENCE.md](API_REFERENCE.md)** - Hytale API Dokumentation
-  - Block System API, Event System, Plugin Lifecycle
-- **[DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)** - Roadmap & Phasen
-- **[TESTING_GUIDE.md](TESTING_GUIDE.md)** - Test-Strategien
-
-### 🔗 Canonical Sources
-- HelloPlugin (Example): noel-lang/hytale-example-plugin
-- Hytale Server Manual: support.hytale.com (authoritative server setup)
-
-Hinweis: Projektinterne Dokumente können teilweise veraltet sein. Bei Konflikten gelten die offiziellen Quellen oben.
-
-### 📦 Configuration & Build
-- **[HYTALE_MANIFEST_FORMAT.md](HYTALE_MANIFEST_FORMAT.md)** - Manifest Spezifikation
-- **[BUILD_COMPLETE.md](BUILD_COMPLETE.md)** - Gradle & Build System
-- **[SETUP.md](SETUP.md)** - Environment Setup
-
-### 📊 Status & Tracking
-- **[PROJECT_STATUS.md](PROJECT_STATUS.md)** - Implementierungs-Status
-- **[IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)** - Feature Tracking
-- **[OPTIMIZATION_REPORT.md](OPTIMIZATION_REPORT.md)** - Performance-Analyse
-
-### ✨ Best Practices
-- **[PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md)** - Patterns & Conventions
-- **[HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md)** - Production-Ready Practices
+### Special Files
+| File | Purpose | Location |
+|------|---------|----------|
+| [CHANGELOG.md](CHANGELOG.md) | Release notes & version history | docs/ |
+| [RELEASE_NOTES.md](../.github/RELEASE_NOTES.md) | How to release | .github/ |
+| [TESTING_GUIDE.md](TESTING_GUIDE.md) | Testing strategies | docs/ (future expansion) |
+| [RESOURCES.md](RESOURCES.md) | External links & references | docs/ |
 
 ---
 
-## 🗂️ Root Documentation
+## 📖 Topic Quick Lookup
 
-- **[../README.md](../README.md)** - Projekt-Übersicht & Schnellstart
-- **[../OPTIMIZATION_SUMMARY.md](../OPTIMIZATION_SUMMARY.md)** - Optimierungs-Zusammenfassung
-- **[../INDEX.md](../INDEX.md)** - Root-Index (veraltet)
+### Getting Started
+- **Setup**: [QUICK_START.md](QUICK_START.md) (clone, build, deploy)
+- **Rules**: [PROJECT_RULES.md](PROJECT_RULES.md) (code standards, workflow)
+- **Architecture**: [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)
+
+### Coding & Development
+- **Code Patterns**: [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md)
+- **HelloPlugin Examples**: [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md#helliplugin-standard-structure)
+- **Logging Standards**: [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md#logging-best-practices) & [PROJECT_RULES.md](PROJECT_RULES.md#logging--console-output-standards)
+- **Anti-Patterns**: [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md#common-pitfalls-anti-patterns-to-avoid)
+- **ASCII/Unicode Rules**: [PROJECT_RULES.md](PROJECT_RULES.md#critical-no-emoji-or-unicode-in-codestrings) & [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md#1-emojiunicode-in-code-the-1-problem)
+
+### API & Configuration
+- **Block System API**: [API_REFERENCE.md](API_REFERENCE.md#blockstate-system)
+- **Codec System**: [API_REFERENCE.md](API_REFERENCE.md#codec-system)
+- **manifest.json Format**: [API_REFERENCE.md](API_REFERENCE.md#manifestjson-format-plugin-configuration)
+- **Plugin Lifecycle**: [API_REFERENCE.md](API_REFERENCE.md#event-system)
+
+### Git & Collaboration
+- **Branching & PRs**: [CONTRIBUTING.md](CONTRIBUTING.md)
+- **Commit Format**: [CONTRIBUTING.md](CONTRIBUTING.md)
+- **Code Review**: [CONTRIBUTING.md](CONTRIBUTING.md)
+
+### Releases & Versions
+- **How to Release**: [../.github/RELEASE_NOTES.md](../.github/RELEASE_NOTES.md)
+- **Version History**: [CHANGELOG.md](CHANGELOG.md)
+- **Versioning Strategy**: [PROJECT_RULES.md](PROJECT_RULES.md#-versioning--changelog)
 
 ---
+
+## 🔍 Searching by Keyword
+
+### Debugging
+- Block Placement Issues: [docs/BLOCK_PLACEMENT_FIX.md](../docs/BLOCK_PLACEMENT_FIX.md) (archived reference)
+- Troubleshooting: [QUICK_START.md](QUICK_START.md#-troubleshooting)
+- Debug Commands: [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)
+
+### Performance
+- Optimization Tips: [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md#-performance--optimization)
+- Thread Pools: [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md#1-thread-pool-management)
+
+### Security
+- Secret Management: [PROJECT_RULES.md](PROJECT_RULES.md#-secret-management)
+- Input Validation: [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md#-error-handling--security)
+
+### Testing
+- Testing Strategy: [TESTING_GUIDE.md](TESTING_GUIDE.md)
+- MEDebugCommand: [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)
+
+---
+
+## 🌍 External References (Canonical Sources)
+
+Always check official sources first. Internal docs may lag behind.
+
+- **Hytale Server Manual**: https://support.hytale.com/
+- **HelloPlugin (Official Example)**: https://github.com/noel-lang/hytale-example-plugin
+- **Semantic Versioning**: https://semver.org/
+- **Conventional Commits**: https://www.conventionalcommits.org/
+- **Keep a Changelog**: https://keepachangelog.com/
+
+---
+
+## 📊 Document Status
+
+| File | Status | Version | Last Updated |
+|------|--------|---------|--------------|
+| QUICK_START.md | ✅ Current | 1.1 | 2026-01-20 |
+| PROJECT_RULES.md | ✅ Current | 1.1 | 2026-01-20 |
+| CONTRIBUTING.md | ✅ Current | 1.0 | 2026-01-20 |
+| PLUGIN_BEST_PRACTICES.md | ✅ Current | 1.1 | 2026-01-20 |
+| DEVELOPMENT_GUIDE.md | ✅ Current | 1.0 | 2026-01-20 |
+| API_REFERENCE.md | ✅ Current | 1.1 | 2026-01-20 |
+| CHANGELOG.md | ✅ Current | 0.1.0 | 2026-01-20 |
+| TESTING_GUIDE.md | ⏳ Incomplete | 1.0 | TBD |
+| RESOURCES.md | ✅ Reference | 1.0 | 2026-01-20 |
+| README.md (root) | ✅ Current | 1.0 | 2026-01-20 |
+
+---
+
+## 🗑️ Archived / Deleted Files
+
+The following files were consolidated into the 7-core structure:
+
+- ~~SETUP.md~~ → Merged into [QUICK_START.md](QUICK_START.md)
+- ~~HYTALE_MANIFEST_FORMAT.md~~ → Merged into [API_REFERENCE.md](API_REFERENCE.md#manifestjson-format-plugin-configuration)
+- ~~HYTALE_PLUGIN_REFERENCE.md~~ → Merged into [API_REFERENCE.md](API_REFERENCE.md)
+- ~~HYTALE_PLUGIN_COMPLETE_GUIDE.md~~ → Merged into [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) & [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md)
+- ~~BUILD_COMPLETE.md~~ → Status moved to [CHANGELOG.md](CHANGELOG.md)
+- ~~PROJECT_STATUS.md~~ → Status moved to [CHANGELOG.md](CHANGELOG.md)
+- ~~IMPLEMENTATION_STATUS.md~~ → Status moved to [CHANGELOG.md](CHANGELOG.md)
+- ~~REFACTORING_COMPLETE.md~~ → Historical (see [CHANGELOG.md](CHANGELOG.md))
+- ~~OPTIMIZATION_REPORT.md~~ → Historical (see [CHANGELOG.md](CHANGELOG.md))
+- ~~PROJECT_STRUCTURE.md~~ → Info in [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)
+- ~~RESOURCES_SUMMARY.md~~ → Merged into [RESOURCES.md](RESOURCES.md)
+
+**Migration completed**: 2026-01-20
+
+---
+
+## 🔧 Maintenance Notes
+
+### To Add New Documentation
+1. Check if it fits into existing categories
+2. If new doc needed, update this INDEX.md
+3. Keep cross-references updated
+4. Link to canonical external sources
+
+### To Update Documentation
+1. Update relevant .md file
+2. Update version in this INDEX
+3. Add entry to [CHANGELOG.md](CHANGELOG.md)
+4. Commit with message: `docs: update [filename]`
+
+### Before Each Release
+1. Review all docs for accuracy
+2. Update [CHANGELOG.md](CHANGELOG.md)
+3. Follow [../.github/RELEASE_NOTES.md](../.github/RELEASE_NOTES.md)
+
+---
+
+**Questions?** See [PROJECT_RULES.md](PROJECT_RULES.md#-questions-or-changes)
 
 ## 🔍 Nach Thema finden
 

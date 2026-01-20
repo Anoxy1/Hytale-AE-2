@@ -282,114 +282,32 @@ System.out.println("========================================");
 
 ## 📚 Key References
 
-| Topic | File | Source |
-|-------|------|--------|
-| **Quick Start** | [docs/QUICK_START.md](QUICK_START.md) | Hytale Server Manual + HelloPlugin |
-| **Setup & Build** | [docs/SETUP.md](SETUP.md) | Official Hytale docs |
-| **API Patterns** | [docs/API_REFERENCE.md](API_REFERENCE.md) | HelloPlugin + Hytale Server Manual |
-| **Code Patterns** | [docs/PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md) | Internal (ChestTerminal, MENode patterns) |
-| **Manifest Format** | [docs/HYTALE_MANIFEST_FORMAT.md](HYTALE_MANIFEST_FORMAT.md) | Hytale specification |
-| **Dev Guide** | [docs/DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) | Architecture & workflows |
-| **Contributing** | [docs/CONTRIBUTING.md](CONTRIBUTING.md) | PR guidelines & conventions |
+| Topic | File | Purpose |
+|-------|------|---------|
+| **Quick Start** | [QUICK_START.md](QUICK_START.md) | Clone, build, deploy in 5 minutes |
+| **API Reference** | [API_REFERENCE.md](API_REFERENCE.md) | Hytale API (BlockState, Codec, Commands, manifest.json) |
+| **Code Patterns** | [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md) | HelloPlugin patterns, logging, anti-patterns |
+| **Dev Guide** | [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) | Architecture, roadmap, testing |
+| **Contributing** | [CONTRIBUTING.md](CONTRIBUTING.md) | PR guidelines, commit format, review process |
+| **Release Notes** | [../.github/RELEASE_NOTES.md](../.github/RELEASE_NOTES.md) | How to create releases |
+| **Changelog** | [CHANGELOG.md](CHANGELOG.md) | Version history and release notes |
+| **Index** | [INDEX.md](INDEX.md) | Complete documentation index |
 
 ---
 
-## 🎯 HelloPlugin Pattern Examples
+## 🎯 Code Patterns & HelloPlugin Compliance
 
-Our codebase follows the official Hytale HelloPlugin structure. Here are critical patterns:
+Our codebase follows the official Hytale HelloPlugin structure and patterns.
 
-### 1. Plugin Entry Point
+**For detailed code patterns, HelloPlugin examples, and anti-patterns:**  
+See [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md#helliplugin-standard-structure)
 
-**HelloPlugin style** (from [official repo](https://github.com/noel-lang/hytale-example-plugin)):
-```java
-import com.hypixel.hytale.server.HytaleServer;
-
-public class HytaleAE2 extends JavaPlugin {
-    private static final Logger logger = LoggerFactory.getLogger(HytaleAE2.class);
-    
-    @Override
-    public void onPluginEnable() {
-        logger.info("HytaleAE2 Plugin Enabled");
-        
-        // Register commands, event listeners, etc.
-        getCommandRegistry().registerCommand(new MEDebugCommand());
-    }
-    
-    @Override
-    public void onPluginDisable() {
-        logger.info("HytaleAE2 Plugin Disabled");
-    }
-}
-```
-
-**Our impl**: See `src/main/java/com/tobi/HytaleAE2.java` (follows same structure)
-
-### 2. Command Registration
-
-**HelloPlugin style**:
-```java
-public class ExampleCommand extends AbstractPlayerCommand {
-    @Override
-    public void execute(Player player, String[] args) {
-        player.sendMessage("Hello from Hytale!");
-    }
-}
-
-// Register in plugin:
-getCommandRegistry().registerCommand(new ExampleCommand());
-```
-
-**Our impl**: See `src/main/java/com/tobi/commands/MEDebugCommand.java`
-
-### 3. Manifest Configuration
-
-**Required**: `src/main/resources/manifest.json` (HelloPlugin compliant):
-```json
-{
-  "id": "hytale-ae2",
-  "name": "Hytale AE2",
-  "version": "0.1.0",
-  "author": "Anoxy1",
-  "description": "Matter/Energy infrastructure plugin",
-  "entrypoint": "com.tobi.HytaleAE2"
-}
-```
-
-See [docs/HYTALE_MANIFEST_FORMAT.md](HYTALE_MANIFEST_FORMAT.md) for full spec.
-
-### 4. Logging Pattern
-
-**Always use SLF4J** (HelloPlugin standard):
-```java
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-private static final Logger logger = LoggerFactory.getLogger(ClassName.class);
-
-logger.info("Plugin initialized successfully");
-logger.warn("[WARN] Resource not found at path: {}", path);
-logger.error("[ERROR] Critical failure", exception);
-```
-
-### 5. ASCII Output for Debugging
-
-**MEDebugCommand example** (ASCII-safe):
-```java
-public class MEDebugCommand extends AbstractPlayerCommand {
-    public void execute(Player player, String[] args) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("=====================================\n");
-        sb.append("   MENode Debug Information\n");
-        sb.append("=====================================\n");
-        sb.append("Total MENodes: ").append(registry.size()).append("\n");
-        sb.append("World ref: ").append(world != null ? "[OK]" : "[FAIL]").append("\n");
-        sb.append("=====================================\n");
-        
-        player.sendMessage(sb.toString());
-        logger.info("Debug info displayed to player: {}", player.getName());
-    }
-}
-```
+**Key rules:**
+- Extend `JavaPlugin` with `onPluginEnable()` / `onPluginDisable()`
+- Register commands via `getCommandRegistry()`
+- Use SLF4J logging (never `System.out.println()` in production)
+- ASCII-only output (see section above)
+- manifest.json in `src/main/resources/` (see [API_REFERENCE.md](API_REFERENCE.md#manifestjson-format-plugin-configuration))
 
 ---
 

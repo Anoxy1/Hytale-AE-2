@@ -471,6 +471,107 @@ public class PipeNetwork {
 
 ---
 
+## 📦 manifest.json Format (Plugin Configuration)
+
+### Required Structure for Java Plugins
+
+```json
+{
+  "Group": "com.tobi",
+  "Name": "Hytale AE2",
+  "Version": "0.1.0",
+  "Main": "com.tobi.HytaleAE2",
+  "Description": "Matter/Energy infrastructure plugin",
+  "Authors": [
+    {
+      "Name": "Anoxy1",
+      "Email": "you@example.com",
+      "Url": "https://github.com/Anoxy1"
+    }
+  ],
+  "Website": "https://github.com/Anoxy1/Hytale-AE-2",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "LoadBefore": {},
+  "DisabledByDefault": false,
+  "IncludesAssetPack": true,
+  "SubPlugins": []
+}
+```
+
+### Key Fields Explained
+
+| Field | Required | Type | Notes |
+|-------|----------|------|-------|
+| `Group` | Yes | String | Organization/author ID (e.g., `com.tobi`) |
+| `Name` | Yes | String | Display name (PascalCase) |
+| `Version` | Yes | String | Semantic versioning (MAJOR.MINOR.PATCH) |
+| `Main` | **Yes (Java)** | String | Full classpath to plugin entry class |
+| `Description` | No | String | Short description |
+| `Authors` | No | Array | Author metadata (Name, Email, URL) |
+| `Website` | No | String | Project URL |
+| `Dependencies` | No | Object | Required plugin dependencies |
+| `OptionalDependencies` | No | Object | Optional dependencies |
+| `LoadBefore` | No | Object | Plugins that should load after this |
+| `DisabledByDefault` | No | Boolean | Plugins starts disabled (default: false) |
+| `IncludesAssetPack` | No | Boolean | Has asset files (blocks, items, textures) |
+| `SubPlugins` | No | Array | Sub-plugins (advanced) |
+
+### Common Mistakes
+
+```json
+// WRONG: Uses lowercase fields
+{
+  "name": "Plugin",        // ❌ Should be "Name"
+  "version": "1.0",        // ❌ Should be "Version"
+  "main": "com.example",   // ❌ Should be "Main"
+  "id": "modid"            // ❌ Not a valid field (should be "Group")
+}
+
+// CORRECT: Proper Hytale format
+{
+  "Group": "com.example",
+  "Name": "Plugin",
+  "Version": "1.0.0",
+  "Main": "com.example.plugin.Main",
+  "IncludesAssetPack": false
+}
+```
+
+### Manifest in Our Project
+
+**File:** `src/main/resources/manifest.json`
+
+```json
+{
+  "Group": "com.tobi",
+  "Name": "Hytale AE2",
+  "Version": "0.1.0",
+  "Main": "com.tobi.HytaleAE2",
+  "Description": "Matter/Energy infrastructure plugin with network system",
+  "Authors": [
+    {
+      "Name": "Anoxy1",
+      "Url": "https://github.com/Anoxy1"
+    }
+  ],
+  "Website": "https://github.com/Anoxy1/Hytale-AE-2",
+  "Dependencies": {},
+  "IncludesAssetPack": true
+}
+```
+
+**Critical Check:**
+```bash
+# Verify manifest.json is valid JSON
+python3 -m json.tool src/main/resources/manifest.json
+
+# Verify Main class exists
+ls src/main/java/com/tobi/HytaleAE2.java
+```
+
+---
+
 ## 🚧 Known Limitations & Workarounds
 
 ### Missing HytaleServer.jar
@@ -490,8 +591,7 @@ public class PipeNetwork {
 ## 📚 Related Documentation
 
 - [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) - Development roadmap
-- [PROJECT_STATUS.md](PROJECT_STATUS.md) - Current implementation status
-- [HYTALE_MANIFEST_FORMAT.md](HYTALE_MANIFEST_FORMAT.md) - Manifest configuration
+- [CHANGELOG.md](CHANGELOG.md) - Version history & status
 - [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md) - Best practices
 
 ---
