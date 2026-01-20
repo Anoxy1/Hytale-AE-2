@@ -75,8 +75,11 @@ hytale-downloader --asset hytale-server --version latest
 
 **Windows:**
 ```bash
-# Copy plugin JAR to mods folder
-copy build\libs\hytale-ae2-*.jar %APPDATA%\Hytale\UserData\Mods\
+# Copy plugin JAR to correct plugins folder (Early Access)
+copy build\libs\hytale-ae2-*.jar %APPDATA%\Roaming\Hytale\UserData\earlyplugins\
+
+# Alternative for Data Assets (JSON configs)
+# copy src\main\resources\Server\Item\*.json %APPDATA%\Roaming\Hytale\UserData\mods\
 
 # Start Hytale, create world in Creative mode
 # Plugin loads automatically
@@ -87,7 +90,27 @@ copy build\libs\hytale-ae2-*.jar %APPDATA%\Hytale\UserData\Mods\
 cp build/libs/hytale-ae2-*.jar ~/Library/Application\ Support/Hytale/UserData/Mods/
 ```
 
-### Step 6: Test In-Game
+### Step 6: Hardware Requirements
+
+⚠️ **Before running a Hytale server with plugins, check your hardware:**
+
+| Setup | Players | RAM | CPU | Storage |
+|-------|---------|-----|-----|----------|
+| **Small** | <20 | 4-6 GB | Moderate | NVMe |
+| **Medium** | 20-50 | 8-12 GB | High Single-Core | NVMe |
+| **Large** | 50+ | 16+ GB | High Multi-Core | NVMe |
+
+**Critical Performance Factor: View Distance**
+- Doubling View Distance = **4x RAM & Network load**
+- Default: 32 chunks; Recommended: 16-24 for stability
+- Each chunk ≈ 1-2 MB at normal settings
+
+**Network Protocol:** Hytale uses **QUIC over UDP** (not TCP)  
+→ Open UDP ports in firewall, not TCP!
+
+---
+
+### Step 7: Test In-Game
 
 ```
 In Hytale Creative Mode:
@@ -101,14 +124,22 @@ In Hytale Creative Mode:
 
 ## 📝 Development Environment
 
-### IntelliJ IDEA
+### IntelliJ IDEA (Recommended)
 
 ```
 1. File → Open → Select HytaleAE2 folder
 2. Configure JDK to Java 25 (File → Project Structure → SDK)
-3. Gradle auto-imports dependencies
-4. Ready to code!
+3. Install Plugins (optional but recommended):
+   - "Hytale Development Tools" (JetBrains Marketplace)
+   - "Hytale .ui Support" (JetBrains Marketplace)
+4. Gradle auto-imports dependencies
+5. Ready to code!
 ```
+
+**Hytale Development Tools Features:**
+- Project Wizard for new Hytale plugins
+- Auto-generation of manifest.json templates
+- Plugin debugging integration
 
 ### VS Code
 

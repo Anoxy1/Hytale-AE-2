@@ -596,5 +596,103 @@ ls src/main/java/com/tobi/HytaleAE2.java
 
 ---
 
+---
+
+## Server-Architektur & Hosting
+
+### Client-Server Modell
+
+**Hytale ist IMMER serverseitig** – auch Single Player!
+- Spieler verbinden sich mit lokalem oder Remote-Server
+- **Kein Client-Modding** – alle Mods sind Server-Plugins (Java JAR)
+- Server sendet alle Modifikationen zu Client
+- Client bleibt stabil, sicher, konsistent
+
+### Netzwerkprotokoll: QUIC über UDP
+
+```java
+// NOT TCP! Hytale uses QUIC over UDP
+// Firewall-Konfiguration:
+// - Open UDP ports (nicht TCP)
+// - Port Forwarding muss UDP unterstützen
+
+// Beispiel: Port 12345
+// Windows Firewall: netsh advfirewall firewall add rule name="Hytale" dir=in action=allow protocol=UDP localport=12345
+```
+
+### Multiserver-Architektur (Lobby System)
+
+**Native Player Routing (keine BungeeCord nötig):**
+
+```java
+// 1. Player Referrals – Spieler zwischen Servern transferieren
+PlayerReferralPayload payload = new PlayerReferralPayload(
+    targetServer,     // "lobby-1.example.com:12345"
+    sessionContext    // Optional: Inventory, Position, etc.
+);
+payload.sign(privateKey);  // Cryptographically signed!
+player.referTo(payload);
+
+// 2. Connection Redirects – During Handshake
+connectionManager.redirect(player, newServerAddress);
+
+// 3. Disconnect Fallbacks – Auto-reconnect
+server.setFallbackServer("fallback.example.com:12345");
+```
+
+### Performance-Optimierung
+
+```
+1. View Distance (KRITISCH!)
+   - Affect: RAM, Network, CPU
+   - Doubling VD = 4x load
+   - Recommended: 16-24 chunks
+
+2. RAM-Konfiguration
+   - Small (< 20 players): 4-6 GB
+   - Medium (20-50): 8-12 GB
+   - Large (50+): 16+ GB
+   - Kann nach Bedarf angepasst werden
+
+3. Storage: NVMe erforderlich
+   - Weltgenerierung ist prozedural & CPU-intensiv
+   - Schnelle Chunk-Generierung nötig
+
+4. CPU: Single-Core Performance kritisch
+   - Weltgenerierung nicht parallelisierbar
+   - Höhere Frequenz besser als mehr Kerne
+
+5. AOT Cache (Ahead-Of-Time)
+   - Server liefert HytaleServer.aot mit
+   - Startup-Zeit ~50% schneller
+   - Automatisch beim Start geladen
+
+6. Sentry Crash Reporting
+   - Während Development: Disabled
+   - Production: Enabled für Bug-Tracking
+   - Konfigurierbar in server.properties
+
+7. Automatische Backups
+   - ESSENTIELL in Early-Access Phase
+   - Abstürze können Datenverlust verursachen
+   - Empfehlung: Stündlich Backups
+```
+
+### Server-Installation & Bereitstellung
+
+```bash
+# Option 1: Download via Hytale Launcher
+# %APPDATA%\Hytale\install\release\package\game\latest\HytaleServer.jar
+
+# Option 2: CLI Downloader (Production)
+hytale-downloader --asset hytale-server --version latest
+
+# Server starten:
+java -jar HytaleServer.jar
+
+# Mit AOT-Cache:
+java -XX:AOTLibrary=HytaleServer.aot -jar HytaleServer.jar
+```
+
 **Last Updated:** Januar 2026  
 **Status:** Complete API Documentation ✅

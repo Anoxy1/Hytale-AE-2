@@ -56,19 +56,42 @@ Eine vollständige, kopierbare Gesamtliste aller Hytale Plugin-/Mod-Dokumentatio
 
 ---
 
+## IDE Plugins & Tools
+
+18. https://plugins.jetbrains.com/plugin/25141-hytale-development-tools – **Hytale Development Tools für IntelliJ IDEA** (Project Wizard, manifest.json Generator, Debugging Support)
+
+19. https://plugins.jetbrains.com/plugin/25142-hytale-ui-support – **Hytale .ui Support** (Syntax Highlighting für UI-Dateien)
+
+20. https://gradle.org/plugins/de.crazydev22.hytale – **Hytale Gradle Plugin** (Version 0.1.3+, automatisiertes Plugin-Build)
+
+## 3D Modeling & Asset Tools
+
+21. https://www.blockbench.net/ – **Blockbench** (Official Partner für Hytale Modelle, Texturen, Animationen)
+
+   **Blockbench für Hytale – Richtlinien:**
+   - Primitive: Nur Würfel & Quads (keine komplexen Meshes)
+   - Texturgröße: Vielfache von 32px (32, 64, 96, 128, etc.)
+   - Pixeldichte: Character 64px/Einheit, Props/Blöcke 32px/Einheit
+   - Beleuchtung: Lights/Shadows direkt in Texture einmalen
+   - Vermeiden: Pure White (#FFFFFF) & Pure Black (#000000) – Stören In-Game-Beleuchtung
+
+22. https://www.curseforge.com/hytale/mods – **CurseForge** (OFFICIAL Partner für Mod-Distribution, Installation, Management, Monetization seit Day 1)
+
 ## Tools / Bibliotheken / Alternative APIs
 
-18. https://www.hytalejs.com/ – HytaleJS: TypeScript / JavaScript Plugin API
+23. https://www.hytalejs.com/ – HytaleJS: TypeScript / JavaScript Plugin API
 
-19. https://www.curseforge.com/hytale/mods/htdevlib – HTDevLib Utility-Library für Hytale Plugins (Hilfsklassen, Events, ECS)
+24. https://www.curseforge.com/hytale/mods/htdevlib – HTDevLib Utility-Library für Hytale Plugins (Hilfsklassen, Events, ECS)
 
-20. https://github.com/Ranork/Hytale-Server-Unpacked – Dekompilierte Server-API / inoffizielle API-Referenz
+25. https://github.com/Ranork/Hytale-Server-Unpacked – Dekompilierte Server-API / inoffizielle API-Referenz
 
 ---
 
 ## Weitere Community-Ressourcen
 
-21. https://hytale.fandom.com/de/wiki/Modding – Hytale Wiki: Modding Übersicht (allgemein)
+26. https://hytale.fandom.com/de/wiki/Modding – Hytale Wiki: Modding Übersicht (allgemein)
+
+27. https://support.hytale.com/hc/en-us/articles/45326769420827-Hytale-Server-Manual – **Hytale Server Manual** (Setup, Configuration, Operation, Troubleshooting)
 
 ---
 
@@ -77,25 +100,28 @@ Eine vollständige, kopierbare Gesamtliste aller Hytale Plugin-/Mod-Dokumentatio
 ### Offizielle Ressourcen & Getting Started
 - #1 (Getting Started Guide – OFFIZIELL), #2 (Modding Strategy – OFFIZIELL), #3 (Support & Server Manual)
 
-### Offizielle Beispiel-Plugins
-- #4 (HelloPlugin – OFFIZIELL), #5 (Kaupenjoe Template – Community ★)
+### Offizielle Beispiel-Plugins & Templates
+- #4 (HelloPlugin – OFFIZIELL), #5 (Kaupenjoe Template – Community ★83)
 
 ### Setup & Entwicklungsumgebung
-- #11, #12
+- #11, #12, #18, #19, #20 (IDE Plugins & Tools)
 
 ### Plugin-API & Events
 - #6, #9, #10, #13, #14
 
 ### Community-Hubs & Tutorials
-- #15, #16, #17, #21
+- #15, #16, #17, #26
+
+### 3D Modeling & Assets
+- #21 (Blockbench – OFFIZIELL), #22 (CurseForge – OFFIZIELL Distribution)
 
 ### Tools & Bibliotheken
-- #18, #19, #20
+- #23, #24, #25
 
 ### Mehrsprachige Ressourcen
-- Englisch: #1, #2, #3, #4, #5, #6, #8, #9, #10, #11, #12, #13, #14, #15, #18, #19, #20
+- Englisch: #1, #2, #3, #4, #5, #6, #8, #9, #10, #11, #12, #13, #14, #15, #18, #19, #20, #21, #22, #23, #24, #25, #27
 - Französisch: #7
-- Deutsch: #21
+- Deutsch: #26
 
 ---
 
