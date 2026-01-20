@@ -1,98 +1,148 @@
-# Dokumentation - HytaleAE2
+# HytaleAE2 Documentation Index
 
-Alle Projektdokumentation an einem Ort.
-
----
-
-## Einstieg
-
-**Neu hier? Starte hier:**
-
-1. **[JETZT_MACHEN.md](JETZT_MACHEN.md)** - Die nächsten konkreten Schritte
-2. **[PROJECT_STATUS.md](PROJECT_STATUS.md)** - Was ist fertig? Was fehlt?
-3. **[START_HIER.md](START_HIER.md)** - Detaillierte Schritt-für-Schritt Anleitung
+**Zentraler Dokumentations-Hub für das Hytale AE2 Plugin**
 
 ---
 
-## Entwicklung
+## 🌟 Haupt-Dokumentation
 
-**Für die Implementierung:**
+### 📖 **[HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md)** ⭐ NEU!
+**Der ultimative Leitfaden für Hytale Plugin-Entwicklung**
 
-- **[ENTWICKLUNGSPLAN.md](ENTWICKLUNGSPLAN.md)** - Vollständiger 9-Monats-Plan
-  - Phase 1: Foundation & MVP (Woche 1-2)
-  - Phase 2: Storage Cells (Monat 2)
-  - Phase 3: Import/Export (Monat 3)
-  - Phase 4: Auto-Crafting (Monat 4-6)
+Basierend auf Analyse von HyPipes, ChestTerminal und offiziellen Quellen:
+- ✅ Komplette Ordnerstruktur (Common/ Standard)
+- ✅ Manifest.json Format & Validation
+- ✅ Block JSON Comprehensive Reference
+- ✅ IconProperties API (Scale, Rotation, Translation)
+- ✅ DrawType Unterschiede (Cube vs Model)
+- ✅ State.Definitions & Variants
+- ✅ Interactions System (RootInteractions + Interactions)
+- ✅ Crafting Recipes Format
+- ✅ Java Plugin Architektur
+- ✅ Lifecycle & Event Handlers
+- ✅ Best Practices von funktionierenden Plugins
+- ✅ Troubleshooting & Common Issues
 
----
-
-## Setup & Konfiguration
-
-**Technische Details:**
-
-- **[SETUP.md](SETUP.md)** - Setup-Anleitung
-- **[DATEIEN_INFO.md](DATEIEN_INFO.md)** - Datei-Übersicht
-
----
-
-## Dokumenten-Übersicht
-
-| Dokument | Zweck | Wann lesen? |
-|----------|-------|-------------|
-| **JETZT_MACHEN.md** | Konkrete nächste Schritte | Jetzt sofort |
-| **PROJECT_STATUS.md** | Aktueller Status | Für Überblick |
-| **ENTWICKLUNGSPLAN.md** | Langfristige Planung | Vor Implementierung |
-| **START_HIER.md** | Detaillierte Anleitung | Setup-Phase |
-| **SETUP.md** | Setup-Details | Bei Problemen |
-| **DATEIEN_INFO.md** | Datei-Referenz | Zur Orientierung |
+**👉 Beginne hier, wenn du Hytale Plugins entwickeln willst!**
 
 ---
 
-## Wichtigste Erkenntnisse
+## 🚀 Quick Start
 
-### Aus ChestTerminal
-- InteractiveCustomUIPage Pattern für GUIs
-- Digital Storage mit HashMap<String, Integer>
-- Event-basierte Interaktionen
+### Für neue Entwickler
+1. **[QUICK_START.md](QUICK_START.md)** - 5-Minuten Setup
+2. **[SETUP.md](SETUP.md)** - Vollständiges Development Environment
+3. **[HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md)** - Lerne die Struktur
 
-### Aus HyPipes
-- Graph-basiertes Network (Map<BlockPos, PipeNode>)
-- BFS Pathfinding für Routing
-- Priority + Distribution Strategies
-
-### Hytale Modding
-- Codec-System statt NBT
-- JavaPlugin mit setup() & start()
-- BlockState Registry für Blocks
+### Für HytaleAE2 Contributors
+1. **[PROJECT_STATUS.md](PROJECT_STATUS.md)** - Was ist fertig?
+2. **[DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)** - Nächste Schritte
+3. **[../PLUGIN_BEST_PRACTICES.md](../PLUGIN_BEST_PRACTICES.md)** - Code-Patterns
 
 ---
 
-## Code-Beispiele
+## 📚 Dokumentations-Kategorien
 
-### Digital Storage
-```java
-MENetwork network = new MENetwork();
-network.storeItem("minecraft:diamond", 64);
-long diamonds = network.getStoredAmount("minecraft:diamond");
-```
+### 🛠️ Development & API
+- **[API_REFERENCE.md](API_REFERENCE.md)** - Hytale API Dokumentation
+  - Block System API, Event System, Plugin Lifecycle
+- **[DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)** - Roadmap & Phasen
+- **[TESTING_GUIDE.md](TESTING_GUIDE.md)** - Test-Strategien
 
-### Channel System
-```java
-network.allocateChannel(pos, 1);
-network.setController(controllerPos); // 8 -> 32 channels
-```
+### 📦 Configuration & Build
+- **[HYTALE_MANIFEST_FORMAT.md](HYTALE_MANIFEST_FORMAT.md)** - Manifest Spezifikation
+- **[BUILD_COMPLETE.md](BUILD_COMPLETE.md)** - Gradle & Build System
+- **[SETUP.md](SETUP.md)** - Environment Setup
 
-### Node Management
-```java
-MENode node = new MENode(worldId, pos, MEDeviceType.CABLE);
-network.addNode(node);
-node.addConnection(Direction.NORTH);
-```
+### 📊 Status & Tracking
+- **[PROJECT_STATUS.md](PROJECT_STATUS.md)** - Implementierungs-Status
+- **[IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)** - Feature Tracking
+- **[OPTIMIZATION_REPORT.md](OPTIMIZATION_REPORT.md)** - Performance-Analyse
+
+### ✨ Best Practices
+- **[../PLUGIN_BEST_PRACTICES.md](../PLUGIN_BEST_PRACTICES.md)** - Patterns & Conventions
+- **[HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md)** - Production-Ready Practices
 
 ---
 
-## Schnelle Navigation
+## 🗂️ Root Documentation
 
-- **Zurück zum Projekt:** [../README.md](../README.md)
-- **Quellcode:** [../src/main/java/com/tobi/mesystem/](../src/main/java/com/tobi/mesystem/)
-- **Build:** [../build.gradle](../build.gradle)
+- **[../README.md](../README.md)** - Projekt-Übersicht & Schnellstart
+- **[../OPTIMIZATION_SUMMARY.md](../OPTIMIZATION_SUMMARY.md)** - Optimierungs-Zusammenfassung
+- **[../INDEX.md](../INDEX.md)** - Root-Index (veraltet)
+
+---
+
+## 🔍 Nach Thema finden
+
+### Assets & Struktur
+→ **[HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md)** (Kapitel 1-2)
+- Common/ Ordnerstruktur
+- Asset-Naming Conventions
+- Texture & Icon Guidelines
+
+### Block Development
+→ **[HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md)** (Kapitel 3)
+- Block JSON Schema
+- IconProperties
+- States & Variants
+- DrawType & Models
+
+### Interactions & Recipes
+→ **[HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md)** (Kapitel 4-5)
+- Interaction System
+- OpenContainer
+- Crafting Recipes
+- Workbench Integration
+
+### Java Plugin Code
+→ **[HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md)** (Kapitel 6)
+→ **[API_REFERENCE.md](API_REFERENCE.md)**
+- JavaPlugin Base Class
+- onLoad / onEnable / onDisable
+- Event Handlers
+- BlockInteractEvent
+
+### Troubleshooting
+→ **[HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md)** (Kapitel 8)
+- Purple-Black Checkerboard
+- Block not placeable
+- Missing Textures
+- Log Analysis
+
+---
+
+## 📦 Referenz-Implementierungen
+
+Im `libs/` Ordner:
+- **HyPipes** (v1.0.5) - Network Graph, Custom Models
+- **ChestTerminal** (v2.0.8) - Container GUI, Interactions
+
+Diese wurden analysiert und alle Erkenntnisse in [HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md) dokumentiert.
+
+---
+
+## 📊 Dokument-Status
+
+| Dokument | Status | Priorität | Letzte Änderung |
+|----------|--------|-----------|-----------------|
+| **HYTALE_PLUGIN_COMPLETE_GUIDE.md** | ✅ Complete | ⭐⭐⭐ | 2026-01-20 |
+| PROJECT_STATUS.md | ✅ Complete | ⭐⭐ | 2026-01-20 |
+| SETUP.md | ✅ Complete | ⭐⭐ | 2025-01-20 |
+| API_REFERENCE.md | ✅ Complete | ⭐⭐ | 2025-01-20 |
+| DEVELOPMENT_GUIDE.md | ✅ Complete | ⭐ | 2025-01-20 |
+| PLUGIN_BEST_PRACTICES.md | ✅ Complete | ⭐ | 2025-01-20 |
+| HYTALE_MANIFEST_FORMAT.md | ✅ Complete | ⭐ | 2025-01-20 |
+| BUILD_COMPLETE.md | ✅ Complete | ⭐ | 2025-01-20 |
+| TESTING_GUIDE.md | ✅ Complete | ⭐ | 2025-01-20 |
+| IMPLEMENTATION_STATUS.md | ✅ Complete | ⭐ | 2025-01-20 |
+| QUICK_START.md | ✅ Complete | ⭐ | 2025-01-20 |
+| OPTIMIZATION_REPORT.md | ✅ Complete | ⭐ | 2025-01-20 |
+
+**Empfehlung:** Starte mit [HYTALE_PLUGIN_COMPLETE_GUIDE.md](HYTALE_PLUGIN_COMPLETE_GUIDE.md) - dort ist alles Wichtige! ⭐
+
+---
+
+**Total:** 12 Dokumentations-Dateien  
+**Haupt-Quelle:** HYTALE_PLUGIN_COMPLETE_GUIDE.md (18KB, alle Erkenntnisse)  
+**Letzte Index-Aktualisierung:** 20. Januar 2026

@@ -1,0 +1,245 @@
+Picked up JAVA_TOOL_OPTIONS: -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8
+Compiled from "InventoryUtils.java"
+public class com.chestterminal.util.InventoryUtils {
+  public com.chestterminal.util.InventoryUtils();
+    Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  public static java.util.HashMap<java.lang.String, java.lang.Integer> collectNearbyItems(com.hypixel.hytale.server.core.universe.world.World, com.hypixel.hytale.component.Ref<com.hypixel.hytale.server.core.universe.world.storage.EntityStore>, com.hypixel.hytale.component.Store<com.hypixel.hytale.server.core.universe.world.storage.EntityStore>, int);
+    Code:
+         0: new           #7                  // class java/util/HashMap
+         3: dup
+         4: invokespecial #9                  // Method java/util/HashMap."<init>":()V
+         7: astore        4
+         9: new           #10                 // class java/util/ArrayList
+        12: dup
+        13: invokespecial #12                 // Method java/util/ArrayList."<init>":()V
+        16: astore        5
+        18: aload_2
+        19: aload_1
+        20: invokestatic  #13                 // Method com/hypixel/hytale/server/core/modules/entity/component/TransformComponent.getComponentType:()Lcom/hypixel/hytale/component/ComponentType;
+        23: invokevirtual #19                 // Method com/hypixel/hytale/component/Store.getComponent:(Lcom/hypixel/hytale/component/Ref;Lcom/hypixel/hytale/component/ComponentType;)Lcom/hypixel/hytale/component/Component;
+        26: checkcast     #14                 // class com/hypixel/hytale/server/core/modules/entity/component/TransformComponent
+        29: invokevirtual #25                 // Method com/hypixel/hytale/server/core/modules/entity/component/TransformComponent.getPosition:()Lcom/hypixel/hytale/math/vector/Vector3d;
+        32: astore        6
+        34: iload_3
+        35: ineg
+        36: istore        7
+        38: iload         7
+        40: iload_3
+        41: if_icmpgt     294
+        44: iload_3
+        45: ineg
+        46: istore        8
+        48: iload         8
+        50: iload_3
+        51: if_icmpge     288
+        54: iload_3
+        55: ineg
+        56: istore        9
+        58: iload         9
+        60: iload_3
+        61: if_icmpgt     282
+        64: aload_1
+        65: aload_0
+        66: aload         6
+        68: invokevirtual #29                 // Method com/hypixel/hytale/math/vector/Vector3d.getX:()D
+        71: iload         7
+        73: i2d
+        74: dadd
+        75: d2i
+        76: aload         6
+        78: invokevirtual #35                 // Method com/hypixel/hytale/math/vector/Vector3d.getY:()D
+        81: iload         8
+        83: i2d
+        84: dadd
+        85: d2i
+        86: aload         6
+        88: invokevirtual #38                 // Method com/hypixel/hytale/math/vector/Vector3d.getZ:()D
+        91: iload         9
+        93: i2d
+        94: dadd
+        95: d2i
+        96: invokestatic  #41                 // Method isBlockInteractable:(Lcom/hypixel/hytale/component/Ref;Lcom/hypixel/hytale/server/core/universe/world/World;III)Z
+        99: ifne          105
+       102: goto          276
+       105: aload_0
+       106: aload         6
+       108: invokevirtual #29                 // Method com/hypixel/hytale/math/vector/Vector3d.getX:()D
+       111: iload         7
+       113: i2d
+       114: dadd
+       115: d2i
+       116: aload         6
+       118: invokevirtual #35                 // Method com/hypixel/hytale/math/vector/Vector3d.getY:()D
+       121: iload         8
+       123: i2d
+       124: dadd
+       125: d2i
+       126: aload         6
+       128: invokevirtual #38                 // Method com/hypixel/hytale/math/vector/Vector3d.getZ:()D
+       131: iload         9
+       133: i2d
+       134: dadd
+       135: d2i
+       136: iconst_1
+       137: invokevirtual #47                 // Method com/hypixel/hytale/server/core/universe/world/World.getState:(IIIZ)Lcom/hypixel/hytale/server/core/universe/world/meta/BlockState;
+       140: astore        10
+       142: aload         10
+       144: instanceof    #53                 // class com/hypixel/hytale/server/core/universe/world/meta/state/ItemContainerState
+       147: ifeq          276
+       150: aload         10
+       152: checkcast     #53                 // class com/hypixel/hytale/server/core/universe/world/meta/state/ItemContainerState
+       155: astore        11
+       157: aload         11
+       159: invokevirtual #55                 // Method com/hypixel/hytale/server/core/universe/world/meta/state/ItemContainerState.getItemContainer:()Lcom/hypixel/hytale/server/core/inventory/container/ItemContainer;
+       162: astore        12
+       164: aload         5
+       166: aload         12
+       168: invokevirtual #59                 // Method java/util/ArrayList.contains:(Ljava/lang/Object;)Z
+       171: ifeq          177
+       174: goto          276
+       177: aload         5
+       179: aload         12
+       181: invokevirtual #63                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+       184: pop
+       185: iconst_0
+       186: istore        13
+       188: iload         13
+       190: aload         12
+       192: invokevirtual #66                 // Method com/hypixel/hytale/server/core/inventory/container/ItemContainer.getCapacity:()S
+       195: if_icmpge     276
+       198: aload         12
+       200: iload         13
+       202: invokevirtual #72                 // Method com/hypixel/hytale/server/core/inventory/container/ItemContainer.getItemStack:(S)Lcom/hypixel/hytale/server/core/inventory/ItemStack;
+       205: astore        14
+       207: aload         14
+       209: ifnull        266
+       212: aload         14
+       214: invokevirtual #76                 // Method com/hypixel/hytale/server/core/inventory/ItemStack.isEmpty:()Z
+       217: ifne          266
+       220: aload         4
+       222: aload         14
+       224: invokevirtual #82                 // Method com/hypixel/hytale/server/core/inventory/ItemStack.getItem:()Lcom/hypixel/hytale/server/core/asset/type/item/config/Item;
+       227: invokevirtual #86                 // Method com/hypixel/hytale/server/core/asset/type/item/config/Item.getId:()Ljava/lang/String;
+       230: aload         4
+       232: aload         14
+       234: invokevirtual #82                 // Method com/hypixel/hytale/server/core/inventory/ItemStack.getItem:()Lcom/hypixel/hytale/server/core/asset/type/item/config/Item;
+       237: invokevirtual #86                 // Method com/hypixel/hytale/server/core/asset/type/item/config/Item.getId:()Ljava/lang/String;
+       240: iconst_0
+       241: invokestatic  #92                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       244: invokevirtual #98                 // Method java/util/HashMap.getOrDefault:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+       247: checkcast     #93                 // class java/lang/Integer
+       250: invokevirtual #102                // Method java/lang/Integer.intValue:()I
+       253: aload         14
+       255: invokevirtual #106                // Method com/hypixel/hytale/server/core/inventory/ItemStack.getQuantity:()I
+       258: iadd
+       259: invokestatic  #92                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       262: invokevirtual #109                // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+       265: pop
+       266: iload         13
+       268: iconst_1
+       269: iadd
+       270: i2s
+       271: istore        13
+       273: goto          188
+       276: iinc          9, 1
+       279: goto          58
+       282: iinc          8, 1
+       285: goto          48
+       288: iinc          7, 1
+       291: goto          38
+       294: new           #112                // class java/util/LinkedList
+       297: dup
+       298: aload         4
+       300: invokevirtual #114                // Method java/util/HashMap.entrySet:()Ljava/util/Set;
+       303: invokespecial #118                // Method java/util/LinkedList."<init>":(Ljava/util/Collection;)V
+       306: astore        7
+       308: aload         7
+       310: invokestatic  #121                // InterfaceMethod java/util/Map$Entry.comparingByValue:()Ljava/util/Comparator;
+       313: invokeinterface #127,  2          // InterfaceMethod java/util/List.sort:(Ljava/util/Comparator;)V
+       318: aload         7
+       320: invokeinterface #133,  1          // InterfaceMethod java/util/List.reversed:()Ljava/util/List;
+       325: astore        7
+       327: aload         7
+       329: invokeinterface #137,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+       334: invokedynamic #141,  0            // InvokeDynamic #0:get:()Ljava/util/function/Supplier;
+       339: invokedynamic #145,  0            // InvokeDynamic #1:accept:()Ljava/util/function/BiConsumer;
+       344: invokedynamic #149,  0            // InvokeDynamic #2:accept:()Ljava/util/function/BiConsumer;
+       349: invokeinterface #150,  4          // InterfaceMethod java/util/stream/Stream.collect:(Ljava/util/function/Supplier;Ljava/util/function/BiConsumer;Ljava/util/function/BiConsumer;)Ljava/lang/Object;
+       354: checkcast     #7                  // class java/util/HashMap
+       357: areturn
+
+  public static boolean isBlockInteractable(com.hypixel.hytale.component.Ref<com.hypixel.hytale.server.core.universe.world.storage.EntityStore>, com.hypixel.hytale.server.core.universe.world.World, int, int, int);
+    Code:
+         0: aload_0
+         1: invokevirtual #156                // Method com/hypixel/hytale/component/Ref.getStore:()Lcom/hypixel/hytale/component/Store;
+         4: aload_0
+         5: invokestatic  #162                // Method com/hypixel/hytale/server/core/entity/entities/Player.getComponentType:()Lcom/hypixel/hytale/component/ComponentType;
+         8: invokevirtual #19                 // Method com/hypixel/hytale/component/Store.getComponent:(Lcom/hypixel/hytale/component/Ref;Lcom/hypixel/hytale/component/ComponentType;)Lcom/hypixel/hytale/component/Component;
+        11: checkcast     #163                // class com/hypixel/hytale/server/core/entity/entities/Player
+        14: astore        5
+        16: aload_0
+        17: invokevirtual #156                // Method com/hypixel/hytale/component/Ref.getStore:()Lcom/hypixel/hytale/component/Store;
+        20: aload_0
+        21: invokestatic  #165                // Method com/hypixel/hytale/server/core/universe/PlayerRef.getComponentType:()Lcom/hypixel/hytale/component/ComponentType;
+        24: invokevirtual #19                 // Method com/hypixel/hytale/component/Store.getComponent:(Lcom/hypixel/hytale/component/Ref;Lcom/hypixel/hytale/component/ComponentType;)Lcom/hypixel/hytale/component/Component;
+        27: checkcast     #166                // class com/hypixel/hytale/server/core/universe/PlayerRef
+        30: astore        6
+        32: new           #168                // class com/hypixel/hytale/server/core/entity/InteractionManager
+        35: dup
+        36: aload         5
+        38: aload         6
+        40: new           #170                // class com/hypixel/hytale/server/core/modules/interaction/InteractionSimulationHandler
+        43: dup
+        44: invokespecial #172                // Method com/hypixel/hytale/server/core/modules/interaction/InteractionSimulationHandler."<init>":()V
+        47: invokespecial #173                // Method com/hypixel/hytale/server/core/entity/InteractionManager."<init>":(Lcom/hypixel/hytale/server/core/entity/LivingEntity;Lcom/hypixel/hytale/server/core/universe/PlayerRef;Lcom/hypixel/hytale/server/core/modules/interaction/IInteractionSimulationHandler;)V
+        50: astore        7
+        52: new           #176                // class com/hypixel/hytale/server/core/event/events/ecs/UseBlockEvent$Pre
+        55: dup
+        56: getstatic     #178                // Field com/hypixel/hytale/protocol/InteractionType.Use:Lcom/hypixel/hytale/protocol/InteractionType;
+        59: aload         7
+        61: aload         5
+        63: aload_0
+        64: invokestatic  #184                // Method com/hypixel/hytale/server/core/entity/InteractionContext.forProxyEntity:(Lcom/hypixel/hytale/server/core/entity/InteractionManager;Lcom/hypixel/hytale/server/core/entity/LivingEntity;Lcom/hypixel/hytale/component/Ref;)Lcom/hypixel/hytale/server/core/entity/InteractionContext;
+        67: new           #190                // class com/hypixel/hytale/math/vector/Vector3i
+        70: dup
+        71: iload_2
+        72: iload_3
+        73: iload         4
+        75: invokespecial #192                // Method com/hypixel/hytale/math/vector/Vector3i."<init>":(III)V
+        78: aload_1
+        79: iload_2
+        80: iload_3
+        81: iload         4
+        83: invokevirtual #195                // Method com/hypixel/hytale/server/core/universe/world/World.getBlockType:(III)Lcom/hypixel/hytale/server/core/asset/type/blocktype/config/BlockType;
+        86: invokespecial #199                // Method com/hypixel/hytale/server/core/event/events/ecs/UseBlockEvent$Pre."<init>":(Lcom/hypixel/hytale/protocol/InteractionType;Lcom/hypixel/hytale/server/core/entity/InteractionContext;Lcom/hypixel/hytale/math/vector/Vector3i;Lcom/hypixel/hytale/server/core/asset/type/blocktype/config/BlockType;)V
+        89: astore        8
+        91: aload_0
+        92: invokevirtual #156                // Method com/hypixel/hytale/component/Ref.getStore:()Lcom/hypixel/hytale/component/Store;
+        95: aload_0
+        96: aload         8
+        98: invokevirtual #202                // Method com/hypixel/hytale/component/Store.invoke:(Lcom/hypixel/hytale/component/Ref;Lcom/hypixel/hytale/component/system/EcsEvent;)V
+       101: aload         8
+       103: invokevirtual #206                // Method com/hypixel/hytale/server/core/event/events/ecs/UseBlockEvent$Pre.isCancelled:()Z
+       106: ifne          113
+       109: iconst_1
+       110: goto          114
+       113: iconst_0
+       114: ireturn
+
+  private static void lambda$collectNearbyItems$0(java.util.LinkedHashMap, java.util.Map$Entry);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokeinterface #209,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+         7: checkcast     #213                // class java/lang/String
+        10: aload_1
+        11: invokeinterface #215,  1          // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+        16: checkcast     #93                 // class java/lang/Integer
+        19: invokevirtual #218                // Method java/util/LinkedHashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+        22: pop
+        23: return
+}

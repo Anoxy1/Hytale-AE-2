@@ -1,0 +1,28 @@
+{
+  "TimeSeconds": 2,
+  "Input": [
+    {
+      "ItemId": "Me_Controller",
+      "Quantity": 1
+    },
+    {
+      "ItemId": "Ingredient_Glass",
+      "Quantity": 4
+    },
+    {
+      "ItemId": "Ingredient_Dust_Redstone",
+      "Quantity": 1
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "Me_Terminal",
+    "Quantity": 1
+  },
+  "BenchRequirement": [
+    {
+      "Type": "Crafting",
+      "Id": "Workbench",
+      "Categories": ["Workbench_Tinkering"]
+    }
+  ]
+}

@@ -1,151 +1,103 @@
 package com.tobi.mesystem.blocks;
 
 import java.util.UUID;
+import java.util.logging.Level;
 
 import com.tobi.mesystem.MEPlugin;
 import com.tobi.mesystem.core.MEDeviceType;
 import com.tobi.mesystem.core.MENetwork;
 import com.tobi.mesystem.core.MENode;
 import com.tobi.mesystem.util.BlockPos;
-import com.tobi.mesystem.util.Direction;
 
 /**
  * ME Terminal Block - Zugriff auf Netzwerk Storage
+ * 
+ * Simplified mit MEBlockBase - gemeinsame Logik in Basisklasse
  */
-public class METerminalBlock {
+public class METerminalBlock extends MEBlockBase {
 
-    public METerminalBlock() {
+    @Override
+    protected MEDeviceType getDeviceType() {
+        return MEDeviceType.TERMINAL;
+    }
+    
+    @Override
+    protected void onRightClickExtra(UUID worldId, BlockPos position, MENode node, MENetwork network) {
+        // GUI wird implementiert sobald Hytale GUI-API verfügbar ist
+        // Aktuell: Zeige Network-Status im Chat
+        logger.at(Level.INFO).log(
+            "Terminal angeklickt bei %s | Network: %s Items, %s/%s Channels, Storage: %s/%s",
+            position,
+            network.getItemTypeCount(),
+            network.getUsedChannels(),
+            network.getMaxChannels(),
+            network.getStoredItemCount(),
+            network.getTotalStorageCapacity()
+        );
     }
 
     // ==================== STATIC HYTALE EVENT WRAPPERS ====================
     
-    /**
-     * Statischer Wrapper für Hytale PlaceBlockEvent
-     */
     public static void onPlaced(BlockPos position, Object world) {
         try {
-            if (world == null) return;
+            if (position == null) {
+                MEPlugin.getInstance().getPluginLogger().at(Level.WARNING).log("onPlaced: BlockPos ist null");
+                return;
+            }
+            if (world == null) {
+                MEPlugin.getInstance().getPluginLogger().at(Level.WARNING).log("onPlaced: World ist null");
+                return;
+            }
             
             UUID worldId = extractWorldId(world);
-            new METerminalBlock().onPlaced(worldId, position);
-            
+            MEPlugin.getInstance().getPluginLogger().at(Level.FINE).log("onPlaced: METerminalBlock bei %s", position);
+            new METerminalBlock().onPlaced(worldId, position, world);
         } catch (Exception e) {
-            MEPlugin.getInstance().getPluginLogger().error("Fehler beim Platzieren von ME Terminal", e);
+            MEPlugin.getInstance().getPluginLogger().at(Level.SEVERE).withCause(e).log("Fehler beim Platzieren von ME Terminal");
         }
     }
 
-    /**
-     * Statischer Wrapper für Hytale BreakBlockEvent
-     */
     public static void onBroken(BlockPos position, Object world) {
         try {
-            if (world == null) return;
+            if (position == null) {
+                MEPlugin.getInstance().getPluginLogger().at(Level.WARNING).log("onBroken: BlockPos ist null");
+                return;
+            }
+            if (world == null) {
+                MEPlugin.getInstance().getPluginLogger().at(Level.WARNING).log("onBroken: World ist null");
+                return;
+            }
             
             UUID worldId = extractWorldId(world);
+            MEPlugin.getInstance().getPluginLogger().at(Level.FINE).log("onBroken: METerminalBlock bei %s", position);
             new METerminalBlock().onBroken(worldId, position);
-            
         } catch (Exception e) {
-            MEPlugin.getInstance().getPluginLogger().error("Fehler beim Zerstören von ME Terminal", e);
+            MEPlugin.getInstance().getPluginLogger().at(Level.SEVERE).withCause(e).log("Fehler beim Zerstören von ME Terminal");
         }
     }
 
-    /**
-     * Statischer Wrapper für Hytale UseBlockEvent
-     * Öffnet das Terminal-GUI
-     * 
-     * @return true wenn das Event verarbeitet wurde (Block-Interaction canceln)
-     */
     public static boolean onRightClick(BlockPos position, Object world, Object player) {
         try {
-            if (world == null || player == null) return false;
+            if (position == null) {
+                MEPlugin.getInstance().getPluginLogger().at(Level.WARNING).log("onRightClick: BlockPos ist null");
+                return false;
+            }
+            if (world == null) {
+                MEPlugin.getInstance().getPluginLogger().at(Level.WARNING).log("onRightClick: World ist null");
+                return false;
+            }
+            if (player == null) {
+                MEPlugin.getInstance().getPluginLogger().at(Level.WARNING).log("onRightClick: Player ist null");
+                return false;
+            }
             
             UUID worldId = extractWorldId(world);
-            METerminalBlock terminal = new METerminalBlock();
-            terminal.onRightClick(worldId, position);
-            
-            // TODO: GUI-Öffnung implementieren wenn Terminal-GUI ready ist
-            // player.openGui(new METerminalGui(position, network));
-            
+            MEPlugin.getInstance().getPluginLogger().at(Level.FINE).log("onRightClick: METerminalBlock bei %s", position);
+            new METerminalBlock().onRightClick(worldId, position);
             return true; // Event wurde verarbeitet
-            
         } catch (Exception e) {
-            MEPlugin.getInstance().getPluginLogger().error("Fehler beim Interagieren mit ME Terminal", e);
+            MEPlugin.getInstance().getPluginLogger().at(Level.SEVERE).withCause(e).log("Fehler beim Interagieren mit ME Terminal");
             return false;
-        }
-    }
-    
-    /**
-     * Hilfsmethode: Extrahiere World-UUID aus World-Objekt
-     */
-    private static UUID extractWorldId(Object world) {
-        try {
-            return (UUID) world.getClass().getMethod("getWorldId").invoke(world);
-        } catch (ReflectiveOperationException e) {
-            MEPlugin.getInstance().getPluginLogger().warn("Konnte World-UUID nicht extrahieren", e);
-            return UUID.randomUUID();
-        }
-    }
-
-    // ==================== INSTANCE METHODS ====================
-    
-    public void onPlaced(UUID worldId, BlockPos position) {
-
-        MENode node = new MENode(worldId, position, MEDeviceType.TERMINAL);
-        MENetwork network = findOrCreateNetwork(worldId, position, node);
-
-        // Device registrieren (reserviert Channels nach Bedarf)
-        network.registerDevice(position, MEDeviceType.TERMINAL);
-
-        // Nachbarn verbinden
-        connectToNeighbors(worldId, position, node);
-
-        // Manager registrieren
-        MEPlugin.getInstance().getNetworkManager().addNode(worldId, position, node);
-    }
-
-    public void onBroken(UUID worldId, BlockPos position) {
-        MENode node = MEPlugin.getInstance().getNetworkManager().getNode(worldId, position);
-        if (node != null && node.getNetwork() != null) {
-            MENetwork network = node.getNetwork();
-            network.unregisterDevice(position);
-            network.removeNode(position);
-        }
-        MEPlugin.getInstance().getNetworkManager().removeNode(worldId, position);
-    }
-
-    public void onRightClick(UUID worldId, BlockPos position) {
-        MENode node = MEPlugin.getInstance().getNetworkManager().getNode(worldId, position);
-        if (node != null && node.getNetwork() != null) {
-            // TODO: display terminal info
-        }
-    }
-
-    private MENetwork findOrCreateNetwork(UUID worldId, BlockPos position, MENode node) {
-        for (Direction dir : Direction.values()) {
-            BlockPos neighborPos = position.offset(dir);
-            MENode neighborNode = MEPlugin.getInstance().getNetworkManager().getNode(worldId, neighborPos);
-            if (neighborNode != null && neighborNode.getNetwork() != null) {
-                MENetwork network = neighborNode.getNetwork();
-                network.addNode(node);
-                return network;
-            }
-        }
-        MENetwork newNetwork = new MENetwork();
-        newNetwork.addNode(node);
-        return newNetwork;
-    }
-
-    private void connectToNeighbors(UUID worldId, BlockPos position, MENode node) {
-        for (Direction dir : Direction.values()) {
-            BlockPos neighborPos = position.offset(dir);
-            MENode neighborNode = MEPlugin.getInstance().getNetworkManager().getNode(worldId, neighborPos);
-            if (neighborNode != null) {
-                node.addConnection(dir);
-                neighborNode.addConnection(dir.getOpposite());
-                if (node.getNetwork() != neighborNode.getNetwork()) {
-                    node.getNetwork().merge(neighborNode.getNetwork());
-                }
-            }
         }
     }
 }

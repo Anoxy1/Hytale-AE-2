@@ -1,0 +1,55 @@
+{
+  "MaxStack": 100,
+  "PlayerAnimationsId": "Block",
+  "Categories": ["Blocks.Rocks"],
+  "Set": "",
+  "Icon": "Icons/ItemsGenerated/Me_Controller.png",
+  "IconProperties": {
+    "Scale": 0.55,
+    "Rotation": [20, 45, 20],
+    "Translation": [0, -10]
+  },
+
+  "BlockType": {
+    "Supporting": {
+      "Up": [{"FaceType": "Full"}],
+      "Down": [{"FaceType": "Full"}],
+      "North": [{"FaceType": "Full"}],
+      "South": [{"FaceType": "Full"}],
+      "East": [{"FaceType": "Full"}],
+      "West": [{"FaceType": "Full"}]
+    },
+    "Support": {
+      "Down": [{"FaceType": "Full"}]
+    },
+    "BlockSoundSetId": "Stone",
+    "DrawType": "Cube",
+    "Textures": [
+      {
+        "Weight": 1,
+        "Sides": "BlockTextures/Me_Controller.png",
+        "UpDown": "BlockTextures/Me_Controller.png"
+      }
+    ],
+    "Flags": {
+      "IsUsable": false
+    },
+    "HitboxType": "Full",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks",
+        "ItemId": "Me_Controller"
+      }
+    },
+    "Material": "Solid",
+    "ParticleColor": "#30ff70",
+    "State": {
+      "Id": "Me_Controller"
+    }
+  },
+
+  "TranslationProperties": {
+    "Name": "items.me_controller.name",
+    "Description": "items.me_controller.description"
+  }
+}

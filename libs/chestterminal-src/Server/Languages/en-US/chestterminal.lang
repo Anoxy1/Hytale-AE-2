@@ -1,0 +1,2 @@
+block.name=Chest Terminal
+block.desc=Place items in this terminal to automatically distribute them to all chests within 50 blocks\n\nRight-click to open the terminal interface

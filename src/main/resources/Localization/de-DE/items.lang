@@ -1,0 +1,13 @@
+# ME System Items - Deutsche Lokalisierung
+
+# ME Cable
+items.me_cable.name=ME Kabel
+items.me_cable.description=Transportkabel für ME Netzwerke. Verbindet ME Geräte miteinander.
+
+# ME Terminal
+items.me_terminal.name=ME Terminal
+items.me_terminal.description=Zugriffspunkt für ME Netzwerk-Speicher. Rechtsklick zum Öffnen.
+
+# ME Controller
+items.me_controller.name=ME Controller
+items.me_controller.description=Haupteinheit für ME Netzwerk. Erhöht Netzwerkkapazität auf 32 Kanäle.

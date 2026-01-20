@@ -1,198 +1,118 @@
 package com.tobi.mesystem.blocks;
 
 import java.util.UUID;
+import java.util.logging.Level;
 
 import com.tobi.mesystem.MEPlugin;
 import com.tobi.mesystem.core.MEDeviceType;
 import com.tobi.mesystem.core.MENetwork;
 import com.tobi.mesystem.core.MENode;
 import com.tobi.mesystem.util.BlockPos;
-import com.tobi.mesystem.util.Direction;
 
 /**
  * ME Controller Block - Network Controller
+ * 
+ * Besonderheiten:
+ * - Erhöht Channel-Limit auf 32
+ * - Pro Network nur ein Controller erlaubt
+ * - Entfernung reduziert Channels auf 8
+ * 
+ * Simplified mit MEBlockBase - gemeinsame Logik in Basisklasse
  */
-public class MEControllerBlock {
+public class MEControllerBlock extends MEBlockBase {
     
-    public MEControllerBlock() {
+    @Override
+    protected MEDeviceType getDeviceType() {
+        return MEDeviceType.CONTROLLER;
     }
     
-    // ==================== STATIC HYTALE EVENT WRAPPERS ====================
-    
-    /**
-     * Statischer Wrapper für Hytale PlaceBlockEvent
-     */
-    public static void onPlaced(BlockPos position, Object world) {
-        try {
-            if (world == null) return;
-            
-            UUID worldId = extractWorldId(world);
-            new MEControllerBlock().onPlaced(worldId, position);
-            
-        } catch (Exception e) {
-            MEPlugin.getInstance().getPluginLogger().error("Fehler beim Platzieren von ME Controller", e);
-        }
-    }
-
-    /**
-     * Statischer Wrapper für Hytale BreakBlockEvent
-     */
-    public static void onBroken(BlockPos position, Object world) {
-        try {
-            if (world == null) return;
-            
-            UUID worldId = extractWorldId(world);
-            new MEControllerBlock().onBroken(worldId, position);
-            
-        } catch (Exception e) {
-            MEPlugin.getInstance().getPluginLogger().error("Fehler beim Zerstören von ME Controller", e);
-        }
-    }
-
-    /**
-     * Statischer Wrapper für Hytale UseBlockEvent
-     */
-    public static void onRightClick(BlockPos position, Object world) {
-        try {
-            if (world == null) return;
-            
-            UUID worldId = extractWorldId(world);
-            new MEControllerBlock().onRightClick(worldId, position);
-            
-        } catch (Exception e) {
-            MEPlugin.getInstance().getPluginLogger().error("Fehler beim Interagieren mit ME Controller", e);
-        }
-    }
-    
-    /**
-     * Hilfsmethode: Extrahiere World-UUID aus World-Objekt
-     */
-    private static UUID extractWorldId(Object world) {
-        try {
-            return (UUID) world.getClass().getMethod("getWorldId").invoke(world);
-        } catch (ReflectiveOperationException e) {
-            MEPlugin.getInstance().getPluginLogger().warn("Konnte World-UUID nicht extrahieren", e);
-            return UUID.randomUUID();
-        }
-    }
-    
-    // ==================== INSTANCE METHODS ====================
-    
-    public void onPlaced(UUID worldId, BlockPos position) {
-        
-        // ME Node erstellen
-        MENode node = new MENode(worldId, position, MEDeviceType.CONTROLLER);
-        
-        // Network finden oder erstellen
-        MENetwork network = findOrCreateNetwork(worldId, position, node);
-        
+    @Override
+    protected void onPlacedExtra(UUID worldId, BlockPos position, MENode node, MENetwork network) {
         // Prüfe ob Network bereits einen Controller hat
         if (network.hasController()) {
-            // TODO: Block wieder entfernen oder nicht platzieren
+            logger.at(Level.WARNING).log("Network hat bereits einen Controller! Platzierung bei %s wird blockiert", position);
+            // Entferne den Node wieder aus dem Netzwerk
+            network.removeNode(position);
+            MEPlugin.getInstance().getNetworkManager().removeNode(worldId, position);
+            logger.at(Level.INFO).log("Doppel-Controller bei %s blockiert und entfernt", position);
             return;
         }
-        
-        // Controller zum Network hinzufügen
+
+        // Controller zum Network hinzufügen (erhöht Channels auf 32)
         network.addController(position);
-        
-        // Zu benachbarten Nodes verbinden
-        connectToNeighbors(worldId, position, node);
-        
-        // Im NetworkManager registrieren
-        MEPlugin.getInstance().getNetworkManager().addNode(worldId, position, node);
+        logger.at(Level.INFO).log("Controller platziert bei %s | Channels: %s", position, network.getMaxChannels());
     }
     
-    public void onBroken(UUID worldId, BlockPos position) {
-        
-        // Node aus Network entfernen
-        MENode node = MEPlugin.getInstance().getNetworkManager().getNode(worldId, position);
-        if (node != null && node.getNetwork() != null) {
-            MENetwork network = node.getNetwork();
-            
-            // Controller entfernen (setzt Channels zurück auf 8)
-            network.removeController();
-            network.removeNode(position);
-        }
-        
-        // Node aus Manager entfernen
-        MEPlugin.getInstance().getNetworkManager().removeNode(worldId, position);
+    @Override
+    protected void onBrokenExtra(UUID worldId, BlockPos position, MENode node, MENetwork network) {
+        // Controller entfernen (reduziert Channels auf 8)
+        network.removeController();
+        logger.at(Level.INFO).log("Controller entfernt bei %s | Channels reduziert auf %s", position, network.getMaxChannels());
     }
     
-    public void onRightClick(UUID worldId, BlockPos position) {
-        MENode node = MEPlugin.getInstance().getNetworkManager().getNode(worldId, position);
-        
-        if (node != null && node.getNetwork() != null) {
-            // TODO: display controller info
-        }
+    @Override
+    protected void onRightClickExtra(UUID worldId, BlockPos position, MENode node, MENetwork network) {
+        logger.at(Level.FINE).log("Controller Status: %s Nodes, %s/%s Channels, %s Item-Typen",
+            network.size(), network.getUsedChannels(),
+            network.getMaxChannels(), network.getItemTypeCount());
     }
+
+    // ==================== STATIC HYTALE EVENT WRAPPERS ====================
     
-    /**
-     * Findet existierendes Network oder erstellt neues
-     */
-    private MENetwork findOrCreateNetwork(UUID worldId, BlockPos position, MENode node) {
-        
-        // Prüfe benachbarte Blocks auf existierende Networks
-        for (Direction dir : Direction.values()) {
-            BlockPos neighborPos = position.offset(dir);
-            MENode neighborNode = MEPlugin.getInstance().getNetworkManager().getNode(worldId, neighborPos);
-            
-            if (neighborNode != null && neighborNode.getNetwork() != null) {
-                // Zu existierendem Network hinzufügen
-                MENetwork network = neighborNode.getNetwork();
-                network.addNode(node);
-                return network;
+    public static void onPlaced(BlockPos position, Object world) {
+        try {
+            if (position == null) {
+                MEPlugin.getInstance().getPluginLogger().at(Level.WARNING).log("onPlaced: BlockPos ist null");
+                return;
             }
-        }
-        
-        // Kein existierendes Network gefunden - neues erstellen
-        MENetwork newNetwork = new MENetwork();
-        newNetwork.addNode(node);
-        return newNetwork;
-    }
-    
-    /**
-     * Verbindet zu allen benachbarten ME Devices
-     */
-    private void connectToNeighbors(UUID worldId, BlockPos position, MENode node) {
-        
-        for (Direction dir : Direction.values()) {
-            BlockPos neighborPos = position.offset(dir);
-            MENode neighborNode = MEPlugin.getInstance().getNetworkManager().getNode(worldId, neighborPos);
-            
-            if (neighborNode != null) {
-                // Connection hinzufügen
-                node.addConnection(dir);
-                neighborNode.addConnection(dir.getOpposite());
-                
-                // Networks mergen, falls unterschiedlich
-                if (node.getNetwork() != neighborNode.getNetwork()) {
-                    MENetwork network1 = node.getNetwork();
-                    MENetwork network2 = neighborNode.getNetwork();
-                    
-                    // Prüfe ob beide Networks Controller haben
-                    if (network1.hasController() && network2.hasController()) {
-                        MEPlugin.getInstance().getPluginLogger().warn(
-                            "Warnung: Versuch zwei Networks mit Controllern zu mergen!"
-                        );
-                        // TODO: Merge verhindern oder einen Controller entfernen
-                        return;
-                    }
-                    
-                    mergeNetworks(network1, network2);
-                }
+            if (world == null) {
+                MEPlugin.getInstance().getPluginLogger().at(Level.WARNING).log("onPlaced: World ist null");
+                return;
             }
+            
+            UUID worldId = extractWorldId(world);
+            MEPlugin.getInstance().getPluginLogger().at(Level.FINE).log("onPlaced: MEControllerBlock bei %s", position);
+            new MEControllerBlock().onPlaced(worldId, position, world);
+        } catch (Exception e) {
+            MEPlugin.getInstance().getPluginLogger().at(Level.SEVERE).withCause(e).log("Fehler beim Platzieren von ME Controller");
         }
     }
-    
-    /**
-     * Merged zwei Networks
-     */
-    private void mergeNetworks(MENetwork network1, MENetwork network2) {
-        if (network1 == network2) return;
-        MENetwork smaller = network1.size() < network2.size() ? network1 : network2;
-        MENetwork larger = network1.size() < network2.size() ? network2 : network1;
-        for (MENode node : smaller.getNodes()) {
-            larger.addNode(node);
+
+    public static void onBroken(BlockPos position, Object world) {
+        try {
+            if (position == null) {
+                MEPlugin.getInstance().getPluginLogger().at(Level.WARNING).log("onBroken: BlockPos ist null");
+                return;
+            }
+            if (world == null) {
+                MEPlugin.getInstance().getPluginLogger().at(Level.WARNING).log("onBroken: World ist null");
+                return;
+            }
+            
+            UUID worldId = extractWorldId(world);
+            MEPlugin.getInstance().getPluginLogger().at(Level.FINE).log("onBroken: MEControllerBlock bei %s", position);
+            new MEControllerBlock().onBroken(worldId, position);
+        } catch (Exception e) {
+            MEPlugin.getInstance().getPluginLogger().at(Level.SEVERE).withCause(e).log("Fehler beim Zerstören von ME Controller");
+        }
+    }
+
+    public static void onRightClick(BlockPos position, Object world) {
+        try {
+            if (position == null) {
+                MEPlugin.getInstance().getPluginLogger().at(Level.WARNING).log("onRightClick: BlockPos ist null");
+                return;
+            }
+            if (world == null) {
+                MEPlugin.getInstance().getPluginLogger().at(Level.WARNING).log("onRightClick: World ist null");
+                return;
+            }
+            
+            UUID worldId = extractWorldId(world);
+            MEPlugin.getInstance().getPluginLogger().at(Level.FINE).log("onRightClick: MEControllerBlock bei %s", position);
+            new MEControllerBlock().onRightClick(worldId, position);
+        } catch (Exception e) {
+            MEPlugin.getInstance().getPluginLogger().at(Level.SEVERE).withCause(e).log("Fehler beim Interagieren mit ME Controller");
         }
     }
 }

@@ -1,0 +1,59 @@
+{
+  "MaxStack": 100,
+  "PlayerAnimationsId": "Block",
+  "Categories": ["Blocks.Rocks"],
+  "Set": "",
+  "Icon": "Icons/ItemsGenerated/Me_Terminal.png",
+  "IconProperties": {
+    "Scale": 0.55,
+    "Rotation": [20, 45, 20],
+    "Translation": [0, -10]
+  },
+
+  "BlockType": {
+    "Supporting": {
+      "Up": [{"FaceType": "Full"}],
+      "Down": [{"FaceType": "Full"}],
+      "North": [{"FaceType": "Full"}],
+      "South": [{"FaceType": "Full"}],
+      "East": [{"FaceType": "Full"}],
+      "West": [{"FaceType": "Full"}]
+    },
+    "Support": {
+      "Down": [{"FaceType": "Full"}]
+    },
+    "BlockSoundSetId": "Stone",
+    "DrawType": "Cube",
+    "Textures": [
+      {
+        "Weight": 1,
+        "Sides": "BlockTextures/Me_Terminal.png",
+        "UpDown": "BlockTextures/Me_Terminal.png"
+      }
+    ],
+    "Flags": {
+      "IsUsable": true
+    },
+    "Interactions": {
+      "Use": "Me_Terminal_Open"
+    },
+    "InteractionHint": "server.interactionHints.open",
+    "HitboxType": "Full",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks",
+        "ItemId": "Me_Terminal"
+      }
+    },
+    "Material": "Solid",
+    "ParticleColor": "#3070ff",
+    "State": {
+      "Id": "Me_Terminal"
+    }
+  },
+
+  "TranslationProperties": {
+    "Name": "items.me_terminal.name",
+    "Description": "items.me_terminal.description"
+  }
+}

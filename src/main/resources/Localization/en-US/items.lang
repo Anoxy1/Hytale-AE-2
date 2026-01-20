@@ -1,0 +1,13 @@
+# ME System Items - English Localization
+
+# ME Cable
+items.me_cable.name=ME Cable
+items.me_cable.description=Transport cable for ME networks. Connects ME devices together.
+
+# ME Terminal
+items.me_terminal.name=ME Terminal
+items.me_terminal.description=Access point for ME network storage. Right-click to open interface.
+
+# ME Controller
+items.me_controller.name=ME Controller
+items.me_controller.description=Main hub for ME network. Increases network capacity to 32 channels.

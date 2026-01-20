@@ -1,9 +1,13 @@
 package com.tobi.mesystem.core;
 
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
+
 import com.tobi.mesystem.util.BlockPos;
 import com.tobi.mesystem.util.Direction;
-
-import java.util.*;
 
 /**
  * ME Network Node
@@ -21,6 +25,7 @@ public class MENode {
     private int priority = 0;
     private boolean active = true;
     private int ticksSinceLastActivity = 0;
+    private volatile Object world;  // World reference for container access
     
     public MENode(UUID worldId, BlockPos position, MEDeviceType deviceType) {
         this.worldId = worldId;
@@ -55,6 +60,14 @@ public class MENode {
     
     public boolean isActive() {
         return active;
+    }
+    
+    public Object getWorld() {
+        return world;
+    }
+    
+    public void setWorld(Object world) {
+        this.world = world;
     }
     
     public void setNetwork(MENetwork network) {

@@ -1,0 +1,28 @@
+{
+  "TimeSeconds": 2,
+  "Input": [
+    {
+      "ItemId": "Me_Cable",
+      "Quantity": 4
+    },
+    {
+      "ItemId": "Ingredient_Dust_Redstone",
+      "Quantity": 2
+    },
+    {
+      "ItemId": "Ingredient_Bar_Iron",
+      "Quantity": 2
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "Me_Controller",
+    "Quantity": 1
+  },
+  "BenchRequirement": [
+    {
+      "Type": "Crafting",
+      "Id": "Workbench",
+      "Categories": ["Workbench_Tinkering"]
+    }
+  ]
+}

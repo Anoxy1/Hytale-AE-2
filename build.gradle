@@ -1,15 +1,21 @@
 plugins {
     id 'java'
-    id 'com.gradleup.shadow' version '8.3.5'
+    id 'com.gradleup.shadow' version '9.0.0-beta4'
 }
 
 group = 'com.tobi'
-version = '0.1.0-SNAPSHOT'
+version = '0.2.0'
+description = 'Applied Energistics 2 für Hytale - ME Network Storage & Transport System'
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
     }
+}
+
+// Shadow JAR mit ASM Update für Java 25 Support
+configurations {
+    shadowPluginClasspath
 }
 
 repositories {
@@ -24,45 +30,130 @@ dependencies {
     compileOnly files('libs/ChestTerminal-2.0.8.jar')
     compileOnly files('libs/HyPipes-1.0.5-SNAPSHOT.jar')
     
-    // Logging (als provided - wird vom Server bereitgestellt)
-    compileOnly 'org.apache.logging.log4j:log4j-api:2.20.0'
-    compileOnly 'org.apache.logging.log4j:log4j-core:2.20.0'
+    // Annotations für bessere Code-Qualität
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
     
     // Testing
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.mockito:mockito-core:5.3.1'
 }
 
+// Shadow JAR Configuration
 shadowJar {
     archiveClassifier.set('')
+    archiveBaseName.set(project.name)
+    archiveVersion.set(project.version.toString())
+    
+    // DISABLE minimization for Java 25 compatibility
+    // minimize() causes issues with ASM and Java 25
     
     // Exclude META-INF von Dependencies
     exclude 'META-INF/*.SF'
     exclude 'META-INF/*.DSA'
     exclude 'META-INF/*.RSA'
+    exclude 'META-INF/maven/**'
+    exclude 'META-INF/versions/**'
     
+    // Plugin Manifest
     manifest {
         attributes(
-            'Main-Class': 'com.tobi.mesystem.MEPlugin'
+            'Main-Class': 'com.tobi.mesystem.MEPlugin',
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version,
+            'Built-By': System.getProperty('user.name'),
+            'Built-JDK': System.getProperty('java.version'),
+            'Created-By': 'Gradle ' + gradle.gradleVersion
         )
     }
 }
 
+// Test Configuration
 tasks.named('test') {
     useJUnitPlatform()
+    
+    // Test Output
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat = "full"
+        showStandardStreams = false
+    }
+    
+    // Performance
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
 }
 
+// Build abhängig von shadowJar
 tasks.build.dependsOn tasks.shadowJar
 
+// Custom Tasks
 task quickBuild {
+    group = 'build'
+    description = 'Schneller Build ohne Tests'
     dependsOn 'clean', 'shadowJar'
     doLast {
-        println "Build fertig: build/libs/${project.name}-${version}.jar"
+        def jar = new File("build/libs/${project.name}-${version}.jar")
+        println "╔════════════════════════════════════════════════════════════╗"
+        println "║  Build erfolgreich!                                        ║"
+        println "╚════════════════════════════════════════════════════════════╝"
+        println "JAR: ${jar.absolutePath}"
+        println "Größe: ${jar.length() / 1024} KB"
+        println "Timestamp: ${new Date()}"
     }
 }
 
-// Compiler Warnings
+task info {
+    group = 'help'
+    description = 'Zeigt Projekt-Informationen an'
+    notCompatibleWithConfigurationCache("Uses project at execution time")
+    doLast {
+        println "\n═══════════════════════════════════════════"
+        println "  ${project.name}"
+        println "═══════════════════════════════════════════"
+        println "  Version: ${project.version}"
+        println "  Group: ${project.group}"
+        println "  Java: ${java.toolchain.languageVersion.get()}"
+        println "═══════════════════════════════════════════\n"
+    }
+}
+
+task copyToServer(type: Copy) {
+    group = 'deployment'
+    description = 'Kopiert das JAR in den Hytale UserData/Mods Ordner'
+    dependsOn shadowJar
+    
+    def jarName = "${project.name}-${version}.jar"
+    def modsPath = System.getenv('APPDATA') + '/Hytale/UserData/Mods'
+    
+    from "build/libs/${jarName}"
+    into modsPath
+    
+    doLast {
+        def targetFile = new File("${modsPath}/${jarName}")
+        println "╔════════════════════════════════════════════════════════════╗"
+        println "║  Plugin kopiert nach Hytale Mods!                          ║"
+        println "╚════════════════════════════════════════════════════════════╝"
+        println "Pfad: ${targetFile.absolutePath}"
+        println "Größe: ${targetFile.length() / 1024} KB"
+    }
+}
+
+// Compiler Configuration
 tasks.withType(JavaCompile) {
-    options.compilerArgs += ['-Xlint:unchecked', '-Xlint:deprecation']
     options.encoding = 'UTF-8'
+    options.compilerArgs += [
+        '-Xlint:unchecked',
+        '-Xlint:deprecation',
+        '-Xlint:all',
+        '-parameters',
+        '-Xlint:cast',
+        '-Xlint:divzero',
+        '-Xlint:empty',
+        '-Xlint:finally'
+    ]
+}
+
+// JAR Task Configuration
+jar {
+    enabled = false // Nur Shadow JAR ausliefern
 }
