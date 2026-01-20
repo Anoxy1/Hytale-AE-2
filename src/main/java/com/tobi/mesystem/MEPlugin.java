@@ -67,19 +67,19 @@ public class MEPlugin extends JavaPlugin {
             initialized = false;
         }
     }
-    
+
     /**
      * Registers BlockStates with Hytale's BlockStateRegistry
-     * 
-     * NOTE: This method requires HytaleServer.jar at runtime.
-     * When HytaleServer.jar is available, uncomment the code below.
-     * 
+     *
+     * NOTE: This method requires HytaleServer.jar at runtime. When
+     * HytaleServer.jar is available, uncomment the code below.
+     *
      * The JSON files in Server/Item/Items/ will be auto-loaded because
      * IncludesAssetPack: true is set in manifest.json
      */
     private void registerBlockStates() {
         logger.info("BlockState registration stubbed - requires HytaleServer.jar");
-        
+
         /* UNCOMMENT WHEN HytaleServer.jar IS IN CLASSPATH:
         
         BlockStateRegistry registry = getBlockStateRegistry();
@@ -119,7 +119,7 @@ public class MEPlugin extends JavaPlugin {
             );
         logger.debug("  ✓ Terminal Interaction registered");
         
-        */
+         */
     }
 
     @Override

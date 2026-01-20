@@ -12,7 +12,7 @@ Ein vollständiges ME (Matter Energy) Storage-System für Hytale, inspiriert von
 # 1. Build
 .\gradlew build
 
-# 2. Single Player: Plugin-JAR → Hytale Mods/
+# 2. Single Player: Plugin-JAR → Hytale UserData/Mods/
 copy build\libs\HytaleAE2-0.1.0-SNAPSHOT.jar C:\Users\<username>\AppData\Roaming\Hytale\UserData\Mods\
 
 # 3. Dedicated Server: Plugin-JAR → Hytale plugins/
