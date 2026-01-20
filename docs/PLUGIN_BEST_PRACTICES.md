@@ -1,6 +1,120 @@
 # Hytale Plugin Development - Best Practices Guide
 
-**Quelle:** Community Documentation, CurseForge Plugins, Stack Overflow, GitBook Docs (Januar 2026)
+**Quelle:** Community Documentation, CurseForge Plugins, Stack Overflow, GitBook Docs (Januar 2026)  
+**REFERENCE**: [HelloPlugin (official)](https://github.com/noel-lang/hytale-example-plugin) - Structure, command patterns, lifecycle  
+**CRITICAL**: See [docs/PROJECT_RULES.md](PROJECT_RULES.md#critical-no-emoji-or-unicode-in-codestrings) for emoji/unicode ban
+
+---
+
+## CRITICAL: No Emoji, Unicode, or Complex Formatting in Code
+
+**This is NOT optional.** See [docs/PROJECT_RULES.md](PROJECT_RULES.md) for full context on why.
+
+```java
+// WRONG (DO NOT USE)
+System.out.println("✓ Container found at: " + pos);
+logger.info("━━━ Starting ━━━");
+String msg = "🚀 Plugin loaded!";
+
+// CORRECT (USE THIS)
+System.out.println("[OK] Container found at: " + pos);
+logger.info("========== Starting ==========");
+String msg = "Plugin loaded successfully.";
+```
+
+**Reason**: Windows console chaos, CI/CD logs garbled, remote SSH sessions fail. ASCII only, always.
+
+---
+
+## HelloPlugin Standard Structure (MUST Follow)
+
+All HytaleAE2 code follows the official [HelloPlugin](https://github.com/noel-lang/hytale-example-plugin) pattern. **Do not deviate.**
+
+### 1. Main Plugin Class
+
+```java
+import com.hypixel.hytale.server.HytaleServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class HytaleAE2 extends JavaPlugin {
+    private static final Logger logger = LoggerFactory.getLogger(HytaleAE2.class);
+    private static HytaleAE2 instance;
+    
+    public HytaleAE2() {
+        instance = this;
+    }
+    
+    @Override
+    public void onPluginEnable() {
+        logger.info("[OK] HytaleAE2 initializing...");
+        
+        // Register commands (HelloPlugin pattern)
+        getCommandRegistry().registerCommand(new MEDebugCommand());
+        
+        // Register event listeners if needed
+        // getEventRegistry().registerEventListener(new MyListener());
+        
+        logger.info("[OK] HytaleAE2 ready");
+    }
+    
+    @Override
+    public void onPluginDisable() {
+        logger.info("[OK] HytaleAE2 shutting down");
+    }
+    
+    public static HytaleAE2 getInstance() {
+        return instance;
+    }
+}
+```
+
+### 2. Command Pattern (from HelloPlugin)
+
+```java
+import com.hypixel.hytale.server.command.AbstractPlayerCommand;
+import com.hypixel.hytale.server.player.Player;
+
+public class MEDebugCommand extends AbstractPlayerCommand {
+    private static final Logger logger = LoggerFactory.getLogger(MEDebugCommand.class);
+    
+    @Override
+    public String getName() {
+        return "medebug";
+    }
+    
+    @Override
+    public void execute(Player player, String[] args) {
+        // ASCII-safe output only
+        StringBuilder sb = new StringBuilder();
+        sb.append("=== MENode Debug ===\n");
+        sb.append("Status: [OK]\n");
+        sb.append("Nodes: ").append(/* count */).append("\n");
+        
+        player.sendMessage(sb.toString());
+        logger.info("[OK] Debug command executed for player: {}", player.getName());
+    }
+}
+```
+
+**Key points**:
+- Extend `AbstractPlayerCommand` (HelloPlugin standard)
+- Use `player.sendMessage()` for output (ASCII-safe)
+- Use `logger` (SLF4J) for system logs
+- No emoji, no Unicode formatting
+
+### 3. Manifest (HelloPlugin compliant)
+
+```json
+{
+  "id": "hytale-ae2",
+  "name": "Hytale AE2",
+  "version": "0.1.0",
+  "author": "Anoxy1",
+  "description": "Matter/Energy infrastructure plugin",
+  "entrypoint": "com.tobi.HytaleAE2"
+}
+```
 
 ---
 
@@ -278,37 +392,63 @@ public void setChannels(int channels) {
 
 ## 📝 Logging Best Practices
 
-### 1. Strukturiertes Logging
+### 1. Strukturiertes Logging (SLF4J)
 
 ```java
-// Bad
-logger.info("Network created");
+// WRONG: Emoji, string concatenation
+logger.info("✓ Network created: " + network.getId());
 
-// Good
+// CORRECT: ASCII-safe, parameterized logging
 logger.info("Network created: id={}, controller={}, cables={}", 
     network.getId(), 
     controller.getPos(), 
     network.getCableCount()
 );
+
+// WRONG: Direct System.out in production code
+System.out.println("Network initialized!");
+
+// CORRECT: Use logger
+logger.info("Network initialized successfully");
 ```
+
+**Why parameterized logging?**
+- Lazy evaluation (better performance if log level is disabled)
+- Prevents accidental formatting issues
+- Works across all environments (Windows, Linux, CI/CD, SSH)
 
 ### 2. Log Levels richtig verwenden
 
 ```java
-// TRACE - Very detailed debugging
+// TRACE - Very detailed debugging (development only)
 logger.trace("Checking connection at {}", pos);
 
-// DEBUG - Development debugging
+// DEBUG - Development debugging  
 logger.debug("Added node {} to network {}", nodeId, networkId);
 
 // INFO - Important events
-logger.info("ME System initialized successfully");
+logger.info("[OK] ME System initialized successfully");
 
-// WARN - Probleme die handled werden können
-logger.warn("Failed to load network {}, creating new", networkId);
+// WARN - Problems that are handled
+logger.warn("[WARN] Failed to load network {}, creating new", networkId);
 
-// ERROR - Kritische Fehler
-logger.error("Failed to save network data", exception);
+// ERROR - Critical failures
+logger.error("[ERROR] Failed to save network data", exception);
+```
+
+**Anti-patterns**:
+```java
+// WRONG: Using INFO for debug info
+logger.info("Loop iteration: " + i);  // Spam!
+
+// WRONG: No context in error
+logger.error("Error occurred");  // Useless!
+
+// CORRECT
+if (logger.isDebugEnabled()) {
+    logger.debug("Loop iteration: {}", i);
+}
+logger.error("Failed to save network {} to disk", networkId, exception);
 ```
 
 ### 3. Performance-Aware Logging
@@ -543,6 +683,121 @@ protected void shutdown() {
 
 ---
 
-**Version:** 1.0.0  
+## ⚠️ Common Pitfalls (Anti-Patterns to Avoid)
+
+### 1. Emoji/Unicode in Code (THE #1 PROBLEM)
+
+**History**: This project spent 2 weeks debugging garbled console output. Root cause: emoji and box-drawing in strings.
+
+```java
+// WRONG (DO NOT USE EVER)
+logger.info("✓ Container found");
+System.out.println("┌─ Status ─┐");
+String banner = "🚀 Initializing...";
+CommandOutput output = "━━━━━━━━━━━━━━━━";
+
+// What you see in output:
+// [INFO] ? Container found
+// ┌─ Status ─┐   (or replaced with ???)
+// ?? Initializing...
+// ????????   (or other garbled chars)
+
+// CORRECT (USE THIS)
+logger.info("[OK] Container found");
+System.out.println("=== Status ===");
+String banner = "Initializing...";
+CommandOutput output = "================";
+
+// What you see in output:
+// [INFO] [OK] Container found
+// === Status ===
+// Initializing...
+// ================   (clean, consistent)
+```
+
+**Why it breaks**:
+- Windows console defaults to code page 850/437 (not UTF-8)
+- CI/CD logs often strip Unicode
+- SSH remote sessions may not support UTF-8
+- Hytale server logs may be collected in non-UTF-8 environment
+
+**Solution**: ASCII ONLY in all code. No exceptions. No "but I used UTF-8 encoding". Still no.
+
+### 2. String Concatenation in Logging
+
+```java
+// WRONG: Performance penalty + harder to read
+logger.info("Player " + player.getName() + " joined with level " + level);
+
+// CORRECT: Lazy evaluation + clear parameters
+logger.info("Player {} joined with level {}", player.getName(), level);
+```
+
+### 3. Mixing ERROR and WARNING
+
+```java
+// WRONG: No distinction
+logger.error("Container not found at " + pos);  // This is a WARN, not ERROR
+
+// CORRECT: Proper severity
+logger.warn("[WARN] Container not found at {}", pos);
+
+// ERROR is for unrecoverable failures:
+logger.error("[ERROR] Failed to save ME network to database", exception);
+```
+
+### 4. Logging without Context
+
+```java
+// WRONG: Impossible to debug
+logger.error("Operation failed");
+
+// CORRECT: Include all relevant data
+logger.error("[ERROR] Failed to extract {} items from container at {} in world {}", 
+    itemCount, containerPos, world.getName(), exception);
+```
+
+### 5. Blocking Operations in Async Contexts
+
+```java
+// WRONG: Blocks event thread
+public void onTick() {
+    ContainerData data = loadFromDatabase();  // BLOCKING!
+    updateUI(data);
+}
+
+// CORRECT: Use thread pool
+public void onTick() {
+    threadPool.submit(() -> {
+        ContainerData data = loadFromDatabase();
+        updateUI(data);  // Safe to call back to main thread
+    });
+}
+```
+
+### 6. Direct System.out in Libraries
+
+```java
+// WRONG: Pollutes stdout, uncontrollable
+public class ContainerUtils {
+    public void debugContainers() {
+        System.out.println("Found " + containers.size() + " containers");  // Bad!
+    }
+}
+
+// CORRECT: Use logger, let caller configure levels
+public class ContainerUtils {
+    private static final Logger logger = LoggerFactory.getLogger(ContainerUtils.class);
+    
+    public void debugContainers() {
+        logger.debug("Found {} containers", containers.size());  // Good!
+    }
+}
+```
+
+---
+
+**Version:** 1.1.0  
 **Last Updated:** Januar 20, 2026  
-**Hytale Version:** Early Access (Januar 2026)
+**Hytale Version:** Early Access (Januar 2026)  
+**Critical Updates**: v1.1 – Added HelloPlugin patterns, emoji/unicode ban with anti-patterns, logging best practices, common pitfalls
