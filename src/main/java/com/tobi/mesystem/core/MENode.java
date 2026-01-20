@@ -10,10 +10,27 @@ import com.tobi.mesystem.util.BlockPos;
 import com.tobi.mesystem.util.Direction;
 
 /**
- * ME Network Node
+ * Represents a node in the ME Network.
  * 
- * Basiert auf HyPipes PipeNode.java (dekompiliert)
- * Erweitert um ME-spezifische Features
+ * Each ME block (cable, terminal, controller, etc.) is represented as a node.
+ * Nodes track their connections, device type, priority, and associated network.
+ * 
+ * <p><b>Key Responsibilities:</b>
+ * <ul>
+ *   <li>Track connections to neighboring nodes</li>
+ *   <li>Store device-specific properties (type, priority)</li>
+ *   <li>Maintain reference to parent network</li>
+ *   <li>Provide world context for operations</li>
+ * </ul>
+ * 
+ * <p><b>Based on:</b> HyPipes PipeNode.java (decompiled)
+ * 
+ * @author Anoxy1
+ * @version 0.1.0
+ * @since 0.1.0
+ * @see MENetwork
+ * @see MEDeviceType
+ * @see BlockPos
  */
 public class MENode {
     

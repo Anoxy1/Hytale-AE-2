@@ -5,9 +5,21 @@
 **Purpose:** Complete JSON schema reference for Items, Blocks, NPCs, Loot Tables, Prefabs, World Generation  
 **CRITICAL**: All paths relative to `src/main/resources/`
 
----
+## AI-Übersicht (was, wann, wohin)
+- Wann lesen? Wenn du Items/Blocks/NPC/Loot/Prefabs/World-Configs anlegst oder prüfst.
+- Was drin? Vollständige Schemas, Templates und Validierungs-Hinweise.
+- Direkt springen: [Items](#item-templates) · [Blocks](#block-templates) · [NPC](#npc-templates) · [Loot](#loot-tables) · [World/Server](#server--world-configuration) · [Best Practices](#validation--best-practices)
+- AI-Hub: [AGENT_ONBOARDING.md#ai-agent-start](AGENT_ONBOARDING.md#ai-agent-start)
+
 
 ## 📚 Table of Contents
+
+### Validation-Checkliste (schnell)
+- Schema-Vollständigkeit: `Id`, `TranslationProperties`, `Icon`, categories/slots passend zum Item-Typ.
+- Pfade prüfen: Icons/Models/Textures referenzieren existierende Assets unter `src/main/resources/Common/...` oder `Server/...`.
+- IDs konsistent: `State.Definitions.Id` passt zu Java-Registrierung (wenn BlockState), Namespaces sauber (`mesystem:*`).
+- In-Game-Test: Asset im Spiel laden, Log auf Fehler prüfen.
+- ASCII/Encoding: Keine Sonderzeichen in Strings/Beschreibungen.
 
 1. [JSON Schema Fundamentals](#json-schema-fundamentals)
 2. [Item Templates](#item-templates)
@@ -114,10 +126,25 @@
   "Icon": "Icons/ItemsGenerated/pickaxe_stone.png",
   "MaxStackSize": 1,
   "Quality": "Common",
+  "Set": "Stone_Tools",
+  
+  "Model": "Resources/stone_pickaxe/model.blockymodel",
+  "Texture": "Resources/stone_pickaxe/texture.png",
+  "UsePlayerAnimations": false,
   
   "ToolConfiguration": {
-    "GatherType": "Pickaxe",
-    "Power": 3,
+    "Specs": [
+      {
+        "GatherType": "Rocks",
+        "Power": 3,
+        "Quality": 2
+      },
+      {
+        "GatherType": "Ore",
+        "Power": 2,
+        "Quality": 1
+      }
+    ],
     "Speed": 1.2,
     "DurabilityLossBlockTypes": [
       "hytale:stone",
@@ -125,6 +152,19 @@
       "hytale:ore_*"
     ],
     "MaxDurability": 200
+  },
+  
+  "DroppedItemConfig": {
+    "PhysicsValues": {
+      "ItemMass": 2.0,
+      "FrictionCoefficient": 0.6,
+      "ApplyGravity": true
+    },
+    "PickupRadius": 1.75,
+    "ttl": 300.0,
+    "ParticleSystemId": "tool_sparkles",
+    "ParticleColor": "#8B7355",
+    "ShowItemParticles": true
   }
 }
 ```
@@ -222,27 +262,53 @@
 }
 ```
 
-### Block with Per-Face Textures
+### Block with Per-Face Textures and Advanced Properties
 
 ```json
 {
   "Id": "oak_logs",
-  "BlockGroup": "Wood",
-  "BlockMaterial": "Solid",
-  "RenderingType": "Cube",
-  "TransparencyLevel": "Solid",
+  "TranslationProperties": {
+    "Name": "server.oak_logs.name"
+  },
+  "MaxStack": 64,
+  "Icon": "Icons/ItemsGenerated/oak_logs.png",
+  "Categories": ["Blocks", "Wood"],
+  "Set": "Wood_Oak",
   
-  "BlockTextures": [
-    {
-      "TopFace": "BlockTextures/oak_logs_top.png",
-      "BottomFace": "BlockTextures/oak_logs_bottom.png",
-      "NorthFace": "BlockTextures/oak_logs_side.png",
-      "SouthFace": "BlockTextures/oak_logs_side.png",
-      "EastFace": "BlockTextures/oak_logs_side.png",
-      "WestFace": "BlockTextures/oak_logs_side.png",
-      "VariantWeight": 1.0
-    }
-  ]
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "Group": "Wood",
+    "Flags": {
+      "CanRot": true,
+      "CanVariate": true
+    },
+    
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Axe",
+        "ItemId": "oak_logs"
+      }
+    },
+    
+    "BlockParticleSetId": "Wood",
+    
+    "Textures": [
+      {
+        "TopFace": "BlockTextures/oak_logs_top.png",
+        "BottomFace": "BlockTextures/oak_logs_bottom.png",
+        "NorthFace": "BlockTextures/oak_logs_side.png",
+        "SouthFace": "BlockTextures/oak_logs_side.png",
+        "EastFace": "BlockTextures/oak_logs_side.png",
+        "WestFace": "BlockTextures/oak_logs_side.png",
+        "VariantWeight": 1.0
+      }
+    ],
+    
+    "ParticleColor": "#8B4513",
+    "BlockSoundSetId": "Wood",
+    "BlockBreakingDecalId": "Breaking_Decals_Wood"
+  }
 }
 ```
 
@@ -576,7 +642,7 @@ EntitySpawns:
 
 ## Server & World Configuration
 
-### Global Server Configuration
+### Global Server Configuration (Complete with Port & Defaults)
 
 **File:** `config.json` (root)
 
@@ -588,6 +654,7 @@ EntitySpawns:
   "MaxPlayers": 50,
   "MaxViewRadius": 32,
   "LocalCompressionEnabled": true,
+  "Port": 25565,
   
   "Defaults": {
     "World": "default",
@@ -596,7 +663,7 @@ EntitySpawns:
 }
 ```
 
-### World-Specific Configuration
+### World-Specific Configuration (Complete with WorldGen & ClientEffects)
 
 **File:** `universe/worlds/my_world/config.json`
 
@@ -607,6 +674,7 @@ EntitySpawns:
   
   "WorldGen": {
     "Type": "Hytale",
+    "Template": "WorldGenTemplates/Orbis_Default.json",
     "Options": {
       "TerrainScale": 1.0,
       "BiomeSize": 256
@@ -617,14 +685,16 @@ EntitySpawns:
   "IsFallDamageEnabled": true,
   "IsGameTimePaused": false,
   "IsSpawningNPC": true,
+  "Gamemode": "ADVENTURE",
   
   "ClientEffects": {
+    "BloomEnabled": true,
+    "FogEnabled": true,
     "FogDistance": 256,
     "RenderDistance": 32,
     "AmbientLight": 1.0
   },
   
-  "Difficulty": "Normal",
   "GameRules": {
     "MobSpawning": true,
     "KeepInventory": false,
@@ -655,6 +725,113 @@ EntitySpawns:
   "DebugMode": false
 }
 ```
+
+---
+
+## Advanced Modding Concepts
+
+### Asset Inheritance & Composition
+
+**Pattern 1: Extending Base Items**
+
+```json
+{
+  "Id": "iron_sword_enhanced",
+  "ExtendsFrom": "iron_sword",
+  "Overrides": {
+    "Quality": "Rare",
+    "ItemLevel": 10,
+    "WeaponConfiguration": {
+      "Damage": 10.0,
+      "AttackSpeed": 1.8
+    }
+  }
+}
+```
+
+**Pattern 2: Modular Behavior (via Plugins)**
+
+Custom Interactions registered in Java:
+
+```java
+// In Java Plugin
+InteractionRegistry.register("healing_potion_drink", new HealingPotionInteraction());
+```
+
+Then referenced in JSON:
+
+```json
+{
+  "Interactions": {
+    "Type": "Simple",
+    "CustomInteractionId": "healing_potion_drink"
+  }
+}
+```
+
+### Codec System (Java ↔ JSON Serialization)
+
+**Hytale uses Codecs for type-safe JSON mapping:**
+
+```java
+public class MEBlockState extends BlockState {
+    public static final BuilderCodec<MEBlockState> CODEC = 
+        BuilderCodec.builder(MEBlockState.class, MEBlockState::new)
+            .withField("active", Codec.BOOLEAN, s -> s.active)
+            .withField("channels", Codec.INT, s -> s.channels)
+            .build();
+}
+```
+
+**Serializes to JSON:**
+
+```json
+{
+  "active": true,
+  "channels": 8
+}
+```
+
+### Dynamic Asset Manipulation at Runtime
+
+**Plugins can modify assets via Asset Registry:**
+
+```java
+// Access asset at runtime
+ItemAsset sword = ItemRegistry.get("iron_sword");
+sword.damage += 5.0;  // Modify via code
+
+// Or register new assets dynamically
+ItemAsset customSword = new ItemAsset("custom_sword");
+ItemRegistry.register(customSword);
+```
+
+---
+
+## Version Compatibility & Migration
+
+### Schema Changes Between Versions
+
+**Hytale Early Access (v2026.01.17):**
+- ItemLevel (integer), Quality (enum: Common/Uncommon/Rare/Epic/Legendary)
+- Interactions support Charging, Condition, Serial types
+- BlockType format with Gathering, BlockSoundSetId, BlockBreakingDecalId
+
+**Expected Changes in Future Updates:**
+- Visual Scripting nodes for NPC behaviors
+- New interaction types (trigger zones, conditional logic)
+- Enhanced particle system support
+- Extended AI parameters
+
+### Migration Checklist
+
+When updating Hytale version:
+
+1. ✅ Re-export all Blockbench models (ensure format compatibility)
+2. ✅ Validate all JSON files with latest schema
+3. ✅ Test items, blocks, NPCs in-game
+4. ✅ Check asset paths (may change in updates)
+5. ✅ Review plugin Java code for API changes
 
 ---
 

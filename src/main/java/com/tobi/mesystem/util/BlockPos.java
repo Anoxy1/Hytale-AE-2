@@ -3,14 +3,26 @@ package com.tobi.mesystem.util;
 import java.util.Objects;
 
 /**
- * Block Position - 3D Koordinate in der Welt
+ * Immutable 3D block position in the world.
  * 
- * Basiert auf HyPipes BlockPos
+ * Represents a block's coordinates as (x, y, z) integers.
+ * This class is immutable and thread-safe, making it suitable
+ * for use as a HashMap key.
  * 
- * Immutable Value Object:
- * - Thread-Safe durch Unveränderlichkeit
- * - Kann sicher als Map-Key verwendet werden
- * - Optimierte equals/hashCode Implementation
+ * <p><b>Key Features:</b>
+ * <ul>
+ *   <li>Immutable - thread-safe by design</li>
+ *   <li>Optimized equals/hashCode for HashMap performance</li>
+ *   <li>Convenient offset methods for neighbor access</li>
+ *   <li>Cached common positions (e.g., ORIGIN)</li>
+ * </ul>
+ * 
+ * <p><b>Based on:</b> HyPipes BlockPos pattern
+ * 
+ * @author Anoxy1
+ * @version 0.1.0
+ * @since 0.1.0
+ * @see Direction
  */
 public final class BlockPos {
     private final int x;
@@ -26,27 +38,47 @@ public final class BlockPos {
         this.z = z;
     }
     
+    /**
+     * Gets the X coordinate.
+     * 
+     * @return the x coordinate
+     */
     public int getX() {
         return x;
     }
     
+    /**
+     * Gets the Y coordinate.
+     * 
+     * @return the y coordinate
+     */
     public int getY() {
         return y;
     }
     
+    /**
+     * Gets the Z coordinate.
+     * 
+     * @return the z coordinate
+     */
     public int getZ() {
         return z;
     }
     
     /**
-     * Gibt Origin (0,0,0) zurück
+     * Returns the origin position (0, 0, 0).
+     * 
+     * @return cached origin position
      */
     public static BlockPos origin() {
         return ORIGIN;
     }
     
     /**
-     * Erstellt neue Position in Richtung verschoben
+     * Creates a new position offset in the given direction.
+     * 
+     * @param direction the direction to offset
+     * @return new position offset by one block in the given direction
      */
     public BlockPos offset(Direction direction) {
         return new BlockPos(
@@ -57,14 +89,22 @@ public final class BlockPos {
     }
     
     /**
-     * Erstellt neue Position mit Offset
+     * Creates a new position with custom offset.
+     * 
+     * @param dx the x offset
+     * @param dy the y offset
+     * @param dz the z offset
+     * @return new position offset by the given deltas
      */
     public BlockPos offset(int dx, int dy, int dz) {
         return new BlockPos(x + dx, y + dy, z + dz);
     }
     
     /**
-     * Berechnet Manhattan-Distanz zu anderer Position
+     * Calculates Manhattan distance to another position.
+     * 
+     * @param other the other position
+     * @return the Manhattan distance (sum of absolute coordinate differences)
      */
     public int manhattanDistance(BlockPos other) {
         return Math.abs(x - other.x) + Math.abs(y - other.y) + Math.abs(z - other.z);

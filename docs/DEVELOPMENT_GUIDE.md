@@ -6,7 +6,21 @@
 **REFERENCE**: [HelloPlugin (official)](https://github.com/noel-lang/hytale-example-plugin) – Commands, lifecycle, manifest pattern  
 **CRITICAL**: See [PROJECT_RULES.md](PROJECT_RULES.md) for emoji/unicode ban and logging standards
 
----
+## AI-Übersicht (was, wann, wohin)
+- Wann lesen? Wenn du Architektur, Roadmap oder Dev-Flow verstehen musst.
+- Was drin? Phasen/Roadmap, Core-System-Status, Block/GUI-Plan, Storage/Import/Export/Crafting Phasen.
+- Direkt springen: [Roadmap/Phasen](#-entwicklungsplan) · [Core-System](#core-system-) · [Block-Registration](#-technical-implementation) · [Network-System](#network-system-integration)
+- AI-Hub: [AGENT_ONBOARDING.md#ai-agent-start](AGENT_ONBOARDING.md#ai-agent-start)
+
+### Digest (maschinenfreundlich)
+| Zweck | Abschnitte | Nutze wenn |
+| --- | --- | --- |
+| Roadmap/Status | Entwicklungsplan, Phasen | Du wissen willst, was fertig/geplant ist |
+| Core-System | Core System | Du MENetwork/MENode/DeviceType verstehen musst |
+| Blocks/GUI | Block Registration, GUI System Integration | Du Blöcke/GUIs weiterbauen willst |
+| Storage/Import/Export | Phase 2/3 Abschnitte | Du Storage Cells/Busse planst |
+| Auto-Crafting | Phase 4 | Du Crafting-Features vorbereitest |
+
 
 ## 🎯 Quick Start - Nächste Schritte
 

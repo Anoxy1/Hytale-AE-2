@@ -4,6 +4,11 @@ Applied Energistics 2 für Hytale – ME Storage System Plugin.
 
 Kurzer Überblick, klare Anleitung, saubere Struktur und verlässlicher Build.
 
+## Für AI-Agents (Einstieg)
+- Schnell orientieren: [docs/AGENT_ONBOARDING.md#ai-agent-start](docs/AGENT_ONBOARDING.md#ai-agent-start)
+- Wichtigste Docs: [docs/QUICK_START.md](docs/QUICK_START.md), [docs/INDEX.md](docs/INDEX.md), [docs/PROJECT_RULES.md](docs/PROJECT_RULES.md)
+- Build-Befehl: `./gradlew build` (JAR in `build/libs/`)
+
 ## Schnellstart
 
 ```bash

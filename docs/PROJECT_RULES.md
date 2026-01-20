@@ -4,6 +4,16 @@
 **Last Updated**: 2026-01-20 (v1.1 – Critical emoji/Unicode rules + logging standards)  
 **For**: Future Developers & AI Agents
 
+## AI-Digest (was, wann, wohin)
+| Zweck | Abschnitte | Nutze wenn |
+| --- | --- | --- |
+| TL;DR Regeln | TL;DR – Essential Rules | Du sofort wissen musst, was erlaubt ist |
+| Workflow | Development Workflow | Du Build/Deploy/Git-Flow brauchst |
+| Stil/Logging | Code Style & Standards, Logging | Du Format/ASCII/Logging-Regeln prüfst |
+| Verbote | Never Do | Du schnell checken willst, was untersagt ist |
+| Governance | Key References | Du auf weitere Governance-Dokumente verweist |
+| CI/Versioning | CI/CD Pipeline, Versioning | Du CI/Release-Regeln benötigst |
+
 ---
 
 ## 📋 TL;DR – Essential Rules (Read First!)
@@ -18,6 +28,14 @@
 8. **Code Style**: 4-space indent, UTF-8, LF line endings (enforced by .editorconfig)
 9. **Never Edit**: `build/`, `libs/`, generated code in `src/main/java/com/` (except logic)
 10. **Before Commit**: `gradlew clean build` must pass; check `.gitignore` to avoid IDE/build artifacts
+
+### AI Agent Quick Contract
+
+- Work only in `src/main/java` and `src/main/resources`; never touch `build/`, `libs/`, or generated sources.
+- Keep outputs and code ASCII-only; no emoji/unicode in strings, logs, or comments that hit runtime.
+- Do not run destructive git commands; always branch from `main`, push branches, open PRs.
+- Always cite file paths and line numbers when proposing or summarizing edits.
+- Run `gradlew clean build` before any commit; do not bypass failures.
 
 ---
 
@@ -360,27 +378,24 @@ See [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md#helliplugin-standard-str
 
 ## 🤖 For AI Agents / Future Developers
 
-**First Steps**:
-1. Read this file (PROJECT_RULES.md)
-2. Read [docs/README.md](README.md) for overview
-3. Read [docs/QUICK_START.md](QUICK_START.md) for 5-minute onboarding
-4. Read [docs/INDEX.md](INDEX.md) to find detailed docs by topic
+**Load context (5 minutes)**
+- Read this file end-to-end.
+- Skim [docs/README.md](README.md) → [docs/QUICK_START.md](QUICK_START.md) → [docs/INDEX.md](INDEX.md) for navigation.
+- For Java edits, open [docs/PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md) Section 8; for JSON assets, open [docs/JSON_DATA_ASSETS.md](JSON_DATA_ASSETS.md).
 
-**Before Coding**:
-- [ ] Run `gradlew clean build` to verify environment
-- [ ] Check [docs/DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) for architecture
-- [ ] Review [docs/PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md) for code patterns
+**Before coding**
+- Run `gradlew clean build` once to validate the environment.
+- Check architecture in [docs/DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md); confirm feature scope.
+- Keep strings/logs ASCII-only; no emoji/unicode.
 
-**Common Tasks**:
-- **New feature**: Branch from main, code, test build, commit (Conventional), push, PR, wait for approval
-- **Bug fix**: Same flow, but prefix commit with `fix:`
-- **Docs update**: Edit in `docs/`, verify links, commit, push
-- **Code cleanup**: Use IDE refactoring tools; test build before commit
+**Execution pattern**
+- New feature: branch from `main` → implement → `gradlew clean build` → commit (Conventional) → push branch → PR to `main`.
+- Bug fix: same flow, commit prefix `fix:`.
+- Docs-only: edit under `docs/`, verify links, keep ASCII, commit, push, PR.
 
-**Help**:
-- Official Hytale docs: [support.hytale.com](https://support.hytale.com/)
-- HelloPlugin reference: [noel-lang/hytale-example-plugin](https://github.com/noel-lang/hytale-example-plugin)
-- Team docs: [docs/INDEX.md](INDEX.md)
+**If unsure**
+- Start at [docs/INDEX.md](INDEX.md) to locate the canonical source.
+- Ask via issue/PR comment; tag with `documentation` if the rule itself needs updates.
 
 ---
 

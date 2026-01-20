@@ -2,12 +2,27 @@
 
 **Complete guide to all documentation. Start here to find what you need.**
 
-**Last Updated:** 2026-01-20  
+**Last Updated:** 2026-01-21  
 **Status:** Foundation Complete (v0.1.0)
 
 ---
 
 ## 🎯 Quick Navigation
+
+### Für AI Agents (Start hier)
+- Zentraler Einstieg + Safeguards + Jumps: [AGENT_ONBOARDING.md](AGENT_ONBOARDING.md#ai-agent-start)
+- Schnelle Sprünge (pro Doc Header): Quick Start, Development Guide, Best Practices, API Reference, JSON Data Assets, Technical Sources
+- **NEU:** Delta-Analyse & Verbesserungen: [DELTA_ANALYSIS.md](DELTA_ANALYSIS.md) | [ACTION_ITEMS.md](ACTION_ITEMS.md)
+
+### AI-Digest (Kernpfade)
+- Build/Deploy: [QUICK_START.md](QUICK_START.md#ai-Übersicht-was-wann-wohin) (mit Troubleshooting)
+- Regeln/Governance: [PROJECT_RULES.md](PROJECT_RULES.md#ai-digest-was-wann-wohin)
+- Code/Patterns: [PLUGIN_BEST_PRACTICES.md](PLUGIN_BEST_PRACTICES.md#ai-Übersicht-was-wann-wohin)
+- Architektur/Roadmap: [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md#ai-Übersicht-was-wann-wohin)
+- API/Server: [API_REFERENCE.md](API_REFERENCE.md#ai-Übersicht-was-wann-wohin), [TECHNICAL_SOURCES.md](TECHNICAL_SOURCES.md#ai-Übersicht-was-wann-wohin)
+- JSON/Assets: [JSON_DATA_ASSETS.md](JSON_DATA_ASSETS.md#ai-Übersicht-was-wann-wohin)
+- **Projekt-Qualität:** [DELTA_ANALYSIS.md](DELTA_ANALYSIS.md) - Abgleich mit Best Practices
+- **Action Items:** [ACTION_ITEMS.md](ACTION_ITEMS.md) - Priorisierte Aufgaben
 
 ### For New Developers
 1. **[AGENT_ONBOARDING.md](AGENT_ONBOARDING.md)** – Complete project overview (5 min read)
@@ -59,6 +74,9 @@
 | File | Purpose | Location |
 |------|---------|----------|
 | [AGENT_ONBOARDING.md](AGENT_ONBOARDING.md) | Complete project overview for new agents (RECOMMENDED START) | docs/ |
+| [DELTA_ANALYSIS.md](DELTA_ANALYSIS.md) | **NEW:** Projekt vs. Best Practices Abgleich | docs/ |
+| [ACTION_ITEMS.md](ACTION_ITEMS.md) | **NEW:** Priorisierte Aufgabenliste | docs/ |
+| [CODE_OPTIMIZATION_COMPLETE.md](CODE_OPTIMIZATION_COMPLETE.md) | **NEW:** Abgeschlossene Code-Optimierungen | docs/ |
 | [CHANGELOG.md](CHANGELOG.md) | Release notes & version history | docs/ |
 | [RELEASE_NOTES.md](../.github/RELEASE_NOTES.md) | How to release | .github/ |
 | [TESTING_GUIDE.md](TESTING_GUIDE.md) | Testing strategies | docs/ (future expansion) |
@@ -126,6 +144,8 @@
 ### Testing
 - Testing Strategy: [TESTING_GUIDE.md](TESTING_GUIDE.md)
 - MEDebugCommand: [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md)
+- **Quality Assurance:** [DELTA_ANALYSIS.md](DELTA_ANALYSIS.md#5-testing--qualitätssicherung)
+- **Test Action Items:** [ACTION_ITEMS.md](ACTION_ITEMS.md#-critical---release-blocker-must-have)
 
 ---
 
@@ -153,6 +173,9 @@ Always check official sources first. Internal docs may lag behind.
 | API_REFERENCE.md | ✅ Current | 1.1 | 2026-01-20 |
 | CHANGELOG.md | ✅ Current | 0.1.0 | 2026-01-20 |
 | JSON_DATA_ASSETS.md | ✅ Current | 1.0 | 2026-01-21 |
+| DELTA_ANALYSIS.md | ✅ **NEW** | 1.0 | 2026-01-21 |
+| ACTION_ITEMS.md | ✅ **NEW** | 1.0 | 2026-01-21 |
+| CODE_OPTIMIZATION_COMPLETE.md | ✅ **NEW** | 1.0 | 2026-01-21 |
 | TESTING_GUIDE.md | ⏳ Incomplete | 1.0 | TBD |
 | RESOURCES.md | ✅ Reference | 1.0 | 2026-01-20 |
 | README.md (root) | ✅ Current | 1.0 | 2026-01-20 |

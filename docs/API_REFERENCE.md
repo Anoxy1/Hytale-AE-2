@@ -6,7 +6,21 @@
 **REFERENCE**: [HelloPlugin (official)](https://github.com/noel-lang/hytale-example-plugin) – Command patterns, event registration  
 **CRITICAL**: [PROJECT_RULES.md](PROJECT_RULES.md#critical-no-emoji-or-unicode-in-codestrings) – ASCII logging only!
 
----
+## AI-Übersicht (was, wann, wohin)
+- Wann lesen? Wenn du API-Details (BlockState/Codec/manifest/Event/GUI) nachschlagen musst.
+- Was drin? BlockState- und Codec-Beispiele, manifest.json Format, Registry-Flow, Events, GUI.
+- Direkt springen: [BlockState](#blockstate-system) · [Codec](#codec-system) · [BlockStateRegistry](#blockstateregistry) · [Event](#event-system) · [manifest](#manifestjson-format-plugin-configuration) · [GUI](#gui-system)
+- AI-Hub: [AGENT_ONBOARDING.md#ai-agent-start](AGENT_ONBOARDING.md#ai-agent-start)
+
+### Digest (maschinenfreundlich)
+| Zweck | Abschnitte | Nutze wenn |
+| --- | --- | --- |
+| BlockStates & Codecs | BlockState System, Codec System | Du Registrierungen/Serialisierung baust |
+| Registry | BlockStateRegistry | Du IDs/Registrierung abgleichen musst |
+| Events/Lifecycle | Event System, Plugin Lifecycle | Du Hooks/Events implementierst |
+| manifest | manifest.json Format (API_REFERENCE) | Du manifest-Felder prüfen/erstellen musst |
+| GUI | GUI System | Du GUI-spezifische API brauchst |
+
 
 ## 📚 Table of Contents
 

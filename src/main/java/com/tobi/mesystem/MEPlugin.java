@@ -11,76 +11,146 @@ import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.tobi.mesystem.commands.MEStatusCommand;
+import com.tobi.mesystem.config.MEConfig;
 import com.tobi.mesystem.util.BlockPos;
 import com.tobi.mesystem.util.NetworkManager;
 
 /**
- * HytaleAE2 - Applied Energistics 2 für Hytale
- *
- * Basierend auf dem offiziellen HelloPlugin Beispiel:
+ * HytaleAE2 - Applied Energistics 2-style ME (Matter/Energy) System for Hytale
+ * 
+ * Main plugin class following HelloPlugin standards:
  * https://github.com/noel-lang/hytale-example-plugin
+ * 
+ * Features:
+ * - Digital storage system (inspired by Applied Energistics)
+ * - Network-based item management
+ * - Channel system (8/32 channels)
+ * - Multi-block structures (cables, terminals, controllers)
+ * 
+ * @author Anoxy1
+ * @version 0.1.0
+ * @since 0.1.0
+ * @see NetworkManager
+ * @see MENetwork
+ * @see MENode
  */
 public class MEPlugin extends JavaPlugin {
 
     private static MEPlugin instance;
     private final NetworkManager networkManager;
+    private MEConfig config;
     private ScheduledExecutorService threadPool;
     private static final int SHUTDOWN_TIMEOUT_SECONDS = 5;
 
+    /**
+     * Constructs the MEPlugin instance.
+     * 
+     * Called by Hytale during plugin initialization.
+     * Sets up the singleton instance and initializes core managers.
+     * 
+     * @param init the plugin initialization context from Hytale
+     */
     public MEPlugin(@Nonnull JavaPluginInit init) {
         super(init);
         instance = this;
         
-        // Log sofort im Konstruktor um zu sehen ob er überhaupt aufgerufen wird
-        System.out.println("===================================================");
-        System.out.println("MEPlugin Constructor called!");
-        System.out.println("===================================================");
+        // Initialize early to ensure availability
+        getLogger().at(Level.INFO).log("===================================================");
+        getLogger().at(Level.INFO).log("       HytaleAE2 Constructor - Initializing       ");
+        getLogger().at(Level.INFO).log("===================================================");
         
         this.networkManager = new NetworkManager();
     }
 
+    /**
+     * Plugin setup phase.
+     * 
+     * Called by Hytale after construction. This is where we:
+     * 1. Load configuration
+     * 2. Initialize subsystems
+     * 3. Register commands and events
+     * 4. Start background tasks
+     * 
+     * Follows HelloPlugin pattern of centralized initialization.
+     */
     @Override
     protected void setup() {
         super.setup();
         
         getLogger().at(Level.INFO).log("=================================================");
-        getLogger().at(Level.INFO).log("       HytaleAE2 - Setup gestartet              ");
+        getLogger().at(Level.INFO).log("       HytaleAE2 - Setup Phase Started          ");
         getLogger().at(Level.INFO).log("=================================================");
         
-        // Thread Pool initialisieren
-        initializeThreadPool();
-        getLogger().at(Level.INFO).log("[OK] Thread Pool initialisiert");
-        
-        // NetworkManager starten
-        networkManager.start();
-        getLogger().at(Level.INFO).log("[OK] NetworkManager gestartet");
-        
-        // BlockState Codecs initialisieren (lädt statische Blöcke)
-        initializeBlockStateCodecs();
-        getLogger().at(Level.INFO).log("[OK] BlockState Codecs initialisiert");
+        try {
+            // Load configuration first (other systems may need it)
+            loadConfiguration();
+            getLogger().at(Level.INFO).log("[OK] Configuration loaded");
+            
+            // Thread Pool initialisieren
+            initializeThreadPool();
+            getLogger().at(Level.INFO).log("[OK] Thread Pool initialized (%d threads)", config.getThreadPoolSize());
+            
+            // NetworkManager starten
+            networkManager.start();
+            getLogger().at(Level.INFO).log("[OK] NetworkManager started");
+            
+            // BlockState Codecs initialisieren (lädt statische Blöcke)
+            initializeBlockStateCodecs();
+            getLogger().at(Level.INFO).log("[OK] BlockState Codecs initialized");
 
-        // Commands registrieren
-        registerCommands();
-        getLogger().at(Level.INFO).log("[OK] Commands registriert");
-        
-        // Event-Listener registrieren
-        registerEventListeners();
-        getLogger().at(Level.INFO).log("[OK] Event-Listener registriert");
-        
-        // Wartungs-Tasks planen
-        scheduleMaintenanceTasks();
-        getLogger().at(Level.INFO).log("[OK] Wartungs-Tasks geplant");
-        
-        getLogger().at(Level.INFO).log("=================================================");
-        getLogger().at(Level.INFO).log("      HytaleAE2 erfolgreich gestartet!          ");
-        getLogger().at(Level.INFO).log("=================================================");
+            // Commands registrieren
+            registerCommands();
+            getLogger().at(Level.INFO).log("[OK] Commands registered");
+            
+            // Event-Listener registrieren
+            registerEventListeners();
+            getLogger().at(Level.INFO).log("[OK] Event listeners registered");
+            
+            // Wartungs-Tasks planen
+            scheduleMaintenanceTasks();
+            getLogger().at(Level.INFO).log("[OK] Maintenance tasks scheduled");
+            
+            getLogger().at(Level.INFO).log("=================================================");
+            getLogger().at(Level.INFO).log("      HytaleAE2 Setup Complete - Ready!        ");
+            getLogger().at(Level.INFO).log("      Max Channels: %d | Search Radius: %d    ", 
+                config.getMaxChannels(), config.getSearchRadius());
+            getLogger().at(Level.INFO).log("=================================================");
+        } catch (Exception e) {
+            getLogger().at(Level.SEVERE).withCause(e).log("[ERROR] Failed to setup plugin - disabling");
+            throw new RuntimeException("Plugin setup failed", e);
+        }
+    }
+
+    /**
+     * Loads plugin configuration from file.
+     * Creates default configuration if not exists.
+     * 
+     * @throws RuntimeException if configuration fails to load
+     */
+    private void loadConfiguration() {
+        try {
+            this.config = new MEConfig(getLogger(), getDataDirectory());
+            if (!config.load()) {
+                getLogger().at(Level.WARNING).log("Failed to load config, using defaults");
+            }
+            
+            // Log important settings
+            if (config.isDebugMode()) {
+                getLogger().at(Level.INFO).log("Debug mode enabled - verbose logging active");
+            }
+        } catch (Exception e) {
+            getLogger().at(Level.SEVERE).withCause(e).log("Failed to initialize configuration");
+            throw new RuntimeException("Configuration initialization failed", e);
+        }
     }
 
     /**
      * Initialisiert Thread Pool für async Operationen
+     * Nutzt konfigurierte Thread-Pool-Größe aus config.
      */
     private void initializeThreadPool() {
-        this.threadPool = Executors.newScheduledThreadPool(4, r -> {
+        final int poolSize = config != null ? config.getThreadPoolSize() : 4;
+        this.threadPool = Executors.newScheduledThreadPool(poolSize, r -> {
             Thread thread = new Thread(r);
             thread.setName("MEPlugin-Worker-" + thread.threadId());
             thread.setDaemon(true);
@@ -361,6 +431,12 @@ public class MEPlugin extends JavaPlugin {
 
     // === Getters ===
     
+    /**
+     * Gets the singleton instance of this plugin.
+     * 
+     * @return the plugin instance
+     * @throws IllegalStateException if plugin not yet initialized
+     */
     public static MEPlugin getInstance() {
         if (instance == null) {
             throw new IllegalStateException("MEPlugin not yet initialized");
@@ -368,14 +444,38 @@ public class MEPlugin extends JavaPlugin {
         return instance;
     }
 
+    /**
+     * Gets the network manager instance.
+     * 
+     * @return the network manager
+     */
     public NetworkManager getNetworkManager() {
         return networkManager;
     }
 
+    /**
+     * Gets the configuration instance.
+     * 
+     * @return the configuration
+     */
+    public MEConfig getConfig() {
+        return config;
+    }
+
+    /**
+     * Gets the plugin logger.
+     * 
+     * @return the Hytale logger instance
+     */
     public HytaleLogger getPluginLogger() {
         return getLogger();
     }
 
+    /**
+     * Gets the thread pool for async operations.
+     * 
+     * @return the scheduled executor service
+     */
     public ScheduledExecutorService getThreadPool() {
         return threadPool;
     }

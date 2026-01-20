@@ -4,7 +4,21 @@
 **REFERENCE**: [HelloPlugin (official)](https://github.com/noel-lang/hytale-example-plugin) - Structure, command patterns, lifecycle  
 **CRITICAL**: See [docs/PROJECT_RULES.md](PROJECT_RULES.md#critical-no-emoji-or-unicode-in-codestrings) for emoji/unicode ban
 
----
+## AI-Übersicht (was, wann, wohin)
+- Wann lesen? Vor oder während Java-Code-Änderungen.
+- Was drin? HelloPlugin-Struktur, Command-Pattern, Logging-Standards, Anti-Patterns, Performance-Hinweise.
+- Direkt springen: [HelloPlugin-Pattern](#hello-plugin-standard-structure-must-follow) · [Command-Beispiel](#2-command-pattern-from-helloplugin) · [Logging/ASCII](#critical-no-emoji-unicode-or-complex-formatting-in-code) · [Anti-Patterns](#-common-pitfalls-anti-patterns-to-avoid)
+- AI-Hub: [AGENT_ONBOARDING.md#ai-agent-start](AGENT_ONBOARDING.md#ai-agent-start)
+
+### Digest (maschinenfreundlich)
+| Zweck | Abschnitte | Nutze wenn |
+| --- | --- | --- |
+| HelloPlugin-Struktur & Lifecycle | HelloPlugin Standard Structure | Du neue Klassen/EntryPoints aufsetzt |
+| Commands | Command Pattern | Du Befehle/Args implementierst |
+| Logging & ASCII | CRITICAL: No Emoji... | Du Logausgaben anpasst |
+| Anti-Patterns | Common Pitfalls | Du Code reviewst oder refaktorierst |
+| Performance | Performance/Optimization (unten) | Du Laufzeit/Threads optimierst |
+
 
 ## CRITICAL: No Emoji, Unicode, or Complex Formatting in Code
 

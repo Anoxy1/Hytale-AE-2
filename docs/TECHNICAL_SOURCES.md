@@ -2,6 +2,21 @@
 
 > Umfassende technische Quellen für Hytale Plugin-Entwicklung, basierend auf offiziellen Dokumentationen und erweiterten Referenzen.
 
+## AI-Übersicht (was, wann, wohin)
+- Wann lesen? Bei Server-/World-Config, Szenarien, Performance-Tuning, Access-Control.
+- Was drin? Server config, World config, Szenario-Profile, Access Control, Plugin-spezifische Configs.
+- Direkt springen: [Server config](#21-haupt-server-konfiguration-configjson) · [World config](#22-weltspezifische-konfiguration-universeworldsworld_nameconfigjson) · [Szenarien](#szenarien-konfigurationen) · [Access Control](#23-access-control-files) · [Plugin configs](#24-plugin-spezifische-konfiguration)
+- AI-Hub: [AGENT_ONBOARDING.md#ai-agent-start](AGENT_ONBOARDING.md#ai-agent-start)
+
+### Digest (maschinenfreundlich)
+| Zweck | Abschnitte | Nutze wenn |
+| --- | --- | --- |
+| Server-Basis | 2.1 Haupt-Server-Konfiguration | Du config.json anpassen willst |
+| Welt-Config | 2.2 Weltspezifische Konfiguration | Du world-spezifische Settings änderst |
+| Szenarien | Szenarien-Konfigurationen | Du Kreativ/PvP/Performance-Profile brauchst |
+| Access Control | 2.3 Access Control Files | Du permissions/whitelist/bans checkst |
+| Plugin-Config | 2.4 Plugin-spezifische Konfiguration | Du pluginbezogene Keys pflegen willst |
+
 ## 1. Offizielle Primärquellen
 
 ### Hytale Server & Runtime

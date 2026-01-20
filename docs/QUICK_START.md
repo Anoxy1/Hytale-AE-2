@@ -6,7 +6,14 @@
 **Build Status:** ✅ SUCCESSFUL  
 **JAR Generated:** `build/libs/HytaleAE2-*.jar`
 
----
+## AI-Übersicht (was, wann, wohin)
+
+### Troubleshooting (schnelle Antworten)
+- Falsche Java-Version: sicherstellen `java -version` zeigt 25 LTS; sonst Temurin 25 installieren.
+- JAR fehlt nach Build: `./gradlew clean build` erneut; Pfad `build/libs/` prüfen.
+- Deploy lädt nicht: Pfad Windows `%APPDATA%\Roaming\Hytale\UserData\earlyplugins\` oder macOS/Linux `~/Library/Application Support/Hytale/UserData/Mods/` prüfen; Neustart Hytale.
+- Netzwerk/QUIC: UDP-Port 25565 freigeben, nicht TCP.
+- Langsamer Server: View Distance auf 16–24 senken; NVMe nutzen.
 
 ## ✅ What You Have Now
 
