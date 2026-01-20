@@ -99,6 +99,32 @@ Eine vollständige, kopierbare Gesamtliste aller Hytale Plugin-/Mod-Dokumentatio
 
 ---
 
+## JSON Data Assets & Modding Tools
+
+29. https://hytalemodding.dev – **Hytale Modding Documentation** (Custom Items, Blocks, Interactions, Data Assets, Entity Component System)
+
+30. https://hytaletools.org – **Hytale Tools** (JSON Parser & Validator, Log Analyzer, Syntax Highlighting, Formatting, Minification)
+
+31. https://hytale-docs.com – **HytaleDocs** (Community JSON Validator, Schema Validation, Step-by-step Tutorials für Blocks, Items, NPCs)
+
+32. https://gist.github.com – **hytale-item-schema** (Vollständiges JSON Schema für Hytale Items mit allen Eigenschaften, Interaktionen, Konfigurationen)
+
+33. https://allthings.how/hytale-asset-editor – **Inside Hytale's Asset Editor** (JSON-driven Assets, Block & Item Definition, NPC Configuration)
+
+34. https://hytale-game.fandom.com/wiki/Modding – **Hytale Modding Wiki** (Custom Models, Custom Sounds, Scripting, Custom AI, Inventory System)
+
+---
+
+## Advanced Modding & Architecture
+
+35. https://hytalemodding.dev/entity-component-system – **Entity Component System (ECS)** (Game Architecture Pattern, ECS Design, Entities, Components, Systems)
+
+36. https://hytaledocs.dev/server-plugin-documentation – **Hytale Server Plugin Documentation** (Codec System, JSON Serialization, BSON Format, Plugin APIs)
+
+37. https://hytale.com/an-introduction-to-building-npc-behaviors – **Building NPC Behaviors** (JSON Scripts, Modular Behaviors, Dialogue Systems, AI)
+
+38. https://hytale.game/hytale-prefabs-creation-editor-world-gen – **Hytale Prefabs & World Generation** (Prefab Creation, Placement Rules, Biome Integration, Structure Generation)
+
 ## Übersicht nach Themen
 
 ### Offizielle Ressourcen & Getting Started
@@ -106,6 +132,21 @@ Eine vollständige, kopierbare Gesamtliste aller Hytale Plugin-/Mod-Dokumentatio
 
 ### Offizielle Beispiel-Plugins & Templates
 - #4 (HelloPlugin – OFFIZIELL), #5 (Kaupenjoe Template – Community ★83)
+
+### JSON Data Assets & Modding
+- #28 (Internal JSON_DATA_ASSETS.md Reference)
+- #29 (Hytale Modding Docs – Custom Items, Blocks, Interactions)
+- #30 (Hytale Tools – JSON Parser, Validator)
+- #31 (HytaleDocs – Community JSON Validator)
+- #32 (hytale-item-schema – Complete Item JSON Schema)
+- #33 (Asset Editor Guide)
+- #34 (Modding Wiki)
+
+### Advanced Architecture & Systems
+- #35 (Entity Component System - ECS Pattern)
+- #36 (Server Plugin Documentation – Codec System)
+- #37 (Building NPC Behaviors)
+- #38 (Prefabs & World Generation)
 
 ### Setup & Entwicklungsumgebung
 - #11, #12, #18, #19, #20 (IDE Plugins & Tools)
@@ -123,6 +164,19 @@ Eine vollständige, kopierbare Gesamtliste aller Hytale Plugin-/Mod-Dokumentatio
 - #23, #24, #25
 
 ### Mehrsprachige Ressourcen
+- #39 (Hytale-Community-Wiki)
+- #40 (German Hytale Dev Community)
+
+## Quellen & Referenzen
+Diese Ressourcenliste wurde mit folgenden offiziellen Quellen validiert:
+- Hytale Server v2026.01.17-4b0f30090 (Offizielle Dokumentation)
+- britakee-studios GitBook: "Getting Started with Plugins"
+- noel-lang/hytale-example-plugin: HelloPlugin (Offizielle Referenzimplementierung)
+- Hytale Server Manual (support.hytale.com)
+- Technical Director Modding Strategy (Hytale News Archive)
+- JetBrains Marketplace: IDE Plugin Support
+- Blockbench: Official 3D Modeling Partner
+- hytale.com API Documentation & Schema References
 - Englisch: #1, #2, #3, #4, #5, #6, #8, #9, #10, #11, #12, #13, #14, #15, #18, #19, #20, #21, #22, #23, #24, #25, #27
 - Französisch: #7
 - Deutsch: #26

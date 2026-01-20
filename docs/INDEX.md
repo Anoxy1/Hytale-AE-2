@@ -52,6 +52,7 @@
 | [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) | Architecture, roadmap, design | Developers |
 | [API_REFERENCE.md](API_REFERENCE.md) | Hytale API, BlockState, Codecs, manifest.json | Developers |
 | [JSON_DATA_ASSETS.md](JSON_DATA_ASSETS.md) | JSON schemas for Items, Blocks, NPCs, Loot, Prefabs | Developers/Content Creators |
+| [TECHNICAL_SOURCES.md](TECHNICAL_SOURCES.md) | Detailed technical references & official documentation | Developers/Architects |
 
 ### Special Files
 | File | Purpose | Location |
@@ -59,7 +60,7 @@
 | [CHANGELOG.md](CHANGELOG.md) | Release notes & version history | docs/ |
 | [RELEASE_NOTES.md](../.github/RELEASE_NOTES.md) | How to release | .github/ |
 | [TESTING_GUIDE.md](TESTING_GUIDE.md) | Testing strategies | docs/ (future expansion) |
-| [RESOURCES.md](RESOURCES.md) | External links & references | docs/ |
+| [RESOURCES.md](RESOURCES.md) | External links & references (38+ entries) | docs/ |
 
 ---
 
@@ -98,6 +99,10 @@
 - **How to Release**: [../.github/RELEASE_NOTES.md](../.github/RELEASE_NOTES.md)
 - **Version History**: [CHANGELOG.md](CHANGELOG.md)
 - **Versioning Strategy**: [PROJECT_RULES.md](PROJECT_RULES.md#-versioning--changelog)
+
+### Technical References & Sources
+- **Detailed Technical Sources**: [TECHNICAL_SOURCES.md](TECHNICAL_SOURCES.md) – Offizielle Referenzen, Daten-Strukturen, Konzepte
+- **Resource Links**: [RESOURCES.md](RESOURCES.md) – 38+ Offizielle & Community-Ressourcen
 
 ---
 
