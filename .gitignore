@@ -33,3 +33,12 @@ temp/
 *.bak
 *.swp
 *~
+
+# Local tooling artifacts
+.claude/
+build_output.txt
+build_output_new.txt
+update_menode.py
+
+# Windows reserved device filename accidentally present
+nul
