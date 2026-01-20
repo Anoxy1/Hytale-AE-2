@@ -5,6 +5,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+import com.hypixel.hytale.server.core.universe.world.meta.BlockStateRegistry;
+import com.tobi.mesystem.blocks.state.MEControllerBlockState;
+import com.tobi.mesystem.blocks.state.METerminalBlockState;
+import com.tobi.mesystem.blocks.state.MECableBlockState;
 import com.tobi.mesystem.util.EventRegistry;
 import com.tobi.mesystem.util.NetworkManager;
 
@@ -70,56 +74,36 @@ public class MEPlugin extends JavaPlugin {
 
     /**
      * Registers BlockStates with Hytale's BlockStateRegistry
-     *
-     * NOTE: This method requires HytaleServer.jar at runtime. When
-     * HytaleServer.jar is available, uncomment the code below.
-     *
+     * 
      * The JSON files in Server/Item/Items/ will be auto-loaded because
      * IncludesAssetPack: true is set in manifest.json
      */
     private void registerBlockStates() {
-        logger.info("BlockState registration stubbed - requires HytaleServer.jar");
-
-        /* UNCOMMENT WHEN HytaleServer.jar IS IN CLASSPATH:
-        
         BlockStateRegistry registry = getBlockStateRegistry();
         
         // Register ME Controller
         registry.registerBlockState(
             MEControllerBlockState.class,
-            "ME_Controller",  // Must match JSON State.Definitions.Id
+            "hytaleae2:me_controller",
             MEControllerBlockState.CODEC
         );
         logger.debug("  ✓ ME Controller BlockState registered");
         
-        // Register ME Terminal (with inventory support)
+        // Register ME Terminal (extends ItemContainerState)
         registry.registerBlockState(
             METerminalBlockState.class,
-            "ME_Terminal",
-            METerminalBlockState.CODEC,
-            ItemContainerStateData.class,
-            ItemContainerStateData.CODEC
+            "hytaleae2:me_terminal",
+            METerminalBlockState.CODEC
         );
         logger.debug("  ✓ ME Terminal BlockState registered");
         
         // Register ME Cable
         registry.registerBlockState(
             MECableBlockState.class,
-            "ME_Cable",
+            "hytaleae2:me_cable",
             MECableBlockState.CODEC
         );
         logger.debug("  ✓ ME Cable BlockState registered");
-        
-        // Register Terminal Interaction
-        getCodecRegistry(Interaction.CODEC)
-            .register(
-                "ME_Terminal_Interaction",
-                METerminalInteraction.class,
-                METerminalInteraction.CODEC
-            );
-        logger.debug("  ✓ Terminal Interaction registered");
-        
-         */
     }
 
     @Override

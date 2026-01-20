@@ -1,49 +1,72 @@
 package com.tobi.mesystem.blocks.state;
 
+import com.hypixel.hytale.server.core.universe.world.meta.BlockState;
+import com.hypixel.hytale.codec.builder.BuilderCodec;
+import com.hypixel.hytale.codec.Codec;
+import com.hypixel.hytale.codec.KeyedCodec;
+
 /**
  * ME Cable BlockState
  *
- * Transport block that connects ME network devices. Supports dynamic model
- * states based on connections (like HyPipes).
- *
- * NOTE: Requires Hytale Server API at runtime: - extends
- * com.hypixel.hytale.server.core.universe.world.meta.BlockState - uses
- * com.hypixel.hytale.codec.builder.BuilderCodec
- *
- * Compile-time stub - actual implementation requires HytaleServer.jar
+ * Transport block that connects ME network devices.
+ * Uses connection bitmask for dynamic visual states (like HyPipes).
+ * 
+ * Connection bits (0-63):
+ * - Bit 0: Down
+ * - Bit 1: Up
+ * - Bit 2: North
+ * - Bit 3: South
+ * - Bit 4: West
+ * - Bit 5: East
  */
-public class MECableBlockState {
+public class MECableBlockState extends BlockState {
 
-    // This will be replaced with proper Codec when HytaleServer.jar is in classpath
-    // public static final BuilderCodec<MECableBlockState> CODEC = 
-    //     BuilderCodec.of(MECableBlockState::new);
+    public static final BuilderCodec<MECableBlockState> CODEC;
+    
+    static {
+        CODEC = BuilderCodec.builder(
+            MECableBlockState.class,
+            MECableBlockState::new,
+            BlockState.BASE_CODEC
+        )
+        .append(
+            new KeyedCodec<>("Connections", Codec.INTEGER),
+            (state, connections) -> state.connections = connections,
+            state -> state.connections
+        )
+        .add()
+        .build();
+    }
+    
+    private int connections; // Bitmask: 0-63 for 6 directions
+    
     public MECableBlockState() {
-        // Constructor for Hytale's BlockState system
+        this.connections = 0;
     }
-
-    // Will override: public boolean initialize(BlockType blockType)
-    // Will override: public void onUnload()
-    /**
-     * Called when cable is placed Updates network connections and visual state
-     */
-    public void onPlaced() {
-        // TODO: Form network connections
-        // TODO: Update cable model based on neighbors
+    
+    public int getConnections() {
+        return connections;
     }
-
-    /**
-     * Called when cable is broken May split network into multiple parts
-     */
-    public void onBroken() {
-        // TODO: Handle network split
+    
+    public void setConnections(int connections) {
+        this.connections = connections;
     }
-
+    
     /**
-     * Updates cable visual state based on connections Similar to HyPipes
-     * dynamic states (Straight_Ns, Corner_Ne, T_North, etc.)
+     * Check if cable is connected in specific direction
+     * @param directionBit 0-5 for down, up, north, south, west, east
      */
-    public void updateConnectionState() {
-        // TODO: Analyze neighbors
-        // TODO: Set appropriate model state
+    public boolean isConnected(int directionBit) {
+        return (connections & (1 << directionBit)) != 0;
+    }
+    
+    /**
+     * Set connection state for specific direction
+     */
+    public void setConnected(int directionBit, boolean connected) {
+        int mask = 1 << directionBit;
+        this.connections = connected 
+            ? (connections | mask) 
+            : (connections & ~mask);
     }
 }

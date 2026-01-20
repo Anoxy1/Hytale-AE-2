@@ -1,39 +1,46 @@
 package com.tobi.mesystem.blocks.state;
 
+import com.hypixel.hytale.server.core.universe.world.meta.BlockState;
+import com.hypixel.hytale.codec.builder.BuilderCodec;
+import com.hypixel.hytale.codec.Codec;
+import com.hypixel.hytale.codec.KeyedCodec;
+
 /**
  * ME Controller BlockState
  *
- * Main hub for ME networks - expands channels from 8 to 32. This class will
- * handle block state for the controller in Hytale.
- *
- * NOTE: Requires Hytale Server API at runtime: - extends
- * com.hypixel.hytale.server.core.universe.world.meta.BlockState - uses
- * com.hypixel.hytale.codec.builder.BuilderCodec
- *
- * Compile-time stub - actual implementation requires HytaleServer.jar
+ * Main hub for ME networks - expands channels from 8 to 32.
+ * Has active/inactive states based on network power.
  */
-public class MEControllerBlockState {
+public class MEControllerBlockState extends BlockState {
 
-    // This will be replaced with proper Codec when HytaleServer.jar is in classpath
-    // public static final BuilderCodec<MEControllerBlockState> CODEC = 
-    //     BuilderCodec.of(MEControllerBlockState::new);
+    public static final BuilderCodec<MEControllerBlockState> CODEC;
+    
+    static {
+        CODEC = BuilderCodec.builder(
+            MEControllerBlockState.class,
+            MEControllerBlockState::new,
+            BlockState.BASE_CODEC
+        )
+        .append(
+            new KeyedCodec<>("Active", Codec.BOOLEAN),
+            (state, active) -> state.active = active,
+            state -> state.active
+        )
+        .add()
+        .build();
+    }
+    
+    private boolean active;
+    
     public MEControllerBlockState() {
-        // Constructor for Hytale's BlockState system
+        this.active = false;
     }
-
-    // Will override: public boolean initialize(BlockType blockType)
-    // Will override: public void onUnload()
-    /**
-     * Called when controller is placed This will notify the ME Network system
-     */
-    public void onPlaced() {
-        // TODO: Integrate with MENetwork
+    
+    public boolean isActive() {
+        return active;
     }
-
-    /**
-     * Called when controller is broken This will update network channel limits
-     */
-    public void onBroken() {
-        // TODO: Update network
+    
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
