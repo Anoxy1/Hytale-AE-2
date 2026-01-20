@@ -1,0 +1,68 @@
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow' version '8.3.5'
+}
+
+group = 'com.tobi'
+version = '0.1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Hytale Server API (lokal)
+    compileOnly files('libs/HytaleServer.jar')
+    
+    // Plugin Dependencies
+    compileOnly files('libs/ChestTerminal-2.0.8.jar')
+    compileOnly files('libs/HyPipes-1.0.5-SNAPSHOT.jar')
+    
+    // Logging (als provided - wird vom Server bereitgestellt)
+    compileOnly 'org.apache.logging.log4j:log4j-api:2.20.0'
+    compileOnly 'org.apache.logging.log4j:log4j-core:2.20.0'
+    
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    
+    // Exclude META-INF von Dependencies
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    
+    manifest {
+        attributes(
+            'Main-Class': 'com.tobi.mesystem.MEPlugin'
+        )
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.build.dependsOn tasks.shadowJar
+
+task quickBuild {
+    dependsOn 'clean', 'shadowJar'
+    doLast {
+        println "Build fertig: build/libs/${project.name}-${version}.jar"
+    }
+}
+
+// Compiler Warnings
+tasks.withType(JavaCompile) {
+    options.compilerArgs += ['-Xlint:unchecked', '-Xlint:deprecation']
+    options.encoding = 'UTF-8'
+}

@@ -1,0 +1,20 @@
+{
+  "Group": "Tobi",
+  "Name": "ME System",
+  "Version": "0.2.0",
+  "Description": "Applied Energistics 2 für Hytale - ME Network Storage & Transport System",
+  "Authors": [
+    {
+      "Name": "Tobi",
+      "Email": "",
+      "Url": ""
+    }
+  ],
+  "Website": "",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "LoadBefore": {},
+  "DisabledByDefault": false,
+  "IncludesAssetPack": false,
+  "SubPlugins": []
+}
