@@ -9,6 +9,7 @@ out/
 *.ipr
 *.iws
 .vscode/
+/.vs/
 *.code-workspace
 
 # Java

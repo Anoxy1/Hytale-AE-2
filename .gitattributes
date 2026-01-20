@@ -1,0 +1,18 @@
+* text=auto
+
+# Enforce LF for source & docs
+*.java     text eol=lf
+*.gradle   text eol=lf
+*.md       text eol=lf
+*.json     text eol=lf
+*.yml      text eol=lf
+*.yaml     text eol=lf
+*.ui       text eol=lf
+*.txt      text eol=lf
+
+# Windows scripts keep CRLF
+*.bat      text eol=crlf
+*.cmd      text eol=crlf
+
+# Shell scripts
+*.sh       text eol=lf
