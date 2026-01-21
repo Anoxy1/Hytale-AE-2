@@ -8,6 +8,7 @@ import java.util.logging.Level;
 
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.tobi.mesystem.MEPlugin;
+import com.tobi.mesystem.config.MEConfig;
 
 /**
  * Container & Inventory Utilities
@@ -24,16 +25,33 @@ public class ContainerUtils {
     private static final HytaleLogger logger = MEPlugin.getInstance().getPluginLogger();
     
     /**
+     * Sammelt alle Items aus Containern im konfigurierten Standardradius.
+     * Nutzt den searchRadius-Wert aus der Config.
+     * 
+     * @param world World-Objekt
+     * @param center Zentral-Position
+     * @return Map von ItemID -> Anzahl
+     */
+    public static Map<String, Long> collectNearbyItems(Object world, BlockPos center) {
+        return collectNearbyItems(world, center, 0); // 0 triggers config value
+    }
+    
+    /**
      * Sammelt alle Items aus Containern in einem Radius
      * 
      * Basiert auf: ChestTerminal's collectNearbyItems()
      * 
      * @param world World-Objekt
      * @param center Zentral-Position
-     * @param radius Suchradius in Blöcken
+     * @param radius Suchradius in Blöcken (nutzt Config-Wert wenn <= 0)
      * @return Map von ItemID -> Anzahl
      */
     public static Map<String, Long> collectNearbyItems(Object world, BlockPos center, int radius) {
+        // Use config value if no radius specified
+        if (radius <= 0) {
+            MEConfig config = MEPlugin.getInstance().getConfig();
+            radius = config != null ? config.getSearchRadius() : 16;
+        }
         Map<String, Long> items = new HashMap<>();
         
         if (world == null || center == null) {

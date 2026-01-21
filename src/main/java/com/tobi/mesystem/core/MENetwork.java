@@ -16,6 +16,7 @@ import java.util.logging.Level;
 
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.tobi.mesystem.MEPlugin;
+import com.tobi.mesystem.config.MEConfig;
 import com.tobi.mesystem.util.BlockPos;
 
 /**
@@ -51,7 +52,7 @@ public class MENetwork {
     private final ReadWriteLock storageLock = new ReentrantReadWriteLock();
     
     // Channel Management
-    private volatile int maxChannels = 8;
+    private volatile int maxChannels;
     private final Map<BlockPos, Integer> channelAllocation = new ConcurrentHashMap<>();
     
     // Device Tracking
@@ -67,6 +68,15 @@ public class MENetwork {
     public MENetwork() {
         this.logger = MEPlugin.getInstance().getPluginLogger();
         this.networkId = UUID.randomUUID();
+        
+        // Load maxChannels from config (default: 8 without controller, 32 with controller)
+        MEConfig config = MEPlugin.getInstance().getConfig();
+        this.maxChannels = config != null ? config.getMaxChannels() : 32;
+        
+        logger.at(Level.FINE).log(
+            "MENetwork created with ID %s, maxChannels=%d (from config)",
+            networkId, maxChannels
+        );
     }
     
     public UUID getNetworkId() {
