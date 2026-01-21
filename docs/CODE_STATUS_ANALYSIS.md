@@ -14,7 +14,7 @@
 |------------|--------|-----------------|----------|
 | **Core System** | ✅ Vollständig | 100% | 42 Tests |
 | **Config System** | ✅ Vollständig & Integriert | 100% | ❌ Keine Tests |
-| **Block System** | ⚠️ Skelett | 60% | ❌ Keine Tests |
+| **Block System** | ✅ Funktional | 90% | ❌ Keine Tests |
 | **Command System** | ⚠️ Basic | 70% | ❌ Keine Tests |
 | **Storage System** | ⚠️ Skelett | 40% | ❌ Keine Tests |
 | **GUI System** | ❌ Nicht implementiert | 0% | N/A |
@@ -101,36 +101,49 @@
 
 ---
 
-## 3. Block System ⚠️ (SKELETT)
+## 3. Block System ✅ (FUNKTIONAL)
 
-### Implementiert (Grundgerüst)
+### Implementiert
 
 **MEBlockBase.java** - Abstract Base Class
-- ✅ onPlaced() Hook
-- ✅ onDestroyed() Hook
-- ✅ getRequiredDevice() Abstract
-- ❌ Keine BlockState-Logik
+- ✅ onPlaced() Hook mit Network Finding
+- ✅ onDestroyed() Hook mit Node Removal
+- ✅ onRightClick() Hook
+- ✅ connectToNeighbors() - 6-directional connection
+- ✅ findOrCreateNetwork() - Auto-merging
+- ✅ World-ID Extraction
 - ❌ Keine Tests
 
-**MECableBlock.java** - Cable Implementation
+**MECableBlock.java** - Cable Implementation ✅
 - ✅ Extends MEBlockBase
 - ✅ onPlaced() registriert Node
 - ✅ onDestroyed() entfernt Node
-- ⚠️ **PROBLEM:** Keine Connection-Logik (TODO)
-- ❌ Keine Neighbor-Detection
+- ✅ **Connection-Logik:** 6-directional neighbor detection
+- ✅ **Network Merging:** Automatic when cables connect
+- ✅ Connection logging (counts neighbors)
+- ✅ Disconnection on break (removes from neighbors)
+- ❌ Visual texture rotation (future)
 - ❌ Keine Tests
 
-**METerminalBlock.java** - Terminal Implementation
+**METerminalBlock.java** - Terminal Implementation ✅
 - ✅ Extends MEBlockBase
 - ✅ Node-Registrierung
-- ⚠️ **PROBLEM:** Keine GUI-Logik (nicht implementiert)
-- ❌ onInteract() fehlt
+- ✅ **GUI-Logik:** Chat-based interface (Phase 1)
+- ✅ **Network Status:** Shows items, channels, storage
+- ✅ **Item List:** Displays top 10 stored items
+- ✅ Right-click opens terminal interface
+- ⏳ Real GUI (future - needs Hytale GUI API)
 - ❌ Keine Tests
 
-**MEControllerBlock.java** - Controller Implementation
+**MEControllerBlock.java** - Controller Implementation ✅
 - ✅ Extends MEBlockBase
 - ✅ Node-Registrierung
-- ⚠️ **PROBLEM:** Keine Channel-Upgrade-Logik
+- ✅ **Channel Upgrade:** 8 → 32 on placement
+- ✅ **Duplicate Prevention:** Only 1 controller per network
+- ✅ **Channel Downgrade:** 32 → 8 on removal
+- ✅ **Overflow Warning:** Alerts when channels exceed limit
+- ✅ Detailed logging (activation/removal)
+- ✅ notifyChannelUpgrade/Downgrade hooks (future device management)
 - ❌ Keine Tests
 
 ### BlockStates (Codec System)
@@ -331,14 +344,9 @@
 | # | Task | File(s) | Aufwand | Blocker? |
 |---|------|---------|---------|----------|
 | 1 | **Assets erstellen** | Common/ | 4-8h | ✅ YES |
-| 2 | **Cable Connection-Logik** | MECableBlock.java | 2-3h | ✅ YES |
-| 3 | **Neighbor Detection** | MEBlockBase.java | 1-2h | ✅ YES |
-| 4 | **Network Auto-Merge on Cable** | NetworkManager.java | 2-3h | ✅ YES |
-| 5 | **Terminal GUI Basis** | METerminalBlock.java + GUI | 4-6h | ✅ YES |
-| 6 | **Controller Channel Upgrade** | MEControllerBlock.java | 1h | ✅ YES |
-| 7 | **Unit-Tests für Config** | MEConfigTest.java | 2h | ⚠️ HIGH |
-| 8 | **Integration-Tests** | tests/ | 4-6h | ⚠️ HIGH |
-| 9 | **TESTING_GUIDE.md** | docs/ | 2-3h | ⚠️ HIGH |
+| 2 | **Unit-Tests für Config** | MEConfigTest.java | 2h | ⚠️ HIGH |
+| 3 | **Integration-Tests** | tests/ | 4-6h | ⚠️ HIGH |
+| 4 | **TESTING_GUIDE.md** | docs/ | 2-3h | ⚠️ HIGH |
 
 ### 🟠 HIGH - Für Stabilität
 

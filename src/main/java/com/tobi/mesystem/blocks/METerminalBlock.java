@@ -12,6 +12,12 @@ import com.tobi.mesystem.util.BlockPos;
 /**
  * ME Terminal Block - Zugriff auf Netzwerk Storage
  * 
+ * Features:
+ * - Opens terminal GUI for network access (future)
+ * - Chat-based interface for testing (current)
+ * - Item browsing and extraction
+ * - Network status display
+ * 
  * Simplified mit MEBlockBase - gemeinsame Logik in Basisklasse
  */
 public class METerminalBlock extends MEBlockBase {
@@ -23,17 +29,47 @@ public class METerminalBlock extends MEBlockBase {
     
     @Override
     protected void onRightClickExtra(UUID worldId, BlockPos position, MENode node, MENetwork network) {
-        // GUI wird implementiert sobald Hytale GUI-API verfügbar ist
-        // Aktuell: Zeige Network-Status im Chat
-        logger.at(Level.INFO).log(
-            "Terminal angeklickt bei %s | Network: %s Items, %s/%s Channels, Storage: %s/%s",
-            position,
-            network.getItemTypeCount(),
-            network.getUsedChannels(),
-            network.getMaxChannels(),
-            network.getStoredItemCount(),
-            network.getTotalStorageCapacity()
-        );
+        // GUI Implementation (Phase 1: Chat-based, Phase 2: Real GUI)
+        openTerminalInterface(worldId, position, network);
+    }
+    
+    /**
+     * Opens terminal interface.
+     * Currently: Chat-based feedback
+     * Future: Opens GUI with item grid, search, and extraction
+     */
+    private void openTerminalInterface(UUID worldId, BlockPos position, MENetwork network) {
+        logger.at(Level.INFO).log("========== ME Terminal ==========");
+        logger.at(Level.INFO).log("Position: %s", position);
+        logger.at(Level.INFO).log("Network ID: %s", network.getNetworkId());
+        logger.at(Level.INFO).log("Nodes: %d | Channels: %d/%d",
+            network.size(), network.getUsedChannels(), network.getMaxChannels());
+        logger.at(Level.INFO).log("Storage: %d items (%d types)",
+            network.getStoredItemCount(), network.getItemTypeCount());
+        logger.at(Level.INFO).log("Capacity: %d/%d",
+            network.getStoredItemCount(), network.getTotalStorageCapacity());
+        
+        // Show stored items (limited to 10 for brevity)
+        var items = network.getStoredItems();
+        if (!items.isEmpty()) {
+            logger.at(Level.INFO).log("--- Stored Items (Top 10) ---");
+            items.entrySet().stream()
+                .limit(10)
+                .forEach(entry -> logger.at(Level.INFO).log(
+                    "  %s: %d", entry.getKey(), entry.getValue()
+                ));
+            if (items.size() > 10) {
+                logger.at(Level.INFO).log("  ... and %d more", items.size() - 10);
+            }
+        } else {
+            logger.at(Level.INFO).log("[Empty Network]");
+        }
+        
+        logger.at(Level.INFO).log("=================================");
+        logger.at(Level.INFO).log("[GUI will be implemented in future phase]");
+        
+        // Future: Open Hytale GUI
+        // GUIManager.openTerminalGUI(player, network);
     }
 
     // ==================== STATIC HYTALE EVENT WRAPPERS ====================

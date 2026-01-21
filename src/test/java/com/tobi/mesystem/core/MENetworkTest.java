@@ -1,11 +1,16 @@
 package com.tobi.mesystem.core;
 
-import org.junit.jupiter.api.Test;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
-import java.util.UUID;
 import com.tobi.mesystem.util.BlockPos;
 
 /**
@@ -78,7 +83,7 @@ class MENetworkTest {
         network.addNode(node);
         assertEquals(1, network.getNodeCount());
         
-        network.removeNode(node);
+        network.removeNode(node.getPosition());
         assertEquals(0, network.getNodeCount());
     }
     
@@ -127,7 +132,7 @@ class MENetworkTest {
     void testExtractItem() {
         network.insertItem("minecraft:stone", 64, null);
         
-        int extracted = network.extractItem("minecraft:stone", 32, null);
+        long extracted = network.extractItem("minecraft:stone", 32L);
         
         assertEquals(32, extracted);
         assertEquals(32, network.getStoredItemCount());
@@ -138,7 +143,7 @@ class MENetworkTest {
     void testExtractMoreThanStored() {
         network.insertItem("minecraft:stone", 10, null);
         
-        int extracted = network.extractItem("minecraft:stone", 20, null);
+        long extracted = network.extractItem("minecraft:stone", 20L);
         
         assertEquals(10, extracted);
         assertEquals(0, network.getStoredItemCount());

@@ -269,6 +269,19 @@ public class MENetwork {
     }
     
     /**
+     * Gibt eine Kopie der gespeicherten Items zurück (Thread-Safe)
+     * @return Map von ItemID -> Anzahl
+     */
+    public Map<String, Long> getStoredItems() {
+        storageLock.readLock().lock();
+        try {
+            return new HashMap<>(itemStorage);
+        } finally {
+            storageLock.readLock().unlock();
+        }
+    }
+    
+    /**
      * Aktualisiert den Cache für Item-Statistiken
      */
     private void updateCache() {

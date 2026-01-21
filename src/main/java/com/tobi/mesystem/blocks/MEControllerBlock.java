@@ -30,24 +30,85 @@ public class MEControllerBlock extends MEBlockBase {
     protected void onPlacedExtra(UUID worldId, BlockPos position, MENode node, MENetwork network) {
         // Prüfe ob Network bereits einen Controller hat
         if (network.hasController()) {
-            logger.at(Level.WARNING).log("Network hat bereits einen Controller! Platzierung bei %s wird blockiert", position);
+            logger.at(Level.WARNING).log(
+                "[BLOCKED] Network already has a controller! Placement at %s denied",
+                position
+            );
+            logger.at(Level.WARNING).log(
+                "[INFO] Only 1 controller per network allowed. Remove existing controller first."
+            );
+            
             // Entferne den Node wieder aus dem Netzwerk
             network.removeNode(position);
             MEPlugin.getInstance().getNetworkManager().removeNode(worldId, position);
-            logger.at(Level.INFO).log("Doppel-Controller bei %s blockiert und entfernt", position);
+            logger.at(Level.INFO).log("Duplicate controller at %s removed", position);
             return;
         }
 
         // Controller zum Network hinzufügen (erhöht Channels auf 32)
         network.addController(position);
-        logger.at(Level.INFO).log("Controller platziert bei %s | Channels: %s", position, network.getMaxChannels());
+        
+        logger.at(Level.INFO).log("========================================");
+        logger.at(Level.INFO).log("[CONTROLLER ACTIVATED]");
+        logger.at(Level.INFO).log("Position: %s", position);
+        logger.at(Level.INFO).log("Channel Upgrade: 8 -> %d", network.getMaxChannels());
+        logger.at(Level.INFO).log("Network Size: %d nodes", network.size());
+        logger.at(Level.INFO).log("Used Channels: %d/%d", network.getUsedChannels(), network.getMaxChannels());
+        logger.at(Level.INFO).log("Available Channels: %d", network.getMaxChannels() - network.getUsedChannels());
+        logger.at(Level.INFO).log("========================================");
+        
+        // Notify all connected devices about channel upgrade
+        notifyChannelUpgrade(network);
     }
     
     @Override
     protected void onBrokenExtra(UUID worldId, BlockPos position, MENode node, MENetwork network) {
         // Controller entfernen (reduziert Channels auf 8)
         network.removeController();
-        logger.at(Level.INFO).log("Controller entfernt bei %s | Channels reduziert auf %s", position, network.getMaxChannels());
+        
+        logger.at(Level.WARNING).log("========================================");
+        logger.at(Level.WARNING).log("[CONTROLLER REMOVED]");
+        logger.at(Level.WARNING).log("Position: %s", position);
+        logger.at(Level.WARNING).log("Channel Downgrade: 32 -> %d", network.getMaxChannels());
+        logger.at(Level.WARNING).log("Network Size: %d nodes", network.size());
+        logger.at(Level.WARNING).log("Used Channels: %d/%d", network.getUsedChannels(), network.getMaxChannels());
+        
+        if (network.getUsedChannels() > network.getMaxChannels()) {
+            logger.at(Level.WARNING).log(
+                "[WARNING] Channel overflow! %d channels in use, only %d available",
+                network.getUsedChannels(), network.getMaxChannels()
+            );
+            logger.at(Level.WARNING).log("Some devices may stop working until controller is replaced.");
+        }
+        
+        logger.at(Level.WARNING).log("========================================");
+        
+        // Notify all connected devices about channel downgrade
+        notifyChannelDowngrade(network);
+    }
+    
+    /**
+     * Notifies network about channel upgrade.
+     * Future: Reactivate offline devices that were waiting for channels.
+     */
+    private void notifyChannelUpgrade(MENetwork network) {
+        logger.at(Level.FINE).log(
+            "Notifying %d nodes about channel upgrade",
+            network.size()
+        );
+        // Future: Iterate through nodes and reactivate waiting devices
+    }
+    
+    /**
+     * Notifies network about channel downgrade.
+     * Future: Deactivate devices if channels exceed limit.
+     */
+    private void notifyChannelDowngrade(MENetwork network) {
+        logger.at(Level.FINE).log(
+            "Notifying %d nodes about channel downgrade",
+            network.size()
+        );
+        // Future: Prioritize devices and disable lowest priority if needed
     }
     
     @Override
